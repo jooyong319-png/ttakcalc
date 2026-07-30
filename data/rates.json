@@ -1,5 +1,5 @@
 {
-  "_comment": "연도별 4대보험 요율·세율·한도 등 제도 데이터. 계산 로직(lib/calc/*)은 이 파일만 보고 계산한다 — 제도가 바뀌면 여기에 새 연도를 추가할 뿐 코드는 건드리지 않는다. 과거 연도 계산도 그대로 지원되는 게 경쟁 사이트와의 차이. 각 항목은 반드시 source(근거)와 verifiedAt(최종 확인일)을 갖는다. ⚠️ 현재 값은 미검증 잠정치 — wiki/rates-log.md 참고.",
+  "_comment": "연도별 4대보험 요율·세율·한도 등 제도 데이터. 계산 로직(lib/calc/*)은 이 파일만 보고 계산한다 — 제도가 바뀌면 여기에 새 연도를 추가할 뿐 코드는 건드리지 않는다. 과거 연도 계산도 그대로 지원되는 게 경쟁 사이트와의 차이. 각 항목은 반드시 source(근거)와 verifiedAt(최종 확인일)을 갖는다. 2026-07-30 공식 출처로 1차 검증 완료(4대보험·최저임금·실업급여·식대) — 미검증 잔여 항목과 검증 이력은 wiki/rates-log.md 참고.",
   "years": {
     "2026": {
       "label": "2026년",
@@ -8,21 +8,21 @@
         "nationalPension": {
           "name": "국민연금",
           "employeeRate": 0.0475,
-          "note": "근로자 부담분. 2026년 요율 인상 반영(기존 4.5%).",
-          "monthlyIncomeMin": 400000,
-          "monthlyIncomeMax": 6370000,
-          "source": "국민연금공단 보험료율 고시"
+          "note": "근로자 부담분(총 9.5%의 절반). 기준소득월액 상·하한은 매년 7월에 바뀐다 — 아래 값은 2026-07~2027-06 적용분.",
+          "monthlyIncomeMin": 410000,
+          "monthlyIncomeMax": 6590000,
+          "source": "국민연금공단 기준소득월액 상·하한액 조정 고시(2026.7 적용)"
         },
         "healthInsurance": {
           "name": "건강보험",
           "employeeRate": 0.03595,
-          "note": "근로자 부담분(총 7.19%의 절반).",
+          "note": "근로자 부담분(총 7.19%의 절반). 2026년 7.09%→7.19% 인상.",
           "source": "국민건강보험공단 보험료율 고시"
         },
         "longTermCare": {
           "name": "장기요양보험",
           "rateOfHealthInsurance": 0.1314,
-          "note": "건강보험료 기준 부과(소득 기준 아님).",
+          "note": "건강보험료 기준 부과. 2026년 12.95%→13.14%(소득 대비 0.9448%).",
           "source": "국민건강보험공단 장기요양보험료율 고시"
         },
         "employmentInsurance": {
@@ -38,25 +38,57 @@
         "note": "실제 원천징수는 간이세액표를 따른다. 아래는 과세표준 구간별 기본세율(연말정산·참고용).",
         "localTaxRateOfIncomeTax": 0.1,
         "brackets": [
-          { "upTo": 14000000, "rate": 0.06, "deduction": 0 },
-          { "upTo": 50000000, "rate": 0.15, "deduction": 1260000 },
-          { "upTo": 88000000, "rate": 0.24, "deduction": 5760000 },
-          { "upTo": 150000000, "rate": 0.35, "deduction": 15440000 },
-          { "upTo": 300000000, "rate": 0.38, "deduction": 19940000 },
-          { "upTo": 500000000, "rate": 0.40, "deduction": 25940000 },
-          { "upTo": 1000000000, "rate": 0.42, "deduction": 35940000 },
-          { "upTo": null, "rate": 0.45, "deduction": 65940000 }
+          {
+            "upTo": 14000000,
+            "rate": 0.06,
+            "deduction": 0
+          },
+          {
+            "upTo": 50000000,
+            "rate": 0.15,
+            "deduction": 1260000
+          },
+          {
+            "upTo": 88000000,
+            "rate": 0.24,
+            "deduction": 5760000
+          },
+          {
+            "upTo": 150000000,
+            "rate": 0.35,
+            "deduction": 15440000
+          },
+          {
+            "upTo": 300000000,
+            "rate": 0.38,
+            "deduction": 19940000
+          },
+          {
+            "upTo": 500000000,
+            "rate": 0.4,
+            "deduction": 25940000
+          },
+          {
+            "upTo": 1000000000,
+            "rate": 0.42,
+            "deduction": 35940000
+          },
+          {
+            "upTo": null,
+            "rate": 0.45,
+            "deduction": 65940000
+          }
         ],
         "source": "소득세법 제55조"
       },
       "nonTaxable": {
-        "mealAllowanceMonthlyMax": 200000,
-        "note": "식대 비과세 한도(월). 이 금액까지는 과세 대상에서 제외.",
+        "mealAllowanceMonthlyMax": 300000,
+        "note": "식대 비과세 한도(월). 2026-01-01 지급분부터 20만원 → 30만원 상향. 이 금액까지는 4대보험·소득세 산정에서 모두 제외.",
         "source": "소득세법 시행령 제17조의2"
       },
       "minimumWage": {
         "hourly": 10320,
-        "note": "2026년 최저시급.",
+        "note": "2026년 최저시급(2.9% 인상). 월 209시간 기준 2,156,880원.",
         "source": "고용노동부 최저임금 고시"
       },
       "freelancer": {
@@ -69,18 +101,38 @@
       "unemployment": {
         "name": "구직급여(실업급여)",
         "wageReplacementRate": 0.6,
-        "dailyMax": 66000,
+        "dailyMax": 68100,
         "lowerBoundRateOfMinimumWage": 0.8,
         "dailyWorkHours": 8,
-        "note": "1일 구직급여 = 이직 전 평균임금의 60%. 상한 66,000원, 하한은 최저시급의 80% × 8시간.",
+        "note": "1일 구직급여 = 이직 전 평균임금의 60%. 2026년 상한 68,100원(최저임금 인상에 따른 하한 역전을 막기 위해 7년 만에 인상), 하한은 최저시급의 80% × 8시간 = 66,048원.",
         "durationDays": {
           "_comment": "소정급여일수 — [고용보험 가입기간 구간] × [연령]. under50은 50세 미만, from50은 50세 이상 또는 장애인.",
           "tiers": [
-            { "underYears": 1, "under50": 120, "from50": 120 },
-            { "underYears": 3, "under50": 150, "from50": 180 },
-            { "underYears": 5, "under50": 180, "from50": 210 },
-            { "underYears": 10, "under50": 210, "from50": 240 },
-            { "underYears": null, "under50": 240, "from50": 270 }
+            {
+              "underYears": 1,
+              "under50": 120,
+              "from50": 120
+            },
+            {
+              "underYears": 3,
+              "under50": 150,
+              "from50": 180
+            },
+            {
+              "underYears": 5,
+              "under50": 180,
+              "from50": 210
+            },
+            {
+              "underYears": 10,
+              "under50": 210,
+              "from50": 240
+            },
+            {
+              "underYears": null,
+              "under50": 240,
+              "from50": 270
+            }
           ]
         },
         "source": "고용보험법 제46조·제50조"
@@ -105,9 +157,18 @@
         "name": "취득세",
         "note": "주택 유상취득 기준. 조정대상지역 다주택 중과세율은 별도. 농어촌특별세는 전용 85㎡ 초과 시에만 부과.",
         "house": {
-          "under6억": { "rate": 0.01, "localEduRate": 0.001 },
-          "from6to9억": { "note": "6~9억 구간은 (취득가액×2/3억−3)/100 누진식", "localEduRateOfAcquisition": 0.1 },
-          "over9억": { "rate": 0.03, "localEduRate": 0.003 }
+          "under6억": {
+            "rate": 0.01,
+            "localEduRate": 0.001
+          },
+          "from6to9억": {
+            "note": "6~9억 구간은 (취득가액×2/3억−3)/100 누진식",
+            "localEduRateOfAcquisition": 0.1
+          },
+          "over9억": {
+            "rate": 0.03,
+            "localEduRate": 0.003
+          }
         },
         "multiHouse": {
           "twoInRegulated": 0.08,
@@ -125,20 +186,68 @@
         "name": "부동산 중개보수",
         "note": "주택 기준 상한요율. 실제 보수는 상한 내에서 협의로 정한다. 지자체 조례로 다를 수 있음.",
         "sale": [
-          { "upTo": 50000000, "rate": 0.006, "maxFee": 250000 },
-          { "upTo": 200000000, "rate": 0.005, "maxFee": 800000 },
-          { "upTo": 900000000, "rate": 0.004, "maxFee": null },
-          { "upTo": 1200000000, "rate": 0.005, "maxFee": null },
-          { "upTo": 1500000000, "rate": 0.006, "maxFee": null },
-          { "upTo": null, "rate": 0.007, "maxFee": null }
+          {
+            "upTo": 50000000,
+            "rate": 0.006,
+            "maxFee": 250000
+          },
+          {
+            "upTo": 200000000,
+            "rate": 0.005,
+            "maxFee": 800000
+          },
+          {
+            "upTo": 900000000,
+            "rate": 0.004,
+            "maxFee": null
+          },
+          {
+            "upTo": 1200000000,
+            "rate": 0.005,
+            "maxFee": null
+          },
+          {
+            "upTo": 1500000000,
+            "rate": 0.006,
+            "maxFee": null
+          },
+          {
+            "upTo": null,
+            "rate": 0.007,
+            "maxFee": null
+          }
         ],
         "lease": [
-          { "upTo": 50000000, "rate": 0.005, "maxFee": 200000 },
-          { "upTo": 100000000, "rate": 0.004, "maxFee": 300000 },
-          { "upTo": 600000000, "rate": 0.003, "maxFee": null },
-          { "upTo": 1200000000, "rate": 0.004, "maxFee": null },
-          { "upTo": 1500000000, "rate": 0.005, "maxFee": null },
-          { "upTo": null, "rate": 0.006, "maxFee": null }
+          {
+            "upTo": 50000000,
+            "rate": 0.005,
+            "maxFee": 200000
+          },
+          {
+            "upTo": 100000000,
+            "rate": 0.004,
+            "maxFee": 300000
+          },
+          {
+            "upTo": 600000000,
+            "rate": 0.003,
+            "maxFee": null
+          },
+          {
+            "upTo": 1200000000,
+            "rate": 0.004,
+            "maxFee": null
+          },
+          {
+            "upTo": 1500000000,
+            "rate": 0.005,
+            "maxFee": null
+          },
+          {
+            "upTo": null,
+            "rate": 0.006,
+            "maxFee": null
+          }
         ],
         "vatRate": 0.1,
         "source": "공인중개사법 시행규칙 별표"
