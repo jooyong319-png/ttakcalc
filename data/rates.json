@@ -1,0 +1,64 @@
+{
+  "_comment": "연도별 4대보험 요율·세율 등 제도 데이터. 계산 로직(lib/calc/*)은 이 파일만 보고 계산한다 — 제도가 바뀌면 여기에 새 연도를 추가할 뿐 코드는 건드리지 않는다. 과거 연도 계산도 그대로 지원되는 게 경쟁 사이트와의 차이. 각 항목은 반드시 source(근거)와 verifiedAt(최종 확인일)을 갖는다.",
+  "years": {
+    "2026": {
+      "label": "2026년",
+      "verifiedAt": "2026-07-30",
+      "insurance": {
+        "nationalPension": {
+          "name": "국민연금",
+          "employeeRate": 0.0475,
+          "note": "근로자 부담분. 2026년 요율 인상 반영(기존 4.5%).",
+          "monthlyIncomeMin": 400000,
+          "monthlyIncomeMax": 6370000,
+          "source": "국민연금공단 보험료율 고시"
+        },
+        "healthInsurance": {
+          "name": "건강보험",
+          "employeeRate": 0.03595,
+          "note": "근로자 부담분(총 7.19%의 절반).",
+          "source": "국민건강보험공단 보험료율 고시"
+        },
+        "longTermCare": {
+          "name": "장기요양보험",
+          "rateOfHealthInsurance": 0.1314,
+          "note": "건강보험료 기준 부과(소득 기준 아님).",
+          "source": "국민건강보험공단 장기요양보험료율 고시"
+        },
+        "employmentInsurance": {
+          "name": "고용보험",
+          "employeeRate": 0.009,
+          "note": "실업급여분 근로자 부담. 고용안정·직업능력개발 사업분은 사업주 전액 부담.",
+          "source": "고용보험법 시행령"
+        }
+      },
+      "incomeTax": {
+        "name": "근로소득세",
+        "method": "simplified-withholding-table",
+        "note": "실제 원천징수는 간이세액표를 따른다. 아래는 과세표준 구간별 기본세율(연말정산·참고용).",
+        "localTaxRateOfIncomeTax": 0.1,
+        "brackets": [
+          { "upTo": 14000000, "rate": 0.06, "deduction": 0 },
+          { "upTo": 50000000, "rate": 0.15, "deduction": 1260000 },
+          { "upTo": 88000000, "rate": 0.24, "deduction": 5760000 },
+          { "upTo": 150000000, "rate": 0.35, "deduction": 15440000 },
+          { "upTo": 300000000, "rate": 0.38, "deduction": 19940000 },
+          { "upTo": 500000000, "rate": 0.40, "deduction": 25940000 },
+          { "upTo": 1000000000, "rate": 0.42, "deduction": 35940000 },
+          { "upTo": null, "rate": 0.45, "deduction": 65940000 }
+        ],
+        "source": "소득세법 제55조"
+      },
+      "nonTaxable": {
+        "mealAllowanceMonthlyMax": 200000,
+        "note": "식대 비과세 한도(월). 이 금액까지는 과세 대상에서 제외.",
+        "source": "소득세법 시행령 제17조의2"
+      },
+      "minimumWage": {
+        "hourly": 10320,
+        "note": "2026년 최저시급.",
+        "source": "고용노동부 최저임금 고시"
+      }
+    }
+  }
+}
