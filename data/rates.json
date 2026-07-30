@@ -1,5 +1,5 @@
 {
-  "_comment": "연도별 4대보험 요율·세율 등 제도 데이터. 계산 로직(lib/calc/*)은 이 파일만 보고 계산한다 — 제도가 바뀌면 여기에 새 연도를 추가할 뿐 코드는 건드리지 않는다. 과거 연도 계산도 그대로 지원되는 게 경쟁 사이트와의 차이. 각 항목은 반드시 source(근거)와 verifiedAt(최종 확인일)을 갖는다.",
+  "_comment": "연도별 4대보험 요율·세율·한도 등 제도 데이터. 계산 로직(lib/calc/*)은 이 파일만 보고 계산한다 — 제도가 바뀌면 여기에 새 연도를 추가할 뿐 코드는 건드리지 않는다. 과거 연도 계산도 그대로 지원되는 게 경쟁 사이트와의 차이. 각 항목은 반드시 source(근거)와 verifiedAt(최종 확인일)을 갖는다. ⚠️ 현재 값은 미검증 잠정치 — wiki/rates-log.md 참고.",
   "years": {
     "2026": {
       "label": "2026년",
@@ -58,6 +58,90 @@
         "hourly": 10320,
         "note": "2026년 최저시급.",
         "source": "고용노동부 최저임금 고시"
+      },
+      "freelancer": {
+        "name": "프리랜서 원천징수",
+        "incomeTaxRate": 0.03,
+        "localTaxRate": 0.003,
+        "note": "사업소득 원천징수. 소득세 3% + 지방소득세 0.3% = 3.3%. 5월 종합소득세 신고로 정산된다.",
+        "source": "소득세법 제129조"
+      },
+      "unemployment": {
+        "name": "구직급여(실업급여)",
+        "wageReplacementRate": 0.6,
+        "dailyMax": 66000,
+        "lowerBoundRateOfMinimumWage": 0.8,
+        "dailyWorkHours": 8,
+        "note": "1일 구직급여 = 이직 전 평균임금의 60%. 상한 66,000원, 하한은 최저시급의 80% × 8시간.",
+        "durationDays": {
+          "_comment": "소정급여일수 — [고용보험 가입기간 구간] × [연령]. under50은 50세 미만, from50은 50세 이상 또는 장애인.",
+          "tiers": [
+            { "underYears": 1, "under50": 120, "from50": 120 },
+            { "underYears": 3, "under50": 150, "from50": 180 },
+            { "underYears": 5, "under50": 180, "from50": 210 },
+            { "underYears": 10, "under50": 210, "from50": 240 },
+            { "underYears": null, "under50": 240, "from50": 270 }
+          ]
+        },
+        "source": "고용보험법 제46조·제50조"
+      },
+      "severance": {
+        "name": "퇴직금",
+        "daysPerYear": 30,
+        "minimumMonths": 12,
+        "weeklyHoursMin": 15,
+        "note": "계속근로 1년에 대해 30일분 이상의 평균임금. 1년 미만 또는 주 15시간 미만은 지급 의무 없음.",
+        "source": "근로자퇴직급여 보장법 제8조"
+      },
+      "holidayPay": {
+        "name": "주휴수당",
+        "weeklyHoursMin": 15,
+        "standardWeeklyHours": 40,
+        "standardHolidayHours": 8,
+        "note": "주 15시간 이상 근무 시 발생. 주 40시간 미만이면 (소정근로시간/40)×8시간분을 지급.",
+        "source": "근로기준법 제55조"
+      },
+      "acquisitionTax": {
+        "name": "취득세",
+        "note": "주택 유상취득 기준. 조정대상지역 다주택 중과세율은 별도. 농어촌특별세는 전용 85㎡ 초과 시에만 부과.",
+        "house": {
+          "under6억": { "rate": 0.01, "localEduRate": 0.001 },
+          "from6to9억": { "note": "6~9억 구간은 (취득가액×2/3억−3)/100 누진식", "localEduRateOfAcquisition": 0.1 },
+          "over9억": { "rate": 0.03, "localEduRate": 0.003 }
+        },
+        "multiHouse": {
+          "twoInRegulated": 0.08,
+          "threeOrMore": 0.12,
+          "note": "조정대상지역 2주택 8%, 3주택 이상(또는 법인) 12%."
+        },
+        "ruralTax": {
+          "rate": 0.002,
+          "areaThresholdSqm": 85,
+          "note": "전용면적 85㎡ 초과 주택에만 농어촌특별세 0.2% 부과."
+        },
+        "source": "지방세법 제11조"
+      },
+      "brokerageFee": {
+        "name": "부동산 중개보수",
+        "note": "주택 기준 상한요율. 실제 보수는 상한 내에서 협의로 정한다. 지자체 조례로 다를 수 있음.",
+        "sale": [
+          { "upTo": 50000000, "rate": 0.006, "maxFee": 250000 },
+          { "upTo": 200000000, "rate": 0.005, "maxFee": 800000 },
+          { "upTo": 900000000, "rate": 0.004, "maxFee": null },
+          { "upTo": 1200000000, "rate": 0.005, "maxFee": null },
+          { "upTo": 1500000000, "rate": 0.006, "maxFee": null },
+          { "upTo": null, "rate": 0.007, "maxFee": null }
+        ],
+        "lease": [
+          { "upTo": 50000000, "rate": 0.005, "maxFee": 200000 },
+          { "upTo": 100000000, "rate": 0.004, "maxFee": 300000 },
+          { "upTo": 600000000, "rate": 0.003, "maxFee": null },
+          { "upTo": 1200000000, "rate": 0.004, "maxFee": null },
+          { "upTo": 1500000000, "rate": 0.005, "maxFee": null },
+          { "upTo": null, "rate": 0.006, "maxFee": null }
+        ],
+        "vatRate": 0.1,
+        "source": "공인중개사법 시행규칙 별표"
       }
     }
   }

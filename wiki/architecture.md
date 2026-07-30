@@ -7,14 +7,30 @@
 - **ko 단독** — 한국 세법·요율 기반이라 en/ja는 제도가 달라 의미가 없다(WhenStage와 다른 점).
 - 외부 의존성 최소(현재 next/react만). 계산은 전부 자체 순수 함수.
 
-## 라우트
+## 라우트 (계산기 8종 완성, 2026-07-30)
 ```
-/                     홈 — 계산기 카탈로그(준비 중 항목도 노출해 로드맵을 투명하게)
-/calc/salary          연봉 실수령액 계산기 (첫 계산기, 완성)
-/changes              제도 변화 — rates.json에서 자동 생성. 차별화 축
+/                          홈 — 계산기 카탈로그. CALCS 배열이 곧 로드맵
+/changes                   제도 변화 — rates.json에서 자동 생성. 차별화 축
+급여·노동
+  /calc/salary             연봉 실수령액 (4대보험·소득세 공제 내역)
+  /calc/severance          퇴직금 (1일 평균임금 → 30일분 × 재직연수)
+  /calc/unemployment       실업급여 (구직급여 일액·소정급여일수, 상·하한)
+  /calc/holiday-pay        주휴수당 (주 15h 이상, 40h 미만은 비례)
+  /calc/freelancer         프리랜서 3.3% (실수령 ↔ 계약금액 양방향)
+부동산
+  /calc/acquisition-tax    취득세 (+지방교육세·농특세, 다주택 중과)
+  /calc/brokerage-fee      중개보수 (매매/임대차 상한요율·한도액·VAT)
+금융
+  /calc/loan               대출 (원리금균등·원금균등·만기일시)
 ```
-앞으로: `/calc/severance`(퇴직금) · `/calc/freelancer`(3.3%) · `/calc/unemployment`(실업급여) ·
-`/calc/acquisition-tax`(취득세) · `/calc/loan`(대출) — 홈 카탈로그의 `CALCS` 배열이 로드맵이다.
+
+## 컴포넌트 구조
+- `components/Breakdown.tsx` — **모든 계산기가 공유하는 결과 UI.** 헤드라인 + 근거 테이블.
+  `Row.basis`(계산 근거)를 받도록 설계해 "숫자만 던지지 않는다"는 원칙이 UI 레벨에서 강제된다.
+  `InputCard`/`Field`와 공용 CSS(`Breakdown.module.css`: input/grid/segment/chip)도 여기 있다.
+- `components/CalcPage.tsx` — 계산기 페이지 껍데기(제목·리드·계산기·FAQ·적용기준·FAQPage JSON-LD).
+  새 계산기를 추가할 때 이 둘만 조합하면 되므로 페이지 파일은 30줄 안팎으로 유지된다.
+- `components/LaborCalculators.tsx` / `PropertyCalculators.tsx` — 계산기별 입력 UI(클라이언트).
 
 ## 데이터 흐름 — 이 프로젝트의 심장
 ```
@@ -22,9 +38,11 @@ data/rates.json  (연도별 요율·세율·한도 + source + verifiedAt)
         │
         ├─> lib/rates.ts        연도별 로더. 없는 연도는 throw(조용히 틀린 계산 금지)
         │        │
-        │        └─> lib/calc/salary.ts   순수 함수. 요율을 절대 하드코딩하지 않는다
-        │                 │
-        │                 └─> components/SalaryCalculator.tsx  (클라이언트, 실시간 재계산)
+        │        ├─> lib/calc/salary.ts    연봉 실수령액
+        │        ├─> lib/calc/labor.ts     퇴직금·프리랜서·실업급여·주휴수당
+        │        └─> lib/calc/property.ts  취득세·중개보수·대출
+        │                 │  (전부 순수 함수. 요율을 절대 하드코딩하지 않는다)
+        │                 └─> components/*Calculators.tsx (클라이언트, 실시간 재계산)
         │
         └─> app/changes/page.tsx   같은 데이터로 "제도 변화" 페이지를 자동 생성
 ```

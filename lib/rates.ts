@@ -13,6 +13,7 @@ export interface InsuranceRates {
 }
 
 export interface TaxBracket { upTo: number | null; rate: number; deduction: number }
+export interface FeeTier { upTo: number | null; rate: number; maxFee: number | null }
 
 export interface YearRates {
   label: string;
@@ -26,9 +27,44 @@ export interface YearRates {
   };
   nonTaxable: { mealAllowanceMonthlyMax: number; note: string; source: string };
   minimumWage: { hourly: number; note: string; source: string };
+  freelancer: {
+    name: string; incomeTaxRate: number; localTaxRate: number; note: string; source: string;
+  };
+  unemployment: {
+    name: string; wageReplacementRate: number; dailyMax: number;
+    lowerBoundRateOfMinimumWage: number; dailyWorkHours: number; note: string;
+    durationDays: {
+      tiers: { underYears: number | null; under50: number; from50: number }[];
+    };
+    source: string;
+  };
+  severance: {
+    name: string; daysPerYear: number; minimumMonths: number; weeklyHoursMin: number;
+    note: string; source: string;
+  };
+  holidayPay: {
+    name: string; weeklyHoursMin: number; standardWeeklyHours: number;
+    standardHolidayHours: number; note: string; source: string;
+  };
+  acquisitionTax: {
+    name: string; note: string;
+    house: {
+      'under6억': { rate: number; localEduRate: number };
+      'from6to9억': { note: string; localEduRateOfAcquisition: number };
+      'over9억': { rate: number; localEduRate: number };
+    };
+    multiHouse: { twoInRegulated: number; threeOrMore: number; note: string };
+    ruralTax: { rate: number; areaThresholdSqm: number; note: string };
+    source: string;
+  };
+  brokerageFee: {
+    name: string; note: string;
+    sale: FeeTier[]; lease: FeeTier[];
+    vatRate: number; source: string;
+  };
 }
 
-const YEARS = (ratesJson as { years: Record<string, YearRates> }).years;
+const YEARS = (ratesJson as unknown as { years: Record<string, YearRates> }).years;
 
 /** 데이터가 있는 연도 목록(내림차순). 계산기 UI의 연도 선택에 쓴다. */
 export function availableYears(): string[] {

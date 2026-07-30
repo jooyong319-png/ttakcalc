@@ -3,13 +3,13 @@ import { latestYear, getRates } from '@/lib/rates';
 // 계산기 카탈로그 — 준비된 것만 링크, 나머지는 "준비 중"으로 로드맵을 투명하게 보여준다.
 const CALCS = [
   { href: '/calc/salary', name: '연봉 실수령액', desc: '4대보험·세금 공제 내역까지', group: '급여·노동', ready: true },
-  { href: '/calc/severance', name: '퇴직금', desc: '평균임금 기준 예상 퇴직금', group: '급여·노동', ready: false },
-  { href: '/calc/unemployment', name: '실업급여', desc: '구직급여 일액·수급 기간', group: '급여·노동', ready: false },
-  { href: '/calc/holiday-pay', name: '주휴수당', desc: '주 15시간 이상 근무 시', group: '급여·노동', ready: false },
-  { href: '/calc/freelancer', name: '프리랜서 3.3%', desc: '원천징수 후 실수령액', group: '급여·노동', ready: false },
-  { href: '/calc/acquisition-tax', name: '취득세', desc: '주택 취득 시 세금', group: '부동산', ready: false },
-  { href: '/calc/brokerage-fee', name: '중개수수료', desc: '거래금액별 상한요율', group: '부동산', ready: false },
-  { href: '/calc/loan', name: '대출 이자', desc: '원리금균등·원금균등 비교', group: '금융', ready: false },
+  { href: '/calc/severance', name: '퇴직금', desc: '평균임금 기준 예상 퇴직금', group: '급여·노동', ready: true },
+  { href: '/calc/unemployment', name: '실업급여', desc: '구직급여 일액·수급 기간', group: '급여·노동', ready: true },
+  { href: '/calc/holiday-pay', name: '주휴수당', desc: '주 15시간 이상 근무 시', group: '급여·노동', ready: true },
+  { href: '/calc/freelancer', name: '프리랜서 3.3%', desc: '원천징수 후 실수령액', group: '급여·노동', ready: true },
+  { href: '/calc/acquisition-tax', name: '취득세', desc: '주택 취득 시 세금', group: '부동산', ready: true },
+  { href: '/calc/brokerage-fee', name: '중개수수료', desc: '거래금액별 상한요율', group: '부동산', ready: true },
+  { href: '/calc/loan', name: '대출 이자', desc: '원리금균등·원금균등 비교', group: '금융', ready: true },
 ];
 
 export default function HomePage() {
