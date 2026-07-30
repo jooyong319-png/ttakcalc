@@ -53,7 +53,8 @@ export function Breakdown({
         <tbody>
           {rows.map((r, i) => (
             <tr key={`${r.label}-${i}`} className={r.tone ? TONE_CLASS[r.tone] : undefined}>
-              <th scope="row">{r.label}</th>
+              {/* span으로 감싸야 항목명 뒤 남는 공간을 점선 리더로 채울 수 있다(CSS ::after) */}
+              <th scope="row"><span>{r.label}</span></th>
               <td className="num">
                 {r.tone === 'minus' ? '−' : ''}
                 {typeof r.value === 'number' ? fmt(r.value) : r.value}

@@ -15,6 +15,8 @@ export default function Page() {
   const b = r.brokerageFee;
   return (
     <CalcPage
+      docNo="07"
+      year={year}
       title="부동산 중개수수료 계산기"
       lead={<>거래금액에 따른 <strong>중개보수 상한</strong>을 계산합니다. 실제 보수는 이 범위 안에서 협의로 정합니다.</>}
       verifiedAt={r.verifiedAt}

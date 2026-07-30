@@ -15,6 +15,8 @@ export default function Page() {
   const h = r.holidayPay;
   return (
     <CalcPage
+      docNo="04"
+      year={year}
       title="주휴수당 계산기"
       lead={<>주 <strong>{h.weeklyHoursMin}시간 이상</strong> 일하면 유급휴일 수당이 발생합니다. 얼마인지 계산해 보세요.</>}
       verifiedAt={r.verifiedAt}

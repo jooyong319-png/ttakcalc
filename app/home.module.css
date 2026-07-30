@@ -1,0 +1,79 @@
+.hero { margin-bottom: 1.6rem; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.66rem; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.7rem;
+}
+.title {
+  font-size: clamp(1.75rem, 6vw, 2.6rem);
+  font-weight: 900; letter-spacing: -0.045em; line-height: 1.14;
+}
+/* 형광펜이 아니라 "도장 밑줄" — 잉크가 번진 것처럼 */
+.mark {
+  position: relative; white-space: nowrap;
+  color: var(--stamp);
+}
+.mark::after {
+  content: '';
+  position: absolute; left: -0.05em; right: -0.05em; bottom: 0.08em;
+  height: 0.28em;
+  background: color-mix(in srgb, var(--stamp) 22%, transparent);
+  z-index: -1;
+}
+.lead {
+  margin: 0.85rem 0 0;
+  color: var(--ink-soft); font-size: 0.98rem; line-height: 1.65;
+  max-width: 34rem;
+}
+
+.stampRow {
+  display: flex; align-items: center; gap: 0.9rem;
+  margin-top: 1.3rem;
+}
+.stampNote {
+  font-family: var(--font-mono);
+  font-size: 0.68rem; line-height: 1.55; color: var(--ink-faint);
+}
+
+/* ─── 계산기 목록 = 전표 묶음 ─── */
+.group { margin-bottom: 1.5rem; }
+.groupTitle {
+  font-family: var(--font-mono);
+  font-size: 0.64rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--rule);
+}
+.list { list-style: none; margin: 0; padding: 0; }
+.list li + li { border-top: 1px dotted var(--rule); }
+
+.item {
+  display: flex; align-items: center; gap: 0.85rem;
+  padding: 0.75rem 0.3rem;
+  transition: background 0.12s;
+}
+.item:hover { background: var(--paper-card); }
+.item:hover .arrow { color: var(--stamp); opacity: 1; }
+.item:hover .no { color: var(--stamp); border-color: var(--stamp); }
+
+.no {
+  flex: 0 0 auto;
+  width: 1.9rem; height: 1.9rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--rule-strong); border-radius: 2px;
+  font-size: 0.72rem; font-weight: 700; color: var(--ink-faint);
+}
+.itemBody { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.itemName { font-size: 0.98rem; font-weight: 800; letter-spacing: -0.01em; }
+.itemDesc { font-size: 0.78rem; color: var(--ink-faint); }
+.arrow {
+  flex: 0 0 auto;
+  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700;
+  color: var(--ink-faint); opacity: 0.65;
+  white-space: nowrap;
+}

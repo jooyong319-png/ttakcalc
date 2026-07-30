@@ -15,6 +15,8 @@ export default function Page() {
   const a = r.acquisitionTax;
   return (
     <CalcPage
+      docNo="06"
+      year={year}
       title="취득세 계산기"
       lead={<>주택을 살 때 내는 <strong>취득세 + 지방교육세 + 농어촌특별세</strong>를 한 번에 계산합니다.</>}
       verifiedAt={r.verifiedAt}

@@ -1,108 +1,231 @@
-/* 모든 계산기가 공유하는 입력/결과 UI */
+/* 입력 전표 + 결과 명세서 — 모든 계산기가 공유한다.
+   레이아웃 규칙은 실제 명세서에서 가져왔다:
+   · 항목과 금액 사이는 점선 리더로 잇는다(눈이 행을 따라가게)
+   · 금액은 오른쪽 정렬 + 등폭
+   · 소계는 실선, 최종 금액은 이중선으로 끊는다 */
 
+/* ─────────── 입력 전표 ─────────── */
 .inputs {
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
   border-radius: var(--radius);
-  padding: 1.2rem;
-  box-shadow: var(--shadow-sm);
-  display: flex; flex-direction: column; gap: 1rem;
+  box-shadow: var(--shadow-paper);
+  padding: 1.1rem 1.15rem 1.25rem;
+  display: flex; flex-direction: column; gap: 0.95rem;
+  position: relative;
 }
-.field { display: flex; flex-direction: column; gap: 0.4rem; }
-.label { font-size: 0.85rem; font-weight: 700; color: var(--text-soft); }
-.hint { font-size: 0.76rem; color: var(--text-faint); line-height: 1.45; }
+/* 전표 상단 라벨 */
+.inputs::before {
+  content: '입력';
+  position: absolute; top: -0.6rem; left: 1rem;
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  padding: 0 0.45rem;
+  font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.14em; color: var(--ink-faint);
+}
+
+.field { display: flex; flex-direction: column; gap: 0.35rem; }
+.label {
+  font-size: 0.78rem; font-weight: 700; color: var(--ink-soft);
+  letter-spacing: 0.01em;
+}
+.hint { font-size: 0.72rem; color: var(--ink-faint); line-height: 1.45; }
 
 .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
 .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
-@media (max-width: 620px) {
-  .grid, .grid3 { grid-template-columns: 1fr; }
-}
+@media (max-width: 620px) { .grid, .grid3 { grid-template-columns: 1fr; } }
 
+/* 입력칸 — 밑줄만 있는 기입란(서식 종이의 빈칸) */
 .input, .select {
-  width: 100%; height: 46px; padding: 0 0.8rem;
-  font-size: 1.02rem;
-  background: var(--bg); color: var(--text);
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  width: 100%; height: 42px;
+  padding: 0 0.55rem;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.02rem; font-weight: 600;
+  text-align: right;
+  background: transparent;
+  color: var(--ink);
+  border: none;
+  border-bottom: 1.5px solid var(--rule-strong);
+  border-radius: 0;
 }
+.select { text-align: left; font-family: var(--font-sans); font-weight: 600; }
 .input:focus-visible, .select:focus-visible {
-  outline: none; border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
+  outline: none;
+  border-bottom-color: var(--stamp);
+  background: color-mix(in srgb, var(--stamp) 5%, transparent);
 }
-.row { display: flex; align-items: center; gap: 0.5rem; }
-.unit { flex: 0 0 auto; color: var(--text-faint); font-size: 0.9rem; white-space: nowrap; }
+.row { display: flex; align-items: baseline; gap: 0.4rem; }
+.unit {
+  flex: 0 0 auto; color: var(--ink-faint);
+  font-size: 0.85rem; font-weight: 600; white-space: nowrap;
+}
 
-.quick { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.quick { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .chip {
-  padding: 0.3rem 0.65rem; font-size: 0.82rem; font-weight: 700;
-  background: var(--bg-sunken); color: var(--text-soft);
-  border: 1px solid var(--border); border-radius: 999px; cursor: pointer;
+  padding: 0.22rem 0.55rem;
+  font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700;
+  background: transparent; color: var(--ink-soft);
+  border: 1px solid var(--rule-strong); border-radius: 2px;
+  cursor: pointer;
 }
-.chip:hover { border-color: var(--accent); color: var(--accent); }
-.chipOn { background: var(--accent); border-color: var(--accent); color: #fff; }
+.chip:hover { border-color: var(--stamp); color: var(--stamp); }
+.chipOn { background: var(--ink); border-color: var(--ink); color: var(--paper-card); }
 
-/* 세그먼트 토글(방식 선택 등) */
-.segment { display: flex; gap: 0.3rem; background: var(--bg-sunken); padding: 0.25rem; border-radius: var(--radius-sm); }
+/* 세그먼트 — 서식의 체크박스 묶음처럼 */
+.segment { display: flex; border: 1px solid var(--rule-strong); border-radius: 2px; overflow: hidden; }
 .segmentBtn {
-  flex: 1; padding: 0.45rem 0.5rem; font-size: 0.85rem; font-weight: 700;
-  background: none; border: none; border-radius: 6px;
-  color: var(--text-soft); cursor: pointer;
+  flex: 1; padding: 0.5rem 0.4rem;
+  font-size: 0.8rem; font-weight: 700;
+  background: transparent; color: var(--ink-soft);
+  border: none; border-right: 1px solid var(--rule);
+  cursor: pointer;
 }
-.segmentBtnOn { background: var(--bg-elev); color: var(--accent); box-shadow: var(--shadow-sm); }
+.segmentBtn:last-child { border-right: none; }
+.segmentBtnOn { background: var(--ink); color: var(--paper-card); }
 
-/* ── 결과 ── */
+/* ─────────── 결과 명세서 ─────────── */
 .result {
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-paper);
   overflow: hidden;
+  position: relative;
 }
+
 .headline {
-  display: flex; flex-direction: column; gap: 0.25rem;
-  padding: 1.4rem 1.2rem;
-  background: linear-gradient(180deg, var(--accent-soft), transparent);
-  border-bottom: 1px solid var(--border);
+  padding: 1.3rem 1.15rem 1.1rem;
+  border-bottom: 1px dashed var(--rule-strong);
+  display: flex; flex-direction: column; gap: 0.15rem;
+  text-align: right;
 }
-.headlineLabel { font-size: 0.85rem; font-weight: 700; color: var(--text-soft); }
+.headlineLabel {
+  font-family: var(--font-mono);
+  font-size: 0.66rem; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
 .headlineNum {
-  font-family: var(--font-mono); font-variant-numeric: tabular-nums;
-  font-size: clamp(1.9rem, 6.5vw, 2.7rem); font-weight: 800;
-  letter-spacing: -0.03em; color: var(--ok); line-height: 1.1;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(2rem, 8vw, 2.9rem);
+  font-weight: 800; letter-spacing: -0.045em;
+  color: var(--ink);
+  line-height: 1.05;
 }
-.headlineNum em { font-style: normal; font-size: 0.45em; margin-left: 0.15em; color: var(--text-soft); }
-.headlineSub { font-size: 0.86rem; color: var(--text-faint); }
+.headlineNum em {
+  font-style: normal; font-size: 0.36em; font-weight: 700;
+  margin-left: 0.2em; color: var(--ink-faint);
+}
+.headlineSub { font-size: 0.8rem; color: var(--ink-faint); font-family: var(--font-mono); }
 
-.table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+/* 명세서 표 — 3열 고정: [항목 + 점선리더] [금액] [근거]
+   table-layout: fixed로 열 폭을 못 박아야 점선 리더가 항상 같은 지점에서 끝난다. */
+.table {
+  width: 100%; border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.88rem;
+}
 .caption {
-  text-align: left; padding: 0.9rem 1.2rem 0.5rem;
-  font-size: 0.8rem; font-weight: 800; color: var(--text-faint); letter-spacing: 0.02em;
+  text-align: left; padding: 0.85rem 1.15rem 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-faint);
 }
-.table th, .table td { padding: 0.55rem 1.2rem; text-align: left; vertical-align: top; }
-.table th { font-weight: 600; color: var(--text-soft); white-space: nowrap; }
-.table td:nth-child(2) { text-align: right; white-space: nowrap; font-weight: 700; }
-.basis { color: var(--text-faint); font-size: 0.78rem; line-height: 1.45; }
+.table th, .table td { padding: 0.45rem 0; vertical-align: baseline; }
 
-/* 행 톤 — 클래스명은 컨테이너(.result)와 겹치지 않게 별도로 둔다 */
-.minus td:nth-child(2) { color: var(--danger); }
-.info th, .info td { color: var(--text-faint); }
-.total th, .total td { border-top: 1px solid var(--border); font-weight: 800; }
+/* 1열: 항목명 + 점선 리더(남는 공간을 점으로 채움) */
+.table th {
+  width: 34%;
+  font-weight: 600; color: var(--ink-soft); text-align: left;
+  padding-left: 1.15rem; padding-right: 0.5rem;
+}
+.table th > span {
+  display: flex; align-items: baseline; gap: 0.35rem;
+  white-space: nowrap;
+}
+.table th > span::after {
+  content: '';
+  flex: 1 1 auto;
+  border-bottom: 1px dotted var(--rule-strong);
+  opacity: 0.6;
+  transform: translateY(-0.22em);
+}
+/* 2열: 금액 */
+.table td:nth-child(2) {
+  width: 26%;
+  text-align: right; white-space: nowrap;
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  padding-right: 1rem;
+}
+/* 3열: 근거 — 금액과 확실히 띄운다 */
+.basis {
+  width: 40%;
+  color: var(--ink-faint); font-size: 0.71rem; line-height: 1.45;
+  padding-right: 1.15rem;
+  word-break: keep-all;
+}
+/* 모바일: 3열을 못 쓰므로 [항목 ····· 금액] 한 줄 + 근거를 그 아래로 */
+@media (max-width: 640px) {
+  .table, .table tbody, .table tr, .table th, .table td { display: block; width: auto; }
+  /* caption도 block이 되면서 th의 폭 규칙을 물려받아 세로로 무너지는 것을 막는다 */
+  .caption { display: block; width: auto; white-space: normal; }
+  .table tr {
+    padding: 0.5rem 1.15rem;
+    border-bottom: 1px dotted var(--rule);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    column-gap: 0.5rem;
+  }
+  .table th { padding: 0; }
+  .table td:nth-child(2) { padding: 0; text-align: right; }
+  .basis {
+    grid-column: 1 / -1;
+    padding: 0.2rem 0 0;
+    font-size: 0.7rem;
+  }
+  .resultRow, .total { border-top: none; }
+  .resultRow th, .resultRow td { border-top: none; }
+  .resultRow { border-top: 3px double var(--ink) !important; }
+  .total { border-top: 1px solid var(--rule-strong) !important; }
+}
+
+.minus td:nth-child(2) { color: var(--minus); }
+.info th, .info td { color: var(--ink-faint); }
+.total th, .total td {
+  border-top: 1px solid var(--rule-strong);
+  padding-top: 0.55rem; font-weight: 800;
+}
+/* 최종 금액 — 이중선으로 끊는다(명세서 합계란) */
 .resultRow th, .resultRow td {
-  border-top: 2px solid var(--text);
-  font-weight: 900; font-size: 1.02rem; color: var(--ok);
-  padding-top: 0.7rem; padding-bottom: 0.9rem;
+  border-top: 3px double var(--ink);
+  padding-top: 0.6rem; padding-bottom: 0.85rem;
+  font-weight: 900; font-size: 1.02rem;
+  color: var(--ink);
 }
+.resultRow td:nth-child(2) { color: var(--plus); font-size: 1.12rem; }
 
+/* 명세서 하단 — 절취선 아래 확인란 */
 .footer {
   display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 0.6rem;
-  padding: 0.9rem 1.2rem 1.1rem;
-  border-top: 1px solid var(--border);
-  background: var(--bg-sunken);
-  font-size: 0.8rem; color: var(--text-faint);
+  flex-wrap: wrap; gap: 0.7rem;
+  padding: 0.85rem 1.15rem 1.1rem;
+  border-top: 1px dashed var(--rule-strong);
+  background: var(--paper-sunken);
+  font-family: var(--font-mono);
+  /* sunken 배경은 카드보다 어두워 ink-faint로는 대비가 모자란다 → 한 단계 진한 색 */
+  font-size: 0.7rem; line-height: 1.5; color: var(--ink-soft);
 }
 .shareBtn {
-  padding: 0.5rem 0.9rem; font-size: 0.85rem; font-weight: 700;
-  background: var(--accent); color: #fff; border: none;
-  border-radius: var(--radius-sm); cursor: pointer;
+  padding: 0.42rem 0.75rem;
+  font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.02em;
+  background: var(--ink); color: var(--paper-card);
+  border: none; border-radius: 2px; cursor: pointer;
 }
-.shareBtn:hover { filter: brightness(1.06); }
+.shareBtn:hover { background: var(--stamp); }
