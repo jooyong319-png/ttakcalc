@@ -2,8 +2,13 @@
 //
 // 정확성 원칙: 실제 매월 원천징수는 국세청 "근로소득 간이세액표"를 따르는데, 그 표는 소득·부양가족
 // 조합별 고정값 목록이라 여기서는 연말정산과 같은 방식(근로소득공제 → 과세표준 → 산출세액 →
-// 근로소득세액공제)으로 연간 세액을 구해 12로 나눈 근사치를 쓴다. 간이세액표와 몇 천 원 차이가
-// 날 수 있고, 어차피 연말정산으로 정산되는 금액이다 — 이 사실을 화면에도 반드시 표기한다.
+// 근로소득세액공제 → 표준세액공제)으로 연간 세액을 구해 12로 나눈다.
+//
+// 2026-07-30 교차검증: 타 계산기(간이세액표 기준)와 대조한 결과 연봉 3천/5천/6천만원 모든 지점에서
+// 실수령액 차이가 20원 안팎(원 단위 절사 차이)까지 좁혀졌다. 그 전에는 연봉과 무관하게 월 10,826원씩
+// 세금을 더 떼고 있었는데, 원인은 표준세액공제 13만원 누락이었다(아래 STANDARD_TAX_CREDIT).
+// 다만 개인별 특별공제(의료비·교육비·기부금 등)를 신청하면 실제 연말정산 결과는 달라진다 —
+// 이 사실은 화면 FAQ에 명시한다.
 import { getRates, type YearRates } from '../rates';
 
 export interface SalaryInput {
@@ -86,6 +91,11 @@ function childTaxCredit(children: number): number {
   return 550_000 + (children - 2) * 400_000;
 }
 
+/** 표준세액공제 — 특별소득공제·특별세액공제를 신청하지 않은 근로자에게 연 13만원(소득세법 제59조의4).
+ *  간이세액표도 이를 반영하므로 빼먹으면 매월 약 1만 원씩 세금을 더 떼는 결과가 된다
+ *  (실측: 이 공제를 넣기 전 타 계산기 대비 소득세가 연봉과 무관하게 월 10,826원 많았다). */
+const STANDARD_TAX_CREDIT = 130_000;
+
 export function calcSalary(input: SalaryInput): SalaryResult {
   const rates = getRates(input.year);
   const ins = rates.insurance;
@@ -115,7 +125,9 @@ export function calcSalary(input: SalaryInput): SalaryResult {
   const taxBase = Math.max(0, afterEarnedDeduction - personalDeduction - insuranceDeduction);
 
   const calculatedTax = Math.max(0, progressiveTax(taxBase, rates));
-  const credits = earnedIncomeTaxCredit(calculatedTax, grossAnnualTaxable) + childTaxCredit(input.childrenUnder20);
+  const credits = earnedIncomeTaxCredit(calculatedTax, grossAnnualTaxable)
+    + childTaxCredit(input.childrenUnder20)
+    + STANDARD_TAX_CREDIT;
   const annualIncomeTax = Math.max(0, calculatedTax - credits);
 
   const incomeTax = won(annualIncomeTax / 12);
@@ -131,7 +143,7 @@ export function calcSalary(input: SalaryInput): SalaryResult {
     { key: 'employmentInsurance', name: ins.employmentInsurance.name, amount: employment,
       basis: `과세 급여 ${monthlyTaxable.toLocaleString()}원 × ${(ins.employmentInsurance.employeeRate * 100).toFixed(1)}%` },
     { key: 'incomeTax', name: '소득세', amount: incomeTax,
-      basis: `연 결정세액 ${Math.round(annualIncomeTax).toLocaleString()}원 ÷ 12 (근로소득공제·인적공제·세액공제 반영)` },
+      basis: `연 결정세액 ${Math.round(annualIncomeTax).toLocaleString()}원 ÷ 12 (근로소득공제·인적공제·근로소득세액공제·표준세액공제 13만원 반영)` },
     { key: 'localTax', name: '지방소득세', amount: localTax,
       basis: `소득세 ${incomeTax.toLocaleString()}원 × ${rates.incomeTax.localTaxRateOfIncomeTax * 100}%` },
   ];

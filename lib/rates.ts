@@ -1,6 +1,6 @@
 // 연도별 제도 데이터 로더 — 계산 로직은 반드시 이걸 통해 요율을 얻는다(코드에 숫자 하드코딩 금지).
 // 제도가 바뀌면 data/rates.json에 새 연도를 추가하는 것만으로 계산기 전체가 갱신된다.
-import ratesJson from '@/data/rates.json';
+import ratesJson from '../data/rates.json';  // 상대경로 — 번들러 없이 tsc로 컴파일해 테스트할 수 있게
 
 export interface InsuranceRates {
   nationalPension: {
