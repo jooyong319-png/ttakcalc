@@ -1,0 +1,12 @@
+/* /net-salary/[man] 전용 — 공통 레이아웃은 components/AnswerPage.module.css */
+
+.current { background: var(--c1-bg); }
+.badge {
+  margin-left: 0.4rem; padding: 0.1rem 0.4rem;
+  background: var(--c1-key); color: var(--on-key);
+  border-radius: 999px;
+  font-size: 0.66rem; font-weight: 700;
+  white-space: nowrap;
+}
+/* 필요 연봉이 줄어드는 건 사용자에게 좋은 방향이라 초록 */
+.down { color: var(--plus); }

@@ -1,0 +1,62 @@
+.c1 { --tone-bg: var(--c1-bg); --tone-key: var(--c1-key); }
+
+.head { padding: 1.8rem 0 1.4rem; }
+.eyebrow {
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  margin: 0 0 0.55rem;
+}
+.category {
+  color: var(--tone-key);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.category:hover { text-decoration-thickness: 2px; }
+.category:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; border-radius: 3px; }
+
+.title { font-size: clamp(1.5rem, 5vw, 2.05rem); font-weight: 900; letter-spacing: -0.035em; }
+.lead {
+  margin: 0.6rem 0 0;
+  color: var(--ink-soft); font-size: 0.94rem; line-height: 1.7;
+  max-width: 38rem;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.table { width: 100%; border-collapse: collapse; font-size: 0.89rem; min-width: 26rem; }
+.caption {
+  caption-side: top; text-align: left;
+  padding: 0.85rem 1rem 0.6rem;
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+.table th, .table td { padding: 0.55rem 0.9rem; text-align: right; }
+.table thead th {
+  font-size: 0.74rem; font-weight: 700; color: var(--ink-faint);
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-sunken);
+  position: sticky; top: 0;
+}
+.table thead th:first-child, .table tbody th { text-align: left; }
+.table tbody th { font-weight: 700; white-space: nowrap; }
+.table tbody tr + tr th, .table tbody tr + tr td { border-top: 1px solid var(--rule); }
+.table tbody tr:hover { background: var(--tone-bg); }
+
+.link { color: var(--tone-key); }
+.link:hover { text-decoration: underline; }
+.link:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; border-radius: 3px; }
+.minus { color: var(--minus); }
+
+.outro {
+  margin: 1.2rem 0 3rem;
+  padding: 1rem 1.1rem;
+  background: var(--accent-soft);
+  border-radius: var(--radius);
+  color: var(--ink-soft); font-size: 0.86rem; line-height: 1.7;
+}
+.outro a {
+  color: var(--accent); font-weight: 700;
+  text-decoration: underline; text-underline-offset: 2px;
+}

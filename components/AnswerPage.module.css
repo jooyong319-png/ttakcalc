@@ -1,0 +1,100 @@
+/* 검색어 하나 = 페이지 하나. 세 개의 프로그래매틱 라우트가 공유한다. */
+
+/* 갈래 색 한 벌 — 홈의 컬러 블록과 같은 토큰 */
+.c1 { --tone-bg: var(--c1-bg); --tone-key: var(--c1-key); }
+.c2 { --tone-bg: var(--c2-bg); --tone-key: var(--c2-key); }
+.c3 { --tone-bg: var(--c3-bg); --tone-key: var(--c3-key); }
+.c4 { --tone-bg: var(--c4-bg); --tone-key: var(--c4-key); }
+
+.head { padding: 1.8rem 0 1.4rem; }
+.eyebrow {
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  margin: 0 0 0.55rem;
+}
+/* 문장 속 링크는 색만으로 구분하지 않는다(WCAG 1.4.1) */
+.category {
+  color: var(--tone-key);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.category:hover { text-decoration-thickness: 2px; }
+.category:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; border-radius: 3px; }
+
+.title {
+  font-size: clamp(1.5rem, 5vw, 2.05rem);
+  font-weight: 900; letter-spacing: -0.035em;
+}
+.lead {
+  margin: 0.6rem 0 1.4rem;
+  color: var(--ink-soft); font-size: 0.95rem; line-height: 1.7;
+}
+.lead strong { color: var(--ink); }
+
+.section { margin-top: 2.2rem; }
+.sectionTitle {
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.12em;
+  color: var(--tone-key);
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 0.9rem;
+}
+
+.note {
+  margin: 0.8rem 0 0;
+  font-size: 0.82rem; line-height: 1.7; color: var(--ink-faint);
+}
+.note a {
+  color: var(--tone-key); font-weight: 700;
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.note a:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; border-radius: 3px; }
+
+.assumptions {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.assumptions li {
+  padding: 0.4rem 0.8rem;
+  background: var(--paper-sunken);
+  border-radius: 999px;
+  font-size: 0.82rem; color: var(--ink-soft);
+}
+.assumptions strong { color: var(--ink); }
+
+/* ─── 비교표 ─── */
+.tableWrap { overflow-x: auto; }
+.table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.89rem;
+  min-width: 24rem;
+}
+.table th, .table td { padding: 0.65rem 0.7rem; text-align: right; }
+.table thead th {
+  font-size: 0.74rem; font-weight: 700; color: var(--ink-faint);
+  border-bottom: 1px solid var(--rule);
+}
+.table thead th:first-child, .table tbody th { text-align: left; }
+.table tbody th { font-weight: 700; }
+.table tbody tr + tr th, .table tbody tr + tr td { border-top: 1px solid var(--rule); }
+
+/* ─── 다른 금액 ─── */
+.nav { margin: 2.2rem 0 3rem; }
+.navRow { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.9rem; }
+.navBtn {
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--rule); border-radius: var(--radius-sm);
+  font-size: 0.86rem; font-weight: 700;
+}
+.navBtn:hover { border-color: var(--tone-key); color: var(--tone-key); }
+.navBtn:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; }
+
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.chip {
+  display: inline-block;
+  padding: 0.32rem 0.7rem;
+  background: var(--paper-sunken);
+  border-radius: 999px;
+  font-size: 0.79rem; font-weight: 600; color: var(--ink-soft);
+}
+.chip:hover { background: var(--tone-bg); color: var(--tone-key); }
+.chip:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; }

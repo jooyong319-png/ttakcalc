@@ -1,0 +1,14 @@
+/* /salary/[man] 전용 — 공통 레이아웃은 components/AnswerPage.module.css에 있다.
+   여기 남은 건 "연도별 실수령액" 표의 상태 표시뿐. */
+
+.current { background: var(--c1-bg); }
+.badge {
+  margin-left: 0.4rem; padding: 0.1rem 0.4rem;
+  background: var(--c1-key); color: var(--on-key);
+  border-radius: 999px;
+  font-size: 0.66rem; font-weight: 700;
+}
+.up { color: var(--plus); }
+.down { color: var(--minus); }
+/* 변동 없음은 숫자가 아니라 말이라 등폭을 풀고 눌러둔다 */
+.same { color: var(--ink-faint); font-family: var(--font-sans); font-size: 0.84rem; }
