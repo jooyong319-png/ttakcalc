@@ -1,0 +1,111 @@
+/* 카테고리 허브 — 계산기가 20개를 넘어가서 홈 한 장에 다 못 넣는다.
+   각 카테고리가 "○○ 계산기 모음" 검색어를 받는 페이지 역할도 한다. */
+
+.c1 { --tone-bg: var(--c1-bg); --tone-ink: var(--c1-ink); --tone-soft: var(--c1-soft); --tone-key: var(--c1-key); }
+.c2 { --tone-bg: var(--c2-bg); --tone-ink: var(--c2-ink); --tone-soft: var(--c2-soft); --tone-key: var(--c2-key); }
+.c3 { --tone-bg: var(--c3-bg); --tone-ink: var(--c3-ink); --tone-soft: var(--c3-soft); --tone-key: var(--c3-key); }
+.c4 { --tone-bg: var(--c4-bg); --tone-ink: var(--c4-ink); --tone-soft: var(--c4-soft); --tone-key: var(--c4-key); }
+
+.head { padding: 2.2rem 0 1.6rem; }
+.eyebrow {
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  margin: 0 0 0.6rem;
+}
+.home {
+  color: var(--tone-key);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.home:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; border-radius: 3px; }
+
+.title {
+  display: flex; align-items: center; gap: 0.7rem;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 900; letter-spacing: -0.04em;
+}
+.icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  flex: 0 0 auto;
+  width: 44px; height: 44px; border-radius: var(--radius-sm);
+  background: var(--tone-bg); color: var(--tone-key);
+  font-size: 1.25rem; font-weight: 700; line-height: 1;
+}
+.lead {
+  margin: 0.8rem 0 0;
+  color: var(--ink-soft); font-size: 0.97rem; line-height: 1.7;
+  max-width: 40rem;
+}
+
+.cards {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem;
+}
+@media (max-width: 900px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
+
+.card {
+  height: 100%;
+  display: flex; flex-direction: column;
+  padding: 1.15rem 1.2rem 1.1rem;
+  border-radius: var(--radius);
+  background: var(--tone-bg);
+  color: var(--tone-ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-paper); }
+.card:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; }
+
+.cardIcon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: var(--radius-sm);
+  background: var(--paper-card); color: var(--tone-key);
+  font-size: 1.1rem; font-weight: 700; line-height: 1;
+  margin-bottom: 0.85rem;
+}
+.cardName { font-size: 1.02rem; font-weight: 800; letter-spacing: -0.015em; }
+.cardDesc { font-size: 0.82rem; line-height: 1.5; margin-top: 0.15rem; color: var(--tone-soft); }
+.cardGo { margin-top: auto; padding-top: 0.9rem; font-size: 0.78rem; font-weight: 700; color: var(--tone-key); }
+
+/* ─── 다른 카테고리 ─── */
+.others { margin: 2.6rem 0 0; }
+.othersTitle {
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 0.9rem;
+}
+.othersList {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem;
+}
+@media (max-width: 760px) { .othersList { grid-template-columns: 1fr; } }
+
+.otherCard {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--rule); border-radius: var(--radius);
+}
+.otherCard:hover { border-color: var(--tone-key); background: var(--tone-bg); }
+.otherCard:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; }
+.otherIcon {
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: var(--radius-sm);
+  background: var(--tone-bg); color: var(--tone-key);
+  font-size: 0.95rem; font-weight: 700; line-height: 1;
+}
+.otherName { display: block; font-size: 0.92rem; font-weight: 800; }
+.otherTagline { display: block; font-size: 0.78rem; color: var(--ink-faint); margin-top: 0.1rem; }
+
+.outro {
+  margin: 2rem 0 3rem;
+  padding: 1rem 1.1rem;
+  background: var(--paper-sunken);
+  border-radius: var(--radius);
+  color: var(--ink-soft); font-size: 0.85rem; line-height: 1.7;
+}
+.outro a {
+  color: var(--accent); font-weight: 700;
+  text-decoration: underline; text-underline-offset: 2px;
+}

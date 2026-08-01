@@ -1,0 +1,163 @@
+/* 상단 내비게이션 — 카테고리 탭 + hover 드롭다운.
+   JS 없이 :hover / :focus-within 으로만 연다. */
+
+.c1 { --tone-bg: var(--c1-bg); --tone-ink: var(--c1-ink); --tone-soft: var(--c1-soft); --tone-key: var(--c1-key); }
+.c2 { --tone-bg: var(--c2-bg); --tone-ink: var(--c2-ink); --tone-soft: var(--c2-soft); --tone-key: var(--c2-key); }
+.c3 { --tone-bg: var(--c3-bg); --tone-ink: var(--c3-ink); --tone-soft: var(--c3-soft); --tone-key: var(--c3-key); }
+.c4 { --tone-bg: var(--c4-bg); --tone-ink: var(--c4-ink); --tone-soft: var(--c4-soft); --tone-key: var(--c4-key); }
+
+.header {
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  position: sticky; top: 0; z-index: 30;
+}
+.inner {
+  max-width: 1040px; margin: 0 auto; padding: 0.55rem 1.25rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+
+.wordmark {
+  flex: 0 0 auto;
+  font-weight: 900; font-size: 1.1rem; letter-spacing: -0.05em;
+  display: inline-flex; align-items: baseline;
+}
+.wordmark b { color: var(--accent); }
+.wordmark:hover b { opacity: 0.75; }
+.wordmark small {
+  font-family: var(--font-mono); font-size: 0.6rem; font-weight: 500;
+  color: var(--ink-faint); letter-spacing: 0.08em; margin-left: 0.4rem;
+  text-transform: uppercase;
+}
+@media (max-width: 720px) { .wordmark small { display: none; } }
+
+.plain {
+  flex: 0 0 auto;
+  font-size: 0.85rem; font-weight: 600; color: var(--ink-soft);
+  white-space: nowrap;
+}
+.plain:hover { color: var(--accent); }
+.plain:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+
+/* ─── 탭 ─── */
+.tabs {
+  margin-right: auto;
+  display: flex; align-items: stretch; gap: 0.1rem;
+  /* 드롭다운이 잘리면 안 되므로 여기서는 overflow를 만들지 않는다.
+     좁은 화면 대응은 아래 미디어쿼리에서 따로 처리한다. */
+  min-width: 0;
+}
+
+.item { position: relative; display: flex; }
+
+.tab {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.86rem; font-weight: 700; color: var(--ink-soft);
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  border-radius: 6px 6px 0 0;
+}
+.tab:focus-visible { outline: 2px solid var(--tone-key); outline-offset: -2px; }
+.item:hover .tab,
+.item:focus-within .tab {
+  color: var(--tone-key);
+  background: var(--tone-bg);
+  border-bottom-color: var(--tone-key);
+}
+
+.tabIcon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 5px;
+  background: var(--tone-bg); color: var(--tone-key);
+  font-size: 0.72rem; line-height: 1;
+}
+.item:hover .tabIcon,
+.item:focus-within .tabIcon { background: var(--paper-card); }
+
+/* ─── 드롭다운 ─── */
+.panel {
+  position: absolute; top: 100%; left: 0;
+  /* 탭과 패널 사이 틈을 이 여백이 덮는다 — 안 그러면 마우스가 지나가다 메뉴가 닫힌다 */
+  padding-top: 0.35rem;
+  z-index: 40;
+  visibility: hidden; opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.12s ease, transform 0.12s ease, visibility 0.12s;
+}
+.item:hover .panel,
+.item:focus-within .panel {
+  visibility: visible; opacity: 1; transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel { transition: none; transform: none; }
+}
+
+/* 마지막 카테고리는 오른쪽으로 넘치지 않게 오른쪽 정렬 */
+.item:last-child .panel { left: auto; right: 0; }
+
+.panelInner {
+  min-width: 17rem;
+  padding: 0.9rem;
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-paper);
+}
+
+.panelHead {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.4rem 0.5rem 0.7rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.panelHead strong { display: block; font-size: 0.86rem; font-weight: 800; color: var(--tone-key); }
+.panelHead:hover strong { text-decoration: underline; }
+.panelHead:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; border-radius: 6px; }
+.panelIcon {
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: var(--radius-sm);
+  background: var(--tone-bg); color: var(--tone-key);
+  font-size: 0.92rem; line-height: 1;
+}
+.panelTagline { display: block; font-size: 0.73rem; color: var(--ink-faint); margin-top: 0.1rem; }
+
+.panelList {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: 1fr; gap: 0.05rem;
+}
+/* 계산기가 많은 카테고리(급여·세금 12개)는 2열로 나눠 세로로 길어지지 않게 */
+.panelWide .panelList { grid-template-columns: repeat(2, minmax(15rem, 1fr)); gap: 0.05rem 0.4rem; }
+
+.panelLink {
+  display: flex; align-items: flex-start; gap: 0.55rem;
+  padding: 0.42rem 0.5rem;
+  border-radius: 7px;
+}
+.panelLink:hover { background: var(--tone-bg); }
+.panelLink:focus-visible { outline: 2px solid var(--tone-key); outline-offset: -2px; }
+
+.linkIcon {
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 6px;
+  background: var(--paper-sunken); color: var(--tone-key);
+  font-size: 0.78rem; line-height: 1;
+  margin-top: 0.05rem;
+}
+.panelLink:hover .linkIcon { background: var(--paper-card); }
+.linkName { display: block; font-size: 0.84rem; font-weight: 700; color: var(--ink); line-height: 1.35; }
+.linkDesc { display: block; font-size: 0.73rem; color: var(--ink-faint); line-height: 1.4; margin-top: 0.05rem; }
+
+/* ─── 좁은 화면 ───
+   hover가 없는 기기에서는 드롭다운을 아예 띄우지 않는다. 탭을 누르면 카테고리 허브로 가고,
+   거기서 전체 목록을 본다 — 길이 막히지 않는다. */
+@media (hover: none), (max-width: 860px) {
+  .panel { display: none; }
+  .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tab { padding: 0.5rem 0.55rem; font-size: 0.82rem; }
+  .inner { gap: 0.7rem; }
+}
+@media (max-width: 560px) {
+  .plain { display: none; }
+}
