@@ -14,7 +14,8 @@ export default function Page() {
   const r = getRates(year);
   return (
     <CalcPage
-      docNo="08"
+      category="금융"
+      tone="c3"
       year={year}
       title="대출 이자 계산기"
       lead={<>상환 방식에 따라 <strong>월 상환액과 총 이자가 얼마나 달라지는지</strong> 비교해 보세요.</>}

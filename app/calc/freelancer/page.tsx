@@ -15,7 +15,8 @@ export default function Page() {
   const f = r.freelancer;
   return (
     <CalcPage
-      docNo="05"
+      category="급여·노동"
+      tone="c1"
       year={year}
       title="프리랜서 3.3% 계산기"
       lead={<>계약금액에서 원천징수 3.3%를 뗀 실수령액을 계산합니다. <strong>실수령액에서 계약금액 역산</strong>도 됩니다.</>}

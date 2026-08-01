@@ -1,55 +1,89 @@
-/* 딱계산 디자인 시스템 — "영수증·명세서"
-   계산기의 본질은 "이 돈이 어디로 갔는지 항목별로 보여주는 것"이고, 그걸 가장 오래 잘 해온 물건이
-   급여명세서와 영수증이다. 그래서 화면을 그 물성(종이·절취선·점선 리더·등폭 숫자·확인 도장)으로
-   만든다. 장식이 아니라 정보 구조를 그대로 쓰는 것이라 밀도가 높아져도 읽힌다. */
+/* 딱계산 디자인 시스템 — "컬러 블록"
+   계산기가 8개나 되므로 무엇이 무슨 갈래인지가 색으로 먼저 읽혀야 한다. 급여·노동은 파랑,
+   부동산은 초록, 금융은 주황으로 묶고, 그 외 화면 요소는 전부 무채색으로 눌러 색이 정보로만
+   작동하게 한다. 결과 화면의 점선 리더·등폭 숫자(명세서 문법)는 그대로 남긴다 — 근거를 항목별로
+   보여주는 데 그만한 형식이 없다. */
 
 :root {
   color-scheme: light;
-  /* 종이 — 순백이 아니라 살짝 누런 오프화이트(영수증 용지) */
-  --paper: #f6f3ec;
-  --paper-card: #fffdf7;
-  --paper-sunken: #ebe6da;
-  /* 잉크 — 순검정이 아닌 따뜻한 먹색 */
-  --ink: #1c1917;
-  --ink-soft: #57534e;
-  --ink-faint: #78705f;   /* 작은 글씨에서도 WCAG AA(4.5:1) 통과하도록 조정 */
-  /* 인쇄선 */
-  --rule: #ddd5c5;
-  --rule-strong: #b8ae9a;
-  /* 도장 빨강 — 확인/강조에만 아주 적게 */
-  --stamp: #b3271f;
+  --paper: #ffffff;
+  --paper-card: #ffffff;
+  --paper-sunken: #f4f4f5;
+  --ink: #18181b;
+  --ink-soft: #52525b;
+  --ink-faint: #6b6b73;   /* sunken 배경(#f4f4f5) 위에서도 4.5:1 통과하는 최소값 */
+  --rule: #e4e4e7;
+  --rule-strong: #c4c4c8;
   /* 금액 의미색 */
   --minus: #a8342b;   /* 빠져나가는 돈 */
   --plus: #1a6b3c;    /* 남는 돈 */
-  --accent: #1e4d7b;  /* 링크·포커스(잉크블루) */
-  --accent-soft: #e4ecf4;
+  --accent: #1d4ed8;  /* 링크·포커스 */
+  --accent-soft: #eff6ff;
+  --stamp: var(--accent);   /* 예전 이름 — 새 팔레트에서는 액센트와 같다 */
 
-  --radius: 3px;      /* 종이는 둥글지 않다 — 각지게 */
-  --shadow-paper: 0 1px 0 rgba(28, 25, 23, 0.06), 0 8px 24px -12px rgba(28, 25, 23, 0.25);
-  --font-mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, "D2Coding", monospace;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo",
+  /* 카테고리 — 배경/제목/설명/아이콘 4개 한 벌. 설명색은 opacity가 아니라 실색으로 둬야
+     대비를 계산할 수 있다. */
+  --c1-bg: #eff6ff; --c1-ink: #1e3a8a; --c1-soft: #2c4a86; --c1-key: #1d4ed8;  /* 급여·노동 */
+  --c2-bg: #ecfdf5; --c2-ink: #064e3b; --c2-soft: #0f5d46; --c2-key: #047857;  /* 부동산 */
+  --c3-bg: #fff7ed; --c3-ink: #7c2d12; --c3-soft: #8a4218; --c3-key: #c2410c;  /* 금융·자동차 */
+  --c4-bg: #f5f3ff; --c4-ink: #4c1d95; --c4-soft: #55279c; --c4-key: #6d28d9;  /* 계산·단위 */
+  --on-key: #ffffff;  /* key 색을 배경으로 깔았을 때 그 위에 올릴 글자색 */
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow-paper: 0 1px 2px rgba(24, 24, 27, 0.05), 0 12px 28px -16px rgba(24, 24, 27, 0.3);
+
+  --font-sans: "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
     "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: var(--f-mono), ui-monospace, "SFMono-Regular", Consolas, monospace;
 }
 
-/* 다크 = 먹지(카본지). 영수증의 물성은 유지하되 어두운 종이로 */
+/* 다크 팔레트 — OS 설정(media)과 수동 선택(data-theme) 양쪽에서 같은 값을 쓴다.
+   data-theme이 media보다 뒤에 오므로 수동 선택이 항상 이긴다.
+   카테고리 색은 반전이 아니라 "어두운 바탕 + 밝은 같은 계열"로 다시 골랐다. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     color-scheme: dark;
-    --paper: #16150f;
-    --paper-card: #1f1d15;
-    --paper-sunken: #2a2719;
-    --ink: #ece7d8;
-    --ink-soft: #b5ae9b;
-    --ink-faint: #9a927f;   /* 어두운 종이 위 4.5:1 확보 */
-    --rule: #3a3629;
-    --rule-strong: #575140;
-    --stamp: #e2564c;
-    --minus: #e2786e;
+    --paper: #0f0f12;
+    --paper-card: #1a1a1f;
+    --paper-sunken: #232327;
+    --ink: #e8e8ea;
+    --ink-soft: #a6a6ad;
+    --ink-faint: #96969e;   /* 어두운 배경 위 4.5:1 확보 */
+    --rule: #2e2e34;
+    --rule-strong: #46464e;
+    --minus: #e58b82;
     --plus: #5cbf85;
-    --accent: #7db3e0;
-    --accent-soft: #1e2a38;
-    --shadow-paper: 0 1px 0 rgba(0, 0, 0, 0.4), 0 10px 30px -14px rgba(0, 0, 0, 0.8);
+    --accent: #7fb2ff;
+    --accent-soft: #16233a;
+    --c1-bg: #131f36; --c1-ink: #cbdcff; --c1-soft: #a3bce8; --c1-key: #7fb2ff;
+    --c2-bg: #0f2620; --c2-ink: #c1ecd8; --c2-soft: #97c9b0; --c2-key: #57c992;
+    --c3-bg: #2a1a11; --c3-ink: #f6d6bb; --c3-soft: #d3ab88; --c3-key: #f79658;
+    --c4-bg: #1d1730; --c4-ink: #dcd0ff; --c4-soft: #b7a6e8; --c4-key: #a78bfa;
+    --on-key: #0f0f12;
+    --shadow-paper: 0 1px 0 rgba(0, 0, 0, 0.4), 0 12px 30px -16px rgba(0, 0, 0, 0.85);
   }
+}
+:root[data-theme='dark'] {
+    color-scheme: dark;
+    --paper: #0f0f12;
+    --paper-card: #1a1a1f;
+    --paper-sunken: #232327;
+    --ink: #e8e8ea;
+    --ink-soft: #a6a6ad;
+    --ink-faint: #96969e;
+    --rule: #2e2e34;
+    --rule-strong: #46464e;
+    --minus: #e58b82;
+    --plus: #5cbf85;
+    --accent: #7fb2ff;
+    --accent-soft: #16233a;
+    --c1-bg: #131f36; --c1-ink: #cbdcff; --c1-soft: #a3bce8; --c1-key: #7fb2ff;
+    --c2-bg: #0f2620; --c2-ink: #c1ecd8; --c2-soft: #97c9b0; --c2-key: #57c992;
+    --c3-bg: #2a1a11; --c3-ink: #f6d6bb; --c3-soft: #d3ab88; --c3-key: #f79658;
+    --c4-bg: #1d1730; --c4-ink: #dcd0ff; --c4-soft: #b7a6e8; --c4-key: #a78bfa;
+    --on-key: #0f0f12;
+    --shadow-paper: 0 1px 0 rgba(0, 0, 0, 0.4), 0 12px 30px -16px rgba(0, 0, 0, 0.85);
 }
 
 * { box-sizing: border-box; }
@@ -57,10 +91,6 @@ html, body { margin: 0; padding: 0; }
 
 body {
   background: var(--paper);
-  /* 종이 질감 — 아주 옅은 격자 노이즈. 눈에 띄면 실패다 */
-  background-image:
-    repeating-linear-gradient(0deg, transparent 0 3px, rgba(120, 110, 90, 0.018) 3px 4px),
-    repeating-linear-gradient(90deg, transparent 0 3px, rgba(120, 110, 90, 0.018) 3px 4px);
   color: var(--ink);
   font-family: var(--font-sans);
   line-height: 1.6;
@@ -70,7 +100,9 @@ body {
 a { color: inherit; text-decoration: none; }
 h1, h2, h3 { line-height: 1.2; letter-spacing: -0.02em; margin: 0; }
 
-.container { max-width: 760px; margin: 0 auto; padding: 0 1rem; }
+/* 홈은 3열 카드라 넓고, 계산기 화면은 폼+명세서라 좁아야 읽힌다 */
+.container { max-width: 1040px; margin: 0 auto; padding: 0 1.25rem; }
+.container-narrow { max-width: 760px; margin: 0 auto; padding: 0 1.25rem; }
 
 /* 숫자는 예외 없이 등폭 — 영수증에서 자릿수가 흔들리면 신뢰가 깨진다 */
 .num {
@@ -79,77 +111,41 @@ h1, h2, h3 { line-height: 1.2; letter-spacing: -0.02em; margin: 0; }
   letter-spacing: -0.02em;
 }
 
-/* ─── 영수증 헤더: 상단 톱니 + 워드마크 ─── */
-.site-header {
-  background: var(--paper-card);
-  border-bottom: 1px solid var(--rule);
-  position: relative;
-}
-/* 위쪽이 뜯긴 종이 — 톱니 */
-.site-header::before {
-  content: '';
-  position: absolute; inset: -8px 0 auto 0; height: 8px;
-  background: var(--paper-card);
-  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 12px);
-  mask-image: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 12px);
-}
-.site-header .inner {
-  max-width: 760px; margin: 0 auto; padding: 0.75rem 1rem;
-  display: flex; align-items: center; gap: 0.9rem;
-}
-.wordmark {
-  font-weight: 900; font-size: 1.1rem; letter-spacing: -0.05em;
-  display: inline-flex; align-items: baseline; gap: 0.1rem;
-}
-.wordmark b { color: var(--stamp); }
-.wordmark small {
-  font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600;
-  color: var(--ink-faint); letter-spacing: 0.08em; margin-left: 0.35rem;
-  text-transform: uppercase;
-}
-.site-nav {
-  margin-left: auto; display: flex; gap: 0.9rem;
-  font-size: 0.84rem; font-weight: 700; color: var(--ink-soft);
-}
-.site-nav a:hover { color: var(--stamp); }
+/* 헤더는 components/SiteNav로 옮겼다(카테고리 탭 + hover 드롭다운) */
 
-/* ─── 절취선 ─── */
-.perforation {
-  position: relative;
-  border-top: 1px dashed var(--rule-strong);
-  margin: 1.1rem 0;
-}
-/* 양끝 반원 노치 — 진짜로 뜯어낸 것처럼 */
-.perforation::before, .perforation::after {
-  content: '';
-  position: absolute; top: -7px;
-  width: 14px; height: 14px; border-radius: 50%;
-  background: var(--paper);
-}
-.perforation::before { left: -8px; }
-.perforation::after { right: -8px; }
-
-/* ─── 확인 도장 ─── */
+/* ─── 확인 배지 ─── */
 .stamp {
   display: inline-block;
-  transform: rotate(-6deg);
-  border: 2px solid var(--stamp);
-  border-radius: 2px;
-  color: var(--stamp);
-  font-family: var(--font-mono);
-  font-size: 0.62rem; font-weight: 700; line-height: 1.25;
-  letter-spacing: 0.04em;
-  padding: 0.25rem 0.45rem;
-  opacity: 0.85;
-  text-align: center;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  background: var(--paper-sunken);
+  font-size: 0.7rem; font-weight: 600; line-height: 1.45;
+  padding: 0.3rem 0.65rem;
+  text-align: left;
 }
 
 footer.site-footer {
-  margin-top: 2.5rem;
-  border-top: 1px dashed var(--rule-strong);
-  padding: 1.4rem 0 2.5rem;
+  margin-top: 3rem;
+  border-top: 1px solid var(--rule);
+  padding: 1.6rem 0 3rem;
   color: var(--ink-faint);
   font-size: 0.78rem;
   line-height: 1.65;
 }
 footer.site-footer .container > p { margin: 0 0 0.4rem; }
+
+/* ─── 테마 토글 ─── */
+.theme-toggle {
+  flex: 0 0 auto;
+  width: 32px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+  font-size: 0.9rem; line-height: 1;
+  cursor: pointer;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }

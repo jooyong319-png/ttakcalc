@@ -15,10 +15,17 @@ export default function Page() {
   const b = r.brokerageFee;
   return (
     <CalcPage
-      docNo="07"
+      category="부동산"
+      tone="c2"
       year={year}
       title="부동산 중개수수료 계산기"
-      lead={<>거래금액에 따른 <strong>중개보수 상한</strong>을 계산합니다. 실제 보수는 이 범위 안에서 협의로 정합니다.</>}
+      lead={
+        <>
+          거래금액에 따른 <strong>중개보수 상한</strong>을 계산합니다. 실제 보수는 이 범위 안에서 협의로 정합니다.
+          {' '}<a href="/brokerage-fee/50000">5억</a>·<a href="/brokerage-fee/100000">10억</a> 같은
+          대표 금액은 바로 볼 수 있습니다.
+        </>
+      }
       verifiedAt={r.verifiedAt}
       faqs={[
         { q: '중개수수료는 정해진 금액인가요?',

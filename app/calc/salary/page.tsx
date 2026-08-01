@@ -38,10 +38,16 @@ export default function SalaryPage() {
 
   return (
     <CalcPage
-      docNo="01"
+      category="급여·노동"
+      tone="c1"
       year={year}
       title={`${year}년 연봉 실수령액 계산기`}
-      lead={<>세전 연봉에서 4대보험과 세금을 각각 얼마씩 떼는지, <strong>근거까지 함께</strong> 보여드립니다.</>}
+      lead={
+        <>
+          세전 연봉에서 4대보험과 세금을 각각 얼마씩 떼는지, <strong>근거까지 함께</strong> 보여드립니다.
+          {' '}조건 없이 금액만 빠르게 보려면 <a href="/salary">연봉별 실수령액 표</a>를 쓰세요.
+        </>
+      }
       verifiedAt={rates.verifiedAt}
       faqs={faqs}
       basisItems={[

@@ -15,10 +15,11 @@ export default function Page() {
   const a = r.acquisitionTax;
   return (
     <CalcPage
-      docNo="06"
+      category="부동산"
+      tone="c2"
       year={year}
       title="취득세 계산기"
-      lead={<>주택을 살 때 내는 <strong>취득세 + 지방교육세 + 농어촌특별세</strong>를 한 번에 계산합니다.</>}
+      lead={<>주택을 살 때 내는 <strong>취득세 + 지방교육세 + 농어촌특별세</strong>를 한 번에 계산합니다.{' '}<a href="/acquisition-tax/50000">5억</a>·<a href="/acquisition-tax/100000">10억</a> 같은 대표 금액은 바로 볼 수 있습니다.</>}
       verifiedAt={r.verifiedAt}
       faqs={[
         { q: '취득세율은 어떻게 정해지나요?',

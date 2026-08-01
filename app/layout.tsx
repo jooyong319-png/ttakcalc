@@ -1,5 +1,15 @@
 import type { Metadata, Viewport } from 'next';
+import { JetBrains_Mono } from 'next/font/google';
+import { SiteNav } from '@/components/SiteNav';
 import './globals.css';
+
+/* 숫자 전용 등폭. 계산기라 자릿수가 흔들리면 안 되고, 0에 슬래시가 있어 6/8과 헷갈리지 않는다. */
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--f-mono',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ttakcalc.com'),
@@ -14,26 +24,29 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f6f3ec' },
-    { media: '(prefers-color-scheme: dark)', color: '#16150f' },
+    { media: '(prefers-color-scheme: light)', color: '#f4f4f5' },
+    { media: '(prefers-color-scheme: dark)', color: '#131316' },
   ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko">
+    // 저장된 테마를 하이드레이션 전에 심어 <html> 속성이 서버 렌더와 달라지므로 경고를 억제한다
+    <html lang="ko" className={mono.variable} suppressHydrationWarning>
+      <head>
+        {/* Pretendard 가변 폰트 — public에서 그대로 서빙한다(외부 CDN 없음).
+            한글 서브셋 @font-face가 92개라 번들러에 물리면 파서 스택이 터진다.
+            dynamic subset이라 브라우저는 실제로 쓰인 유니코드 범위만 내려받는다. */}
+        <link rel="stylesheet" href="/fonts/pretendard/pretendard.css" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();",
+          }}
+        />
+      </head>
       <body>
-        <header className="site-header">
-          <div className="inner">
-            <a href="/" className="wordmark">
-              딱<b>계산</b><small>ttakcalc</small>
-            </a>
-            <nav className="site-nav">
-              <a href="/calc/salary">연봉</a>
-              <a href="/changes">제도 변화</a>
-            </nav>
-          </div>
-        </header>
+        <SiteNav />
 
         <main>{children}</main>
 
@@ -44,7 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               달라질 수 있고, 연말정산으로 정산됩니다.
             </p>
             <p>* 요율·세율은 공식 고시를 대조해 관리하며, 변경 이력은 제도 변화 페이지에 남깁니다.</p>
-            <p className="num" style={{ marginTop: '0.9rem', opacity: 0.7 }}>© 2026 TTAKCALC</p>
+            <p className="num" style={{ marginTop: '0.9rem' }}>© 2026 TTAKCALC</p>
           </div>
         </footer>
       </body>

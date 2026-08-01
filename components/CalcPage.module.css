@@ -1,72 +1,96 @@
-/* 계산기 페이지 공통 레이아웃 — 서식 문서 톤 */
+/* 계산기 페이지 공통 레이아웃 */
 
-.head { margin-bottom: 1.2rem; }
-.docNo {
-  font-family: var(--font-mono);
-  font-size: 0.64rem; font-weight: 700;
-  letter-spacing: 0.16em; text-transform: uppercase;
+/* 갈래 색 한 벌 — 홈의 컬러 블록과 같은 토큰을 쓴다 */
+.c1 { --tone-bg: var(--c1-bg); --tone-key: var(--c1-key); }
+.c2 { --tone-bg: var(--c2-bg); --tone-key: var(--c2-key); }
+.c3 { --tone-bg: var(--c3-bg); --tone-key: var(--c3-key); }
+.c4 { --tone-bg: var(--c4-bg); --tone-key: var(--c4-key); }
+
+.head { margin-bottom: 1.4rem; }
+.eyebrow {
+  font-size: 0.74rem; font-weight: 700;
+  letter-spacing: 0.06em;
   color: var(--ink-faint);
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.55rem;
 }
+/* 문장 안에 들어간 링크라 색만으로 구분하면 안 된다(WCAG 1.4.1) — 밑줄을 상시로 둔다 */
+.category {
+  color: var(--tone-key);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.category:hover { text-decoration-thickness: 2px; }
+.category:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; border-radius: 3px; }
 .title {
-  font-size: clamp(1.45rem, 5vw, 2rem);
+  font-size: clamp(1.5rem, 5vw, 2.05rem);
   font-weight: 900; letter-spacing: -0.035em;
 }
 .lead {
-  margin: 0.55rem 0 0;
-  color: var(--ink-soft); font-size: 0.93rem; line-height: 1.6;
+  margin: 0.6rem 0 0;
+  color: var(--ink-soft); font-size: 0.94rem; line-height: 1.65;
 }
+/* 문장 속 링크 — 색만으로 구분하지 않는다(WCAG 1.4.1) */
+.lead a {
+  color: var(--tone-key); font-weight: 700;
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.lead a:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; border-radius: 3px; }
 
 .body { display: flex; flex-direction: column; gap: 1.1rem; }
 
-.section { margin-top: 2rem; }
+.section { margin-top: 2.2rem; }
 .sectionTitle {
-  font-family: var(--font-mono);
-  font-size: 0.64rem; font-weight: 700;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--ink-faint);
-  padding-bottom: 0.4rem;
+  font-size: 0.78rem; font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--tone-key);
+  padding-bottom: 0.45rem;
   border-bottom: 1px solid var(--rule);
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.85rem;
 }
 
 /* FAQ — 접히는 문답 */
-.faq { border-bottom: 1px dotted var(--rule); }
+.faq { border-bottom: 1px solid var(--rule); }
 .faqQ {
-  font-weight: 700; font-size: 0.9rem; cursor: pointer;
-  padding: 0.7rem 0.2rem;
+  font-weight: 700; font-size: 0.92rem; cursor: pointer;
+  padding: 0.8rem 0.2rem;
   list-style: none;
-  display: flex; align-items: baseline; gap: 0.5rem;
+  display: flex; align-items: baseline; gap: 0.55rem;
 }
 .faqQ::-webkit-details-marker { display: none; }
 .faqQ::before {
   content: 'Q';
-  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 800;
-  color: var(--stamp); flex: 0 0 auto;
+  font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700;
+  color: var(--tone-key); flex: 0 0 auto;
 }
-.faq[open] .faqQ { color: var(--stamp); }
+.faqQ:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; border-radius: 4px; }
+.faq[open] .faqQ { color: var(--tone-key); }
 .faqA {
-  margin: 0 0 0.85rem;
-  padding-left: 1.35rem;
-  color: var(--ink-soft); font-size: 0.86rem; line-height: 1.65;
+  margin: 0 0 0.9rem;
+  padding-left: 1.4rem;
+  color: var(--ink-soft); font-size: 0.87rem; line-height: 1.7;
 }
 
-/* 적용 기준 — 각주처럼 */
+/* 적용 기준 — 근거 각주 */
 .basisList {
   list-style: none; margin: 0; padding: 0;
-  font-family: var(--font-mono);
-  font-size: 0.74rem; line-height: 1.7; color: var(--ink-soft);
+  font-size: 0.8rem; line-height: 1.75; color: var(--ink-soft);
 }
-.basisList li { padding-left: 1rem; position: relative; }
+.basisList li { padding-left: 0.95rem; position: relative; }
 .basisList li::before {
-  content: '·'; position: absolute; left: 0.25rem;
-  color: var(--ink-faint); font-weight: 700;
+  content: ''; position: absolute; left: 0.15rem; top: 0.72em;
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--tone-key);
 }
 .verified {
-  display: flex; align-items: flex-start; gap: 0.8rem;
-  margin-top: 1rem;
+  display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem 0.85rem;
+  margin-top: 1.1rem;
+  padding: 0.9rem 1rem;
+  background: var(--tone-bg);
+  border-radius: var(--radius);
 }
 .verifiedNote {
-  font-size: 0.76rem; color: var(--ink-faint); line-height: 1.6;
+  flex: 1 1 18rem;
+  margin: 0;
+  font-size: 0.78rem; color: var(--ink-soft); line-height: 1.65;
 }
-.verifiedNote a { color: var(--stamp); font-weight: 700; border-bottom: 1px solid currentColor; }
+.verifiedNote a { color: var(--tone-key); font-weight: 700; border-bottom: 1px solid currentColor; }

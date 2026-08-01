@@ -16,7 +16,8 @@ export default function Page() {
   const lower = Math.round(r.minimumWage.hourly * u.lowerBoundRateOfMinimumWage * u.dailyWorkHours);
   return (
     <CalcPage
-      docNo="03"
+      category="급여·노동"
+      tone="c1"
       year={year}
       title="실업급여 계산기"
       lead={<>구직급여 <strong>1일 지급액과 받을 수 있는 일수</strong>를 계산합니다. 상·하한이 걸리면 그 사실도 표시해요.</>}

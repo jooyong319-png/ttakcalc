@@ -14,7 +14,8 @@ export default function Page() {
   const r = getRates(year);
   return (
     <CalcPage
-      docNo="02"
+      category="급여·노동"
+      tone="c1"
       year={year}
       title="퇴직금 계산기"
       lead={<>재직 기간과 평균임금으로 예상 퇴직금을 계산합니다. <strong>1일 평균임금이 어떻게 나왔는지</strong>까지 보여드려요.</>}

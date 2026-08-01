@@ -1,79 +1,179 @@
-.hero { margin-bottom: 1.6rem; }
+/* 검색 유입이 첫 답에 바로 닿도록 히어로는 최소한으로 */
+.hero { padding: 2.2rem 0 1.6rem; }
 
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.66rem; font-weight: 700;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--ink-faint);
-  margin: 0 0 0.7rem;
-}
 .title {
-  font-size: clamp(1.75rem, 6vw, 2.6rem);
-  font-weight: 900; letter-spacing: -0.045em; line-height: 1.14;
+  font-size: clamp(1.6rem, 4.5vw, 2.3rem);
+  font-weight: 900; letter-spacing: -0.045em; line-height: 1.15;
 }
-/* 형광펜이 아니라 "도장 밑줄" — 잉크가 번진 것처럼 */
+/* 형광펜 밑줄 — 강조는 여기 한 군데만. 배경 그라데이션 한 겹으로만 그린다
+   (box-shadow를 겹치면 밴드가 두 개로 보인다). */
 .mark {
-  position: relative; white-space: nowrap;
-  color: var(--stamp);
-}
-.mark::after {
-  content: '';
-  position: absolute; left: -0.05em; right: -0.05em; bottom: 0.08em;
-  height: 0.28em;
-  background: color-mix(in srgb, var(--stamp) 22%, transparent);
-  z-index: -1;
+  white-space: nowrap;
+  background: linear-gradient(
+    180deg,
+    transparent 68%,
+    color-mix(in srgb, var(--accent) 26%, transparent) 68%
+  );
 }
 .lead {
-  margin: 0.85rem 0 0;
-  color: var(--ink-soft); font-size: 0.98rem; line-height: 1.65;
+  margin: 0.65rem 0 0;
+  color: var(--ink-soft); font-size: 0.97rem; line-height: 1.6;
   max-width: 34rem;
 }
 
-.stampRow {
-  display: flex; align-items: center; gap: 0.9rem;
-  margin-top: 1.3rem;
-}
-.stampNote {
-  font-family: var(--font-mono);
-  font-size: 0.68rem; line-height: 1.55; color: var(--ink-faint);
+.sectionTitle {
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 0.9rem;
 }
 
-/* ─── 계산기 목록 = 전표 묶음 ─── */
-.group { margin-bottom: 1.5rem; }
-.groupTitle {
-  font-family: var(--font-mono);
-  font-size: 0.64rem; font-weight: 700;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.35rem;
+/* ─── 자주 찾는 답 — 홈의 주인공 ─── */
+.qaSection { margin-bottom: 2.4rem; }
+.qaGrid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem;
+}
+@media (max-width: 1000px) { .qaGrid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 760px) { .qaGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .qaGrid { grid-template-columns: 1fr; } }
+
+.qa {
+  height: 100%;
+  display: flex; flex-direction: column; gap: 0.15rem;
+  padding: 0.95rem 1rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.qa:hover {
+  transform: translateY(-2px);
+  border-color: var(--tone-key);
+  background: var(--tone-bg);
+}
+.qa:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; }
+
+.qaQ { font-size: 0.79rem; font-weight: 600; color: var(--ink-soft); line-height: 1.45; }
+.qaA {
+  margin-top: 0.35rem;
+  font-size: 1.18rem; font-weight: 800; letter-spacing: -0.03em;
+  color: var(--tone-key);
+}
+.qaNote { margin-top: auto; padding-top: 0.4rem; font-size: 0.72rem; color: var(--ink-faint); line-height: 1.45; }
+
+.qaFoot {
+  margin: 0.8rem 0 0;
+  font-size: 0.75rem; line-height: 1.6; color: var(--ink-faint);
+}
+
+/* ─── 카테고리 ─── */
+.group { margin-bottom: 2.2rem; }
+.groupHead {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.3rem 0.75rem;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--rule);
 }
-.list { list-style: none; margin: 0; padding: 0; }
-.list li + li { border-top: 1px dotted var(--rule); }
-
-.item {
-  display: flex; align-items: center; gap: 0.85rem;
-  padding: 0.75rem 0.3rem;
-  transition: background 0.12s;
+.groupTitle {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em;
+  color: var(--tone-key);
 }
-.item:hover { background: var(--paper-card); }
-.item:hover .arrow { color: var(--stamp); opacity: 1; }
-.item:hover .no { color: var(--stamp); border-color: var(--stamp); }
-
-.no {
-  flex: 0 0 auto;
-  width: 1.9rem; height: 1.9rem;
+.groupIcon {
   display: inline-flex; align-items: center; justify-content: center;
-  border: 1px solid var(--rule-strong); border-radius: 2px;
-  font-size: 0.72rem; font-weight: 700; color: var(--ink-faint);
+  width: 26px; height: 26px; border-radius: 7px;
+  background: var(--tone-bg);
+  font-size: 0.85rem; line-height: 1;
 }
-.itemBody { display: flex; flex-direction: column; min-width: 0; flex: 1; }
-.itemName { font-size: 0.98rem; font-weight: 800; letter-spacing: -0.01em; }
-.itemDesc { font-size: 0.78rem; color: var(--ink-faint); }
-.arrow {
-  flex: 0 0 auto;
-  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700;
-  color: var(--ink-faint); opacity: 0.65;
+.groupTagline { font-size: 0.8rem; color: var(--ink-faint); }
+.groupMore {
+  margin-left: auto;
+  font-size: 0.8rem; font-weight: 700; color: var(--tone-key);
   white-space: nowrap;
 }
+.groupMore:hover { text-decoration: underline; }
+.groupMore:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; border-radius: 3px; }
+
+.cards {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem;
+}
+@media (max-width: 1000px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
+
+.card {
+  height: 100%;
+  display: flex; flex-direction: column;
+  padding: 1.05rem 1.1rem 1rem;
+  border-radius: var(--radius);
+  background: var(--tone-bg);
+  color: var(--tone-ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-paper); }
+.card:focus-visible { outline: 2px solid var(--tone-key); outline-offset: 2px; }
+
+/* "N개 더" 카드는 계산기가 아니라 안내라서 눌러서 구분한다 */
+.cardMore {
+  background: transparent;
+  border: 1px dashed var(--rule-strong);
+  color: var(--ink-soft);
+}
+.cardMore:hover { border-color: var(--tone-key); border-style: solid; }
+.cardMore .cardIcon { background: var(--paper-sunken); }
+
+.cardIcon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  background: var(--paper-card);
+  color: var(--tone-key);
+  font-size: 1.05rem; font-weight: 700; line-height: 1;
+  margin-bottom: 0.8rem;
+}
+.cardName { font-size: 0.97rem; font-weight: 800; letter-spacing: -0.015em; line-height: 1.35; }
+.cardDesc { font-size: 0.79rem; line-height: 1.5; margin-top: 0.15rem; color: var(--tone-soft); }
+.cardMore .cardDesc { color: var(--ink-faint); }
+/* 화살표는 아래에 붙여 카드 높이가 달라도 줄이 맞는다 */
+.cardGo { margin-top: auto; padding-top: 0.85rem; font-size: 0.76rem; font-weight: 700; color: var(--tone-key); }
+
+/* ─── 카드 아래 밴드 — 주장과 그 증거(제도 변화)를 붙여 놓는 자리 ─── */
+.band {
+  display: flex; flex-wrap: wrap; align-items: flex-start;
+  gap: 1rem 2rem;
+  margin: 0.8rem 0 1rem;
+  padding: 1.5rem 1.6rem;
+  background: var(--paper-sunken);
+  border-radius: var(--radius);
+}
+.bandBody { flex: 1 1 24rem; }
+.bandTitle {
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  font-weight: 900; letter-spacing: -0.035em; line-height: 1.3;
+}
+.bandText {
+  margin: 0.55rem 0 0;
+  color: var(--ink-soft); font-size: 0.88rem; line-height: 1.65;
+  max-width: 38rem;
+}
+.bandSide {
+  flex: 0 1 auto;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;
+}
+.bandLink {
+  display: inline-block;
+  padding: 0.55rem 1rem;
+  background: var(--accent); color: var(--on-key);
+  border-radius: 999px;
+  font-size: 0.85rem; font-weight: 700;
+  white-space: nowrap;
+}
+.bandLink:hover { filter: brightness(1.1); }
+.bandLink:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.bandMeta { margin: 0; font-size: 0.74rem; color: var(--ink-faint); }
+
+/* 갈래별 색 한 벌을 지역 변수로 받아, 카드 규칙은 한 번만 쓴다 */
+.c1 { --tone-bg: var(--c1-bg); --tone-ink: var(--c1-ink); --tone-soft: var(--c1-soft); --tone-key: var(--c1-key); }
+.c2 { --tone-bg: var(--c2-bg); --tone-ink: var(--c2-ink); --tone-soft: var(--c2-soft); --tone-key: var(--c2-key); }
+.c3 { --tone-bg: var(--c3-bg); --tone-ink: var(--c3-ink); --tone-soft: var(--c3-soft); --tone-key: var(--c3-key); }
+.c4 { --tone-bg: var(--c4-bg); --tone-ink: var(--c4-ink); --tone-soft: var(--c4-soft); --tone-key: var(--c4-key); }
