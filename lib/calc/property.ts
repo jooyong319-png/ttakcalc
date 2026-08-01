@@ -28,14 +28,18 @@ export function calcAcquisitionTax(i: AcquisitionInput): AcquisitionResult {
 
   let rate: number;
   let rateBasis: string;
+  /** 중과세율이 걸리면 부가세목(지방교육세·농특세)도 다른 산식을 쓴다 — 그 사실을 여기서 한 번만 판정한다 */
+  let heavy: 'two' | 'three' | null = null;
 
   // 다주택 중과 — 조정대상지역 2주택 / 3주택 이상
   if (i.houseCount >= 3) {
     rate = a.multiHouse.threeOrMore;
     rateBasis = `3주택 이상 중과 ${(rate * 100).toFixed(0)}%`;
+    heavy = 'three';
   } else if (i.houseCount === 2 && i.regulated) {
     rate = a.multiHouse.twoInRegulated;
     rateBasis = `조정대상지역 2주택 중과 ${(rate * 100).toFixed(0)}%`;
+    heavy = 'two';
   } else if (p <= 600_000_000) {
     rate = a.house['under6억'].rate;
     rateBasis = `6억 이하 ${(rate * 100).toFixed(0)}%`;
@@ -50,10 +54,23 @@ export function calcAcquisitionTax(i: AcquisitionInput): AcquisitionResult {
   }
 
   const acquisitionTax = won(p * rate);
-  // 지방교육세 — 취득세율의 1/10 수준(표준세율 기준 0.1~0.3%)
-  const localEduTax = won(p * Math.min(0.003, Math.max(0.001, rate / 10)));
+
+  // 지방교육세 — 주택 유상거래는 취득세율의 1/10(제151조 단서), 다주택 중과는 0.4% 고정(같은 조 나목)
+  const localEduRate = heavy
+    ? a.multiHouse.localEduRate
+    : Math.min(0.003, Math.max(0.001, rate / 10));
+  const localEduBasis = heavy ? a.multiHouse.localEduBasis : a.house['under6억'].localEduBasis;
+  const localEduTax = won(p * localEduRate);
+
+  // 농어촌특별세 — 85㎡ 초과에만. 중과 시에는 과세표준이 커져 0.2% → 0.6%/1.0%
   const overArea = i.areaSqm > a.ruralTax.areaThresholdSqm;
-  const ruralTax = overArea ? won(p * a.ruralTax.rate) : 0;
+  const ruralTaxRate = heavy === 'three'
+    ? a.multiHouse.ruralTaxRateThree
+    : heavy === 'two'
+      ? a.multiHouse.ruralTaxRateTwo
+      : a.ruralTax.rate;
+  const ruralTax = overArea ? won(p * ruralTaxRate) : 0;
+
   const total = acquisitionTax + localEduTax + ruralTax;
 
   return {
@@ -64,9 +81,13 @@ export function calcAcquisitionTax(i: AcquisitionInput): AcquisitionResult {
     steps: [
       { label: '취득가액', value: p, basis: '입력값' },
       { label: '취득세', value: acquisitionTax, basis: `${p.toLocaleString()}원 × ${(rate * 100).toFixed(2)}% (${rateBasis})` },
-      { label: '지방교육세', value: localEduTax, basis: '취득세율의 1/10 수준' },
+      { label: '지방교육세', value: localEduTax,
+        basis: `${(localEduRate * 100).toFixed(2)}% — ${localEduBasis}` },
       { label: '농어촌특별세', value: ruralTax,
-        basis: overArea ? `전용 ${i.areaSqm}㎡ > ${a.ruralTax.areaThresholdSqm}㎡ → ${(a.ruralTax.rate * 100).toFixed(1)}%` : `전용 ${a.ruralTax.areaThresholdSqm}㎡ 이하는 비과세` },
+        basis: overArea
+          ? `전용 ${i.areaSqm}㎡ > ${a.ruralTax.areaThresholdSqm}㎡ → ${(ruralTaxRate * 100).toFixed(1)}%`
+            + (heavy ? ` (${a.multiHouse.ruralTaxBasis})` : '')
+          : `전용 ${a.ruralTax.areaThresholdSqm}㎡ 이하는 비과세` },
       { label: '총 납부액', value: total, basis: `실효세율 ${(total / (p || 1) * 100).toFixed(2)}%` },
     ],
   };
