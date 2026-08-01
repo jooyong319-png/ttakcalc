@@ -437,6 +437,245 @@
           "source": "계량에 관한 법률(법정단위는 ㎡) — 평은 관습 환산"
         },
         "source": "부가가치세법 제30조, 소득세법 제129조, 계량에 관한 법률"
+      },
+      "annualLeave": {
+        "name": "연차 유급휴가",
+        "baseDays": 15,
+        "under1YearMonthlyDay": 1,
+        "under1YearMaxDays": 11,
+        "bonusStartYear": 3,
+        "bonusEveryYears": 2,
+        "maxDays": 25,
+        "attendanceRate": 0.8,
+        "monthlyStandardHours": 209,
+        "dailyStandardHours": 8,
+        "note": "1년 이상 80% 이상 출근 시 15일. 3년 이상 계속근로부터 최초 1년을 초과하는 계속근로 매 2년마다 1일 가산, 총 25일 한도. 1년 미만은 1개월 개근 시 1일(최대 11일).",
+        "source": "근로기준법 제60조"
+      },
+      "giftTax": {
+        "name": "증여세",
+        "deductions": [
+          {
+            "key": "spouse",
+            "label": "배우자",
+            "amount": 600000000
+          },
+          {
+            "key": "lineal-ascendant",
+            "label": "직계존속(부모·조부모)",
+            "amount": 50000000
+          },
+          {
+            "key": "lineal-ascendant-minor",
+            "label": "직계존속 → 미성년자",
+            "amount": 20000000
+          },
+          {
+            "key": "lineal-descendant",
+            "label": "직계비속(자녀·손자녀)",
+            "amount": 50000000
+          },
+          {
+            "key": "other-relative",
+            "label": "기타 친족(4촌 이내 혈족·3촌 이내 인척)",
+            "amount": 10000000
+          },
+          {
+            "key": "other",
+            "label": "그 외(타인)",
+            "amount": 0
+          }
+        ],
+        "deductionNote": "증여받기 전 10년 이내에 같은 관계로부터 공제받은 금액을 합산해 한도를 넘으면 초과분은 공제하지 않는다. 즉 10년마다 한도가 다시 열린다.",
+        "brackets": [
+          {
+            "upTo": 100000000,
+            "rate": 0.1,
+            "deduction": 0
+          },
+          {
+            "upTo": 500000000,
+            "rate": 0.2,
+            "deduction": 10000000
+          },
+          {
+            "upTo": 1000000000,
+            "rate": 0.3,
+            "deduction": 60000000
+          },
+          {
+            "upTo": 3000000000,
+            "rate": 0.4,
+            "deduction": 160000000
+          },
+          {
+            "upTo": null,
+            "rate": 0.5,
+            "deduction": 460000000
+          }
+        ],
+        "filingCreditRate": 0.03,
+        "filingCreditNote": "신고기한(증여일이 속한 달의 말일부터 3개월) 안에 신고하면 산출세액의 3%를 공제한다.",
+        "note": "수증자(받는 사람)가 낸다. 증여일이 속한 달의 말일부터 3개월 안에 신고·납부.",
+        "source": "상속세 및 증여세법 제53조(공제)·제56조(세율)·제69조(신고세액공제)"
+      },
+      "carAcquisitionTax": {
+        "name": "자동차 취득세",
+        "rates": [
+          {
+            "key": "passenger",
+            "label": "비영업용 승용자동차",
+            "rate": 0.07
+          },
+          {
+            "key": "passenger-light",
+            "label": "비영업용 승용 경자동차",
+            "rate": 0.04
+          },
+          {
+            "key": "other-private",
+            "label": "그 밖의 자동차(비영업용)",
+            "rate": 0.05
+          },
+          {
+            "key": "other-business",
+            "label": "그 밖의 자동차(영업용)",
+            "rate": 0.04
+          },
+          {
+            "key": "motorcycle",
+            "label": "이륜자동차",
+            "rate": 0.02
+          }
+        ],
+        "lightCarExemptionMax": 500000,
+        "lightCarNote": "경차는 지방세특례제한법에 따라 취득세가 감면되며 한도가 있다. 감면 요건·한도는 연도별로 바뀌므로 위택스에서 확인할 것.",
+        "note": "과세표준은 취득가액(차량 가격). 공채매입비·등록 대행료는 별도이며 지자체마다 다르다.",
+        "source": "지방세법 제12조 제1항 제2호"
+      },
+      "rentConversion": {
+        "name": "전월세 전환율",
+        "ceilingRate": 0.1,
+        "baseRateSpread": 0.02,
+        "bokBaseRate": 0.0275,
+        "bokBaseRateAsOf": "2026-07-16",
+        "note": "보증금을 월세로 바꿀 때의 법정 상한. ①연 10% ②한국은행 기준금리 + 2% 중 낮은 쪽을 적용한다. 기준금리가 바뀌면 상한도 함께 바뀐다.",
+        "note2": "계약 갱신 시 전환에만 적용되며, 신규 계약에는 강제력이 없다는 것이 일반적인 해석이다.",
+        "source": "주택임대차보호법 제7조의2, 같은 법 시행령 제9조, 한국은행 기준금리"
+      },
+      "comprehensivePropertyTax": {
+        "name": "종합부동산세",
+        "deductionOneHouse": 1200000000,
+        "deductionOther": 900000000,
+        "fairMarketRatio": 0.6,
+        "brackets": {
+          "under3": [
+            {
+              "upTo": 300000000,
+              "rate": 0.005
+            },
+            {
+              "upTo": 600000000,
+              "rate": 0.007
+            },
+            {
+              "upTo": 1200000000,
+              "rate": 0.01
+            },
+            {
+              "upTo": 2500000000,
+              "rate": 0.013
+            },
+            {
+              "upTo": 5000000000,
+              "rate": 0.015
+            },
+            {
+              "upTo": 9400000000,
+              "rate": 0.02
+            },
+            {
+              "upTo": null,
+              "rate": 0.027
+            }
+          ],
+          "from3": [
+            {
+              "upTo": 300000000,
+              "rate": 0.005
+            },
+            {
+              "upTo": 600000000,
+              "rate": 0.007
+            },
+            {
+              "upTo": 1200000000,
+              "rate": 0.01
+            },
+            {
+              "upTo": 2500000000,
+              "rate": 0.02
+            },
+            {
+              "upTo": 5000000000,
+              "rate": 0.03
+            },
+            {
+              "upTo": 9400000000,
+              "rate": 0.04
+            },
+            {
+              "upTo": null,
+              "rate": 0.05
+            }
+          ]
+        },
+        "ruralTaxRate": 0.2,
+        "note": "매년 6월 1일 기준, 공시가격 합계에서 공제금액을 뺀 뒤 공정시장가액비율 60%를 곱해 과세표준을 구한다. 12월에 부과되며, 이미 낸 재산세 중 겹치는 부분은 공제된다.",
+        "note2": "이 계산기는 재산세 공제와 세부담상한을 반영하지 않는다 — 개인별 보유 이력이 필요해 정확히 계산할 수 없다. 실제 고지액은 이 금액보다 낮을 수 있다.",
+        "source": "종합부동산세법 제8조·제9조, 같은 법 시행령"
+      },
+      "transferTax": {
+        "name": "양도소득세",
+        "basicDeduction": 2500000,
+        "oneHouseExemptLimit": 1200000000,
+        "longTermGeneral": {
+          "startYear": 3,
+          "perYearRate": 0.02,
+          "baseRate": 0.06,
+          "maxRate": 0.3,
+          "note": "3년 6%부터 매년 2%p씩, 15년 이상 30% 한도(소득세법 제95조 표1)"
+        },
+        "longTermOneHouse": {
+          "holdPerYearRate": 0.04,
+          "holdMaxRate": 0.4,
+          "livePerYearRate": 0.04,
+          "liveMaxRate": 0.4,
+          "minHoldYears": 3,
+          "minLiveYears": 2,
+          "note": "보유 3년부터 연 4%(최대 40%) + 거주 2년부터 연 4%(최대 40%) = 최대 80%(표2)"
+        },
+        "shortTermRates": [
+          {
+            "underYears": 1,
+            "rate": 0.7,
+            "label": "1년 미만"
+          },
+          {
+            "underYears": 2,
+            "rate": 0.6,
+            "label": "1년 이상 2년 미만"
+          }
+        ],
+        "heavySurcharge": {
+          "twoHouse": 0,
+          "threeOrMore": 0,
+          "note": "조정대상지역 다주택 중과는 2022-05-10부터 한시 배제 중이었다. 2026-05-09에 유예가 종료돼 그 뒤 양도분부터 다시 적용된다."
+        },
+        "localTaxRateOfIncomeTax": 0.1,
+        "note": "1세대 1주택은 양도가액 12억원까지 비과세이고, 초과분에 해당하는 양도차익만 과세한다.",
+        "note2": "취득가액을 모르면(상속·증여 등) 환산취득가액을 써야 하고, 필요경비 인정 범위도 사안마다 달라진다. 금액이 큰 세금이라 실제 신고 전에는 세무 상담을 받을 것.",
+        "source": "소득세법 제89조·제95조·제103조·제104조"
       }
     },
     "2025": {
@@ -904,6 +1143,245 @@
           "source": "계량에 관한 법률(법정단위는 ㎡) — 평은 관습 환산"
         },
         "source": "부가가치세법 제30조, 소득세법 제129조, 계량에 관한 법률"
+      },
+      "annualLeave": {
+        "name": "연차 유급휴가",
+        "baseDays": 15,
+        "under1YearMonthlyDay": 1,
+        "under1YearMaxDays": 11,
+        "bonusStartYear": 3,
+        "bonusEveryYears": 2,
+        "maxDays": 25,
+        "attendanceRate": 0.8,
+        "monthlyStandardHours": 209,
+        "dailyStandardHours": 8,
+        "note": "1년 이상 80% 이상 출근 시 15일. 3년 이상 계속근로부터 최초 1년을 초과하는 계속근로 매 2년마다 1일 가산, 총 25일 한도. 1년 미만은 1개월 개근 시 1일(최대 11일).",
+        "source": "근로기준법 제60조"
+      },
+      "giftTax": {
+        "name": "증여세",
+        "deductions": [
+          {
+            "key": "spouse",
+            "label": "배우자",
+            "amount": 600000000
+          },
+          {
+            "key": "lineal-ascendant",
+            "label": "직계존속(부모·조부모)",
+            "amount": 50000000
+          },
+          {
+            "key": "lineal-ascendant-minor",
+            "label": "직계존속 → 미성년자",
+            "amount": 20000000
+          },
+          {
+            "key": "lineal-descendant",
+            "label": "직계비속(자녀·손자녀)",
+            "amount": 50000000
+          },
+          {
+            "key": "other-relative",
+            "label": "기타 친족(4촌 이내 혈족·3촌 이내 인척)",
+            "amount": 10000000
+          },
+          {
+            "key": "other",
+            "label": "그 외(타인)",
+            "amount": 0
+          }
+        ],
+        "deductionNote": "증여받기 전 10년 이내에 같은 관계로부터 공제받은 금액을 합산해 한도를 넘으면 초과분은 공제하지 않는다. 즉 10년마다 한도가 다시 열린다.",
+        "brackets": [
+          {
+            "upTo": 100000000,
+            "rate": 0.1,
+            "deduction": 0
+          },
+          {
+            "upTo": 500000000,
+            "rate": 0.2,
+            "deduction": 10000000
+          },
+          {
+            "upTo": 1000000000,
+            "rate": 0.3,
+            "deduction": 60000000
+          },
+          {
+            "upTo": 3000000000,
+            "rate": 0.4,
+            "deduction": 160000000
+          },
+          {
+            "upTo": null,
+            "rate": 0.5,
+            "deduction": 460000000
+          }
+        ],
+        "filingCreditRate": 0.03,
+        "filingCreditNote": "신고기한(증여일이 속한 달의 말일부터 3개월) 안에 신고하면 산출세액의 3%를 공제한다.",
+        "note": "수증자(받는 사람)가 낸다. 증여일이 속한 달의 말일부터 3개월 안에 신고·납부.",
+        "source": "상속세 및 증여세법 제53조(공제)·제56조(세율)·제69조(신고세액공제)"
+      },
+      "carAcquisitionTax": {
+        "name": "자동차 취득세",
+        "rates": [
+          {
+            "key": "passenger",
+            "label": "비영업용 승용자동차",
+            "rate": 0.07
+          },
+          {
+            "key": "passenger-light",
+            "label": "비영업용 승용 경자동차",
+            "rate": 0.04
+          },
+          {
+            "key": "other-private",
+            "label": "그 밖의 자동차(비영업용)",
+            "rate": 0.05
+          },
+          {
+            "key": "other-business",
+            "label": "그 밖의 자동차(영업용)",
+            "rate": 0.04
+          },
+          {
+            "key": "motorcycle",
+            "label": "이륜자동차",
+            "rate": 0.02
+          }
+        ],
+        "lightCarExemptionMax": 500000,
+        "lightCarNote": "경차는 지방세특례제한법에 따라 취득세가 감면되며 한도가 있다. 감면 요건·한도는 연도별로 바뀌므로 위택스에서 확인할 것.",
+        "note": "과세표준은 취득가액(차량 가격). 공채매입비·등록 대행료는 별도이며 지자체마다 다르다.",
+        "source": "지방세법 제12조 제1항 제2호"
+      },
+      "rentConversion": {
+        "name": "전월세 전환율",
+        "ceilingRate": 0.1,
+        "baseRateSpread": 0.02,
+        "bokBaseRate": 0.0275,
+        "bokBaseRateAsOf": "2026-07-16",
+        "note": "보증금을 월세로 바꿀 때의 법정 상한. ①연 10% ②한국은행 기준금리 + 2% 중 낮은 쪽을 적용한다. 기준금리가 바뀌면 상한도 함께 바뀐다.",
+        "note2": "계약 갱신 시 전환에만 적용되며, 신규 계약에는 강제력이 없다는 것이 일반적인 해석이다.",
+        "source": "주택임대차보호법 제7조의2, 같은 법 시행령 제9조, 한국은행 기준금리"
+      },
+      "comprehensivePropertyTax": {
+        "name": "종합부동산세",
+        "deductionOneHouse": 1200000000,
+        "deductionOther": 900000000,
+        "fairMarketRatio": 0.6,
+        "brackets": {
+          "under3": [
+            {
+              "upTo": 300000000,
+              "rate": 0.005
+            },
+            {
+              "upTo": 600000000,
+              "rate": 0.007
+            },
+            {
+              "upTo": 1200000000,
+              "rate": 0.01
+            },
+            {
+              "upTo": 2500000000,
+              "rate": 0.013
+            },
+            {
+              "upTo": 5000000000,
+              "rate": 0.015
+            },
+            {
+              "upTo": 9400000000,
+              "rate": 0.02
+            },
+            {
+              "upTo": null,
+              "rate": 0.027
+            }
+          ],
+          "from3": [
+            {
+              "upTo": 300000000,
+              "rate": 0.005
+            },
+            {
+              "upTo": 600000000,
+              "rate": 0.007
+            },
+            {
+              "upTo": 1200000000,
+              "rate": 0.01
+            },
+            {
+              "upTo": 2500000000,
+              "rate": 0.02
+            },
+            {
+              "upTo": 5000000000,
+              "rate": 0.03
+            },
+            {
+              "upTo": 9400000000,
+              "rate": 0.04
+            },
+            {
+              "upTo": null,
+              "rate": 0.05
+            }
+          ]
+        },
+        "ruralTaxRate": 0.2,
+        "note": "매년 6월 1일 기준, 공시가격 합계에서 공제금액을 뺀 뒤 공정시장가액비율 60%를 곱해 과세표준을 구한다. 12월에 부과되며, 이미 낸 재산세 중 겹치는 부분은 공제된다.",
+        "note2": "이 계산기는 재산세 공제와 세부담상한을 반영하지 않는다 — 개인별 보유 이력이 필요해 정확히 계산할 수 없다. 실제 고지액은 이 금액보다 낮을 수 있다.",
+        "source": "종합부동산세법 제8조·제9조, 같은 법 시행령"
+      },
+      "transferTax": {
+        "name": "양도소득세",
+        "basicDeduction": 2500000,
+        "oneHouseExemptLimit": 1200000000,
+        "longTermGeneral": {
+          "startYear": 3,
+          "perYearRate": 0.02,
+          "baseRate": 0.06,
+          "maxRate": 0.3,
+          "note": "3년 6%부터 매년 2%p씩, 15년 이상 30% 한도(소득세법 제95조 표1)"
+        },
+        "longTermOneHouse": {
+          "holdPerYearRate": 0.04,
+          "holdMaxRate": 0.4,
+          "livePerYearRate": 0.04,
+          "liveMaxRate": 0.4,
+          "minHoldYears": 3,
+          "minLiveYears": 2,
+          "note": "보유 3년부터 연 4%(최대 40%) + 거주 2년부터 연 4%(최대 40%) = 최대 80%(표2)"
+        },
+        "shortTermRates": [
+          {
+            "underYears": 1,
+            "rate": 0.7,
+            "label": "1년 미만"
+          },
+          {
+            "underYears": 2,
+            "rate": 0.6,
+            "label": "1년 이상 2년 미만"
+          }
+        ],
+        "heavySurcharge": {
+          "twoHouse": 0,
+          "threeOrMore": 0,
+          "note": "조정대상지역 다주택 중과는 2022-05-10부터 한시 배제 중이었다. 2026-05-09에 유예가 종료돼 그 뒤 양도분부터 다시 적용된다."
+        },
+        "localTaxRateOfIncomeTax": 0.1,
+        "note": "1세대 1주택은 양도가액 12억원까지 비과세이고, 초과분에 해당하는 양도차익만 과세한다.",
+        "note2": "취득가액을 모르면(상속·증여 등) 환산취득가액을 써야 하고, 필요경비 인정 범위도 사안마다 달라진다. 금액이 큰 세금이라 실제 신고 전에는 세무 상담을 받을 것.",
+        "source": "소득세법 제89조·제95조·제103조·제104조"
       }
     },
     "2026": {
@@ -1371,6 +1849,245 @@
           "source": "계량에 관한 법률(법정단위는 ㎡) — 평은 관습 환산"
         },
         "source": "부가가치세법 제30조, 소득세법 제129조, 계량에 관한 법률"
+      },
+      "annualLeave": {
+        "name": "연차 유급휴가",
+        "baseDays": 15,
+        "under1YearMonthlyDay": 1,
+        "under1YearMaxDays": 11,
+        "bonusStartYear": 3,
+        "bonusEveryYears": 2,
+        "maxDays": 25,
+        "attendanceRate": 0.8,
+        "monthlyStandardHours": 209,
+        "dailyStandardHours": 8,
+        "note": "1년 이상 80% 이상 출근 시 15일. 3년 이상 계속근로부터 최초 1년을 초과하는 계속근로 매 2년마다 1일 가산, 총 25일 한도. 1년 미만은 1개월 개근 시 1일(최대 11일).",
+        "source": "근로기준법 제60조"
+      },
+      "giftTax": {
+        "name": "증여세",
+        "deductions": [
+          {
+            "key": "spouse",
+            "label": "배우자",
+            "amount": 600000000
+          },
+          {
+            "key": "lineal-ascendant",
+            "label": "직계존속(부모·조부모)",
+            "amount": 50000000
+          },
+          {
+            "key": "lineal-ascendant-minor",
+            "label": "직계존속 → 미성년자",
+            "amount": 20000000
+          },
+          {
+            "key": "lineal-descendant",
+            "label": "직계비속(자녀·손자녀)",
+            "amount": 50000000
+          },
+          {
+            "key": "other-relative",
+            "label": "기타 친족(4촌 이내 혈족·3촌 이내 인척)",
+            "amount": 10000000
+          },
+          {
+            "key": "other",
+            "label": "그 외(타인)",
+            "amount": 0
+          }
+        ],
+        "deductionNote": "증여받기 전 10년 이내에 같은 관계로부터 공제받은 금액을 합산해 한도를 넘으면 초과분은 공제하지 않는다. 즉 10년마다 한도가 다시 열린다.",
+        "brackets": [
+          {
+            "upTo": 100000000,
+            "rate": 0.1,
+            "deduction": 0
+          },
+          {
+            "upTo": 500000000,
+            "rate": 0.2,
+            "deduction": 10000000
+          },
+          {
+            "upTo": 1000000000,
+            "rate": 0.3,
+            "deduction": 60000000
+          },
+          {
+            "upTo": 3000000000,
+            "rate": 0.4,
+            "deduction": 160000000
+          },
+          {
+            "upTo": null,
+            "rate": 0.5,
+            "deduction": 460000000
+          }
+        ],
+        "filingCreditRate": 0.03,
+        "filingCreditNote": "신고기한(증여일이 속한 달의 말일부터 3개월) 안에 신고하면 산출세액의 3%를 공제한다.",
+        "note": "수증자(받는 사람)가 낸다. 증여일이 속한 달의 말일부터 3개월 안에 신고·납부.",
+        "source": "상속세 및 증여세법 제53조(공제)·제56조(세율)·제69조(신고세액공제)"
+      },
+      "carAcquisitionTax": {
+        "name": "자동차 취득세",
+        "rates": [
+          {
+            "key": "passenger",
+            "label": "비영업용 승용자동차",
+            "rate": 0.07
+          },
+          {
+            "key": "passenger-light",
+            "label": "비영업용 승용 경자동차",
+            "rate": 0.04
+          },
+          {
+            "key": "other-private",
+            "label": "그 밖의 자동차(비영업용)",
+            "rate": 0.05
+          },
+          {
+            "key": "other-business",
+            "label": "그 밖의 자동차(영업용)",
+            "rate": 0.04
+          },
+          {
+            "key": "motorcycle",
+            "label": "이륜자동차",
+            "rate": 0.02
+          }
+        ],
+        "lightCarExemptionMax": 500000,
+        "lightCarNote": "경차는 지방세특례제한법에 따라 취득세가 감면되며 한도가 있다. 감면 요건·한도는 연도별로 바뀌므로 위택스에서 확인할 것.",
+        "note": "과세표준은 취득가액(차량 가격). 공채매입비·등록 대행료는 별도이며 지자체마다 다르다.",
+        "source": "지방세법 제12조 제1항 제2호"
+      },
+      "rentConversion": {
+        "name": "전월세 전환율",
+        "ceilingRate": 0.1,
+        "baseRateSpread": 0.02,
+        "bokBaseRate": 0.0275,
+        "bokBaseRateAsOf": "2026-07-16",
+        "note": "보증금을 월세로 바꿀 때의 법정 상한. ①연 10% ②한국은행 기준금리 + 2% 중 낮은 쪽을 적용한다. 기준금리가 바뀌면 상한도 함께 바뀐다.",
+        "note2": "계약 갱신 시 전환에만 적용되며, 신규 계약에는 강제력이 없다는 것이 일반적인 해석이다.",
+        "source": "주택임대차보호법 제7조의2, 같은 법 시행령 제9조, 한국은행 기준금리"
+      },
+      "comprehensivePropertyTax": {
+        "name": "종합부동산세",
+        "deductionOneHouse": 1200000000,
+        "deductionOther": 900000000,
+        "fairMarketRatio": 0.6,
+        "brackets": {
+          "under3": [
+            {
+              "upTo": 300000000,
+              "rate": 0.005
+            },
+            {
+              "upTo": 600000000,
+              "rate": 0.007
+            },
+            {
+              "upTo": 1200000000,
+              "rate": 0.01
+            },
+            {
+              "upTo": 2500000000,
+              "rate": 0.013
+            },
+            {
+              "upTo": 5000000000,
+              "rate": 0.015
+            },
+            {
+              "upTo": 9400000000,
+              "rate": 0.02
+            },
+            {
+              "upTo": null,
+              "rate": 0.027
+            }
+          ],
+          "from3": [
+            {
+              "upTo": 300000000,
+              "rate": 0.005
+            },
+            {
+              "upTo": 600000000,
+              "rate": 0.007
+            },
+            {
+              "upTo": 1200000000,
+              "rate": 0.01
+            },
+            {
+              "upTo": 2500000000,
+              "rate": 0.02
+            },
+            {
+              "upTo": 5000000000,
+              "rate": 0.03
+            },
+            {
+              "upTo": 9400000000,
+              "rate": 0.04
+            },
+            {
+              "upTo": null,
+              "rate": 0.05
+            }
+          ]
+        },
+        "ruralTaxRate": 0.2,
+        "note": "매년 6월 1일 기준, 공시가격 합계에서 공제금액을 뺀 뒤 공정시장가액비율 60%를 곱해 과세표준을 구한다. 12월에 부과되며, 이미 낸 재산세 중 겹치는 부분은 공제된다.",
+        "note2": "이 계산기는 재산세 공제와 세부담상한을 반영하지 않는다 — 개인별 보유 이력이 필요해 정확히 계산할 수 없다. 실제 고지액은 이 금액보다 낮을 수 있다.",
+        "source": "종합부동산세법 제8조·제9조, 같은 법 시행령"
+      },
+      "transferTax": {
+        "name": "양도소득세",
+        "basicDeduction": 2500000,
+        "oneHouseExemptLimit": 1200000000,
+        "longTermGeneral": {
+          "startYear": 3,
+          "perYearRate": 0.02,
+          "baseRate": 0.06,
+          "maxRate": 0.3,
+          "note": "3년 6%부터 매년 2%p씩, 15년 이상 30% 한도(소득세법 제95조 표1)"
+        },
+        "longTermOneHouse": {
+          "holdPerYearRate": 0.04,
+          "holdMaxRate": 0.4,
+          "livePerYearRate": 0.04,
+          "liveMaxRate": 0.4,
+          "minHoldYears": 3,
+          "minLiveYears": 2,
+          "note": "보유 3년부터 연 4%(최대 40%) + 거주 2년부터 연 4%(최대 40%) = 최대 80%(표2)"
+        },
+        "shortTermRates": [
+          {
+            "underYears": 1,
+            "rate": 0.7,
+            "label": "1년 미만"
+          },
+          {
+            "underYears": 2,
+            "rate": 0.6,
+            "label": "1년 이상 2년 미만"
+          }
+        ],
+        "heavySurcharge": {
+          "twoHouse": 0.2,
+          "threeOrMore": 0.3,
+          "note": "조정대상지역 다주택 중과. 2022-05-10부터 한시 배제됐다가 2026-05-09 종료돼 다시 적용된다. 기본세율에 20%p(2주택)·30%p(3주택 이상)를 더한다."
+        },
+        "localTaxRateOfIncomeTax": 0.1,
+        "note": "1세대 1주택은 양도가액 12억원까지 비과세이고, 초과분에 해당하는 양도차익만 과세한다.",
+        "note2": "취득가액을 모르면(상속·증여 등) 환산취득가액을 써야 하고, 필요경비 인정 범위도 사안마다 달라진다. 금액이 큰 세금이라 실제 신고 전에는 세무 상담을 받을 것.",
+        "source": "소득세법 제89조·제95조·제103조·제104조"
       }
     }
   }

@@ -48,6 +48,8 @@ export const CATEGORIES: Category[] = [
       { href: '/calc/unemployment', name: '실업급여', desc: '구직급여 일액·수급 기간', icon: '◇' },
       { href: '/calc/holiday-pay', name: '주휴수당', desc: '주 15시간 이상 근무 시', icon: '◴' },
       { href: '/calc/parental-leave', name: '육아휴직급여', desc: '개월별 지급액 · 2025 개편 반영', icon: '☺' },
+      { href: '/calc/annual-leave', name: '연차수당', desc: '근속연수별 발생일수 · 미사용 수당', icon: '◷' },
+      { href: '/calc/gift-tax', name: '증여세', desc: '관계별 공제 · 10년 합산', icon: '⊛' },
       { href: '/calc/employer-cost', name: '사업주 4대보험 부담', desc: '직원 1명의 실제 인건비', icon: '⊡' },
     ],
   },
@@ -56,14 +58,17 @@ export const CATEGORIES: Category[] = [
     name: '부동산',
     tagline: '집 살 때·가지고 있을 때 드는 세금',
     description:
-      '주택 취득세, 재산세, 중개수수료를 공시가격·거래금액별로 계산합니다. '
-      + '6억·9억 같은 구간 경계에서 세금이 어떻게 뛰는지 함께 보여드립니다.',
+      '집을 살 때(취득세·중개수수료), 가지고 있을 때(재산세·종합부동산세), 팔 때(양도소득세)까지. '
+      + '6억·9억·12억 같은 구간 경계에서 세금이 어떻게 뛰는지 함께 보여드립니다.',
     tone: 'c2',
     icon: '⌂',
     calcs: [
       { href: '/calc/acquisition-tax', name: '취득세', desc: '주택 취득 시 세금', icon: '⌂', featured: true },
       { href: '/calc/property-tax', name: '재산세', desc: '공시가격 기준 · 7·9월 부과', icon: '▤', featured: true },
-      { href: '/calc/brokerage-fee', name: '중개수수료', desc: '거래금액별 상한요율', icon: '◎', featured: true },
+      { href: '/calc/transfer-tax', name: '양도소득세', desc: '집 팔 때 · 12억 비과세·장특공제', icon: '⇱', featured: true },
+      { href: '/calc/comprehensive-property-tax', name: '종합부동산세', desc: '공시가격 합계 · 12월 부과', icon: '⌸' },
+      { href: '/calc/rent-conversion', name: '전월세 전환율', desc: '보증금 → 월세 법정 상한', icon: '⇆' },
+      { href: '/calc/brokerage-fee', name: '중개수수료', desc: '거래금액별 상한요율', icon: '◎' },
     ],
   },
   {
@@ -78,6 +83,7 @@ export const CATEGORIES: Category[] = [
       { href: '/calc/loan', name: '대출 이자', desc: '원리금균등·원금균등 비교', icon: '↗', featured: true },
       { href: '/calc/car-tax', name: '자동차세', desc: '배기량·차령 · 연납 할인', icon: '◈', featured: true },
       { href: '/calc/exchange', name: '환전', desc: '고시환율 + 스프레드·우대율', icon: '⇌', featured: true },
+      { href: '/calc/car-acquisition', name: '자동차 취득세', desc: '차 살 때 · 승용 7%', icon: '⊙' },
     ],
   },
   {

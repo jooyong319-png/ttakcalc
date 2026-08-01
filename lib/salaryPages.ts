@@ -13,6 +13,12 @@ export const SALARY = makeRange(2000, 10_000, 100);
 /** 월 실수령액(만원). 150만~700만, 10만원 간격 = 56개. 역산 페이지가 쓴다. */
 export const NET = makeRange(150, 700, 10);
 
+/** 근속연수 1~30년 — 연차 페이지 */
+export const LEAVE_YEARS = makeRange(1, 30, 1);
+
+/** 증여 금액(만원). 1,000만~10억, 1,000만원 간격 = 100개. */
+export const GIFT = makeRange(1_000, 100_000, 1_000);
+
 /** 목록·본문에 쓰는 "많이 찾는 연봉" — 500만원 간격의 라운드 넘버 */
 export function popularMan(): number[] {
   return SALARY.all().filter(m => m % 500 === 0);

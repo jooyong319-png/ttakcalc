@@ -17,6 +17,8 @@ export interface FeeTier { upTo: number | null; rate: number; maxFee: number | n
 export interface CcTier { upToCc: number | null; perCc: number }
 /** 재산세식 구간 — "기본세액 + (과세표준 − 구간시작)×세율" 형태(누진공제와 다르다) */
 export interface PropertyTaxBracket { upTo: number | null; base: number; over: number; rate: number }
+/** 한계세율 구간 — 구간마다 그 구간에 걸친 금액에만 세율을 곱해 더한다(종부세 방식) */
+export interface MarginalBracket { upTo: number | null; rate: number }
 
 export interface YearRates {
   label: string;
@@ -91,6 +93,61 @@ export interface YearRates {
     urbanAreaRate: number; urbanAreaNote: string;
     localEduRateOfPropertyTax: number;
     source: string;
+  };
+  annualLeave: {
+    name: string;
+    baseDays: number; under1YearMonthlyDay: number; under1YearMaxDays: number;
+    bonusStartYear: number; bonusEveryYears: number; maxDays: number;
+    attendanceRate: number; monthlyStandardHours: number; dailyStandardHours: number;
+    note: string; source: string;
+  };
+  giftTax: {
+    name: string;
+    deductions: { key: string; label: string; amount: number }[];
+    deductionNote: string;
+    brackets: TaxBracket[];
+    filingCreditRate: number; filingCreditNote: string;
+    note: string; source: string;
+  };
+  carAcquisitionTax: {
+    name: string;
+    rates: { key: string; label: string; rate: number }[];
+    lightCarExemptionMax: number; lightCarNote: string;
+    note: string; source: string;
+  };
+  rentConversion: {
+    name: string;
+    /** 상한 ① 연 10% */
+    ceilingRate: number;
+    /** 상한 ② 기준금리 + 이 값 */
+    baseRateSpread: number;
+    bokBaseRate: number; bokBaseRateAsOf: string;
+    note: string; note2: string; source: string;
+  };
+  comprehensivePropertyTax: {
+    name: string;
+    deductionOneHouse: number; deductionOther: number;
+    fairMarketRatio: number;
+    /** 한계세율 구간 — 누진공제 없이 구간별로 쪼개 더한다(누진공제는 구간에서 유도되는 값이라 따로 두지 않는다) */
+    brackets: { under3: MarginalBracket[]; from3: MarginalBracket[] };
+    ruralTaxRate: number;
+    note: string; note2: string; source: string;
+  };
+  transferTax: {
+    name: string;
+    basicDeduction: number; oneHouseExemptLimit: number;
+    longTermGeneral: {
+      startYear: number; perYearRate: number; baseRate: number; maxRate: number; note: string;
+    };
+    longTermOneHouse: {
+      holdPerYearRate: number; holdMaxRate: number;
+      livePerYearRate: number; liveMaxRate: number;
+      minHoldYears: number; minLiveYears: number; note: string;
+    };
+    shortTermRates: { underYears: number; rate: number; label: string }[];
+    heavySurcharge: { twoHouse: number; threeOrMore: number; note: string };
+    localTaxRateOfIncomeTax: number;
+    note: string; note2: string; source: string;
   };
   /** 계산·단위 카테고리 — 본체 계산기로 이어지는 진입로들이 쓰는 상수 */
   basic: {

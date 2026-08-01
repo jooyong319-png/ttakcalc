@@ -16,6 +16,10 @@ import { calcReverseSalary, calcEmployerCost, calcEmploymentCompare } from '../l
 import { calcExchange, parseCurUnit } from '../lib/exchange';
 import { calcArea, calcVat, calcPercent, calcCompound } from '../lib/calc/basic';
 import { CATEGORIES, allCalcHrefs } from '../lib/catalog';
+import {
+  calcAnnualLeave, calcGiftTax, calcCarAcquisitionTax,
+  calcRentConversion, calcComprehensivePropertyTax, calcTransferTax,
+} from '../lib/calc/extra';
 import { getRates, latestYear, availableYears } from '../lib/rates';
 import { pct } from '../lib/format';
 
@@ -811,5 +815,213 @@ test('카탈로그 — 카테고리마다 대표 계산기가 최소 1개 있다
   for (const c of CATEGORIES) {
     assert.ok(c.calcs.length > 0, `${c.slug}: 계산기 없음`);
     assert.ok(c.calcs.some(x => x.featured), `${c.slug}: featured 없음 — 홈에 아무것도 안 나온다`);
+  }
+});
+
+// ─────────────────────── 연차 유급휴가 ───────────────────────
+test('연차 — 1년 미만은 1개월 개근당 1일, 최대 11일', () => {
+  const at = (m: number) => calcAnnualLeave(0, 3_000_000, 0, Y, m).days;
+  assert.equal(at(0), 0);
+  assert.equal(at(5), 5);
+  assert.equal(at(11), 11);
+  assert.equal(at(12), 11, '11일이 한도');
+});
+
+// 근로기준법 제60조 제4항: 3년 이상부터 "최초 1년을 초과하는 계속근로 매 2년"에 1일
+test('연차 — 근속연수별 발생일수', () => {
+  const at = (y: number) => calcAnnualLeave(y, 3_000_000, 0, Y).days;
+  assert.equal(at(1), 15, '1년');
+  assert.equal(at(2), 15, '2년 — 아직 가산 없음');
+  assert.equal(at(3), 16, '3년 — 첫 가산');
+  assert.equal(at(5), 17, '5년');
+  assert.equal(at(10), 19, '10년');
+  assert.equal(at(21), 25, '21년 — 25일 도달');
+  assert.equal(at(30), 25, '한도를 넘지 않는다');
+});
+
+test('연차 — 수당은 1일 통상임금 × 미사용일수', () => {
+  const r = calcAnnualLeave(3, 3_135_000, 5, Y);   // 209시간 기준 시급 15,000원
+  assert.equal(r.dailyWage, 120_000, '시급 15,000 × 8시간');
+  assert.equal(r.unusedPay, 600_000, '120,000 × 5일');
+});
+
+test('연차 — 미사용일수가 발생일수를 넘을 수 없다', () => {
+  const r = calcAnnualLeave(1, 3_000_000, 99, Y);
+  assert.equal(r.unusedPay, r.dailyWage * 15, '15일까지만');
+});
+
+// ─────────────────────── 증여세 ───────────────────────
+test('증여세 — 직계존속 5천만원까지는 세금 없음', () => {
+  const r = calcGiftTax(50_000_000, 'lineal-ascendant', 0, true, Y);
+  assert.equal(r.taxBase, 0);
+  assert.equal(r.finalTax, 0);
+});
+
+test('증여세 — 부모에게 1억 5천 받으면', () => {
+  const r = calcGiftTax(150_000_000, 'lineal-ascendant', 0, true, Y);
+  assert.equal(r.deduction, 50_000_000);
+  assert.equal(r.taxBase, 100_000_000, '1.5억 − 5천만');
+  assert.equal(r.calculatedTax, 10_000_000, '1억 × 10%');
+  assert.equal(r.filingCredit, 300_000, '산출세액 × 3%');
+  assert.equal(r.finalTax, 9_700_000);
+});
+
+// 10년 합산이 이 세금의 핵심 함정이라 반드시 못 박는다
+test('증여세 — 10년 내 이미 공제받았으면 한도가 줄어든다', () => {
+  const fresh = calcGiftTax(100_000_000, 'lineal-ascendant', 0, true, Y);
+  const used = calcGiftTax(100_000_000, 'lineal-ascendant', 50_000_000, true, Y);
+  assert.equal(fresh.deduction, 50_000_000);
+  assert.equal(used.deduction, 0, '이미 5천만원을 다 썼다');
+  assert.ok(used.finalTax > fresh.finalTax);
+});
+
+test('증여세 — 배우자는 6억, 미성년 자녀는 2천만원', () => {
+  assert.equal(calcGiftTax(600_000_000, 'spouse', 0, true, Y).finalTax, 0);
+  assert.equal(calcGiftTax(20_000_000, 'lineal-ascendant-minor', 0, true, Y).finalTax, 0);
+  assert.ok(calcGiftTax(50_000_000, 'lineal-ascendant-minor', 0, true, Y).finalTax > 0);
+});
+
+test('증여세 — 기한 내 신고 안 하면 3% 공제가 없다', () => {
+  const filed = calcGiftTax(200_000_000, 'lineal-ascendant', 0, true, Y);
+  const not = calcGiftTax(200_000_000, 'lineal-ascendant', 0, false, Y);
+  assert.equal(not.filingCredit, 0);
+  assert.ok(not.finalTax > filed.finalTax);
+});
+
+// ─────────────────────── 자동차 취득세 ───────────────────────
+test('자동차 취득세 — 비영업용 승용 7%, 경차 4%, 이륜 2%', () => {
+  assert.equal(calcCarAcquisitionTax(30_000_000, 'passenger', Y).tax, 2_100_000);
+  assert.equal(calcCarAcquisitionTax(15_000_000, 'passenger-light', Y).tax, 600_000);
+  assert.equal(calcCarAcquisitionTax(5_000_000, 'motorcycle', Y).tax, 100_000);
+});
+
+// ─────────────────────── 전월세 전환율 ───────────────────────
+test('전월세 전환율 — 기준금리+2%와 연 10% 중 낮은 쪽', () => {
+  const r = calcRentConversion(500_000_000, 100_000_000, Y);
+  const c = R.rentConversion;
+  const expected = Math.min(c.ceilingRate, c.bokBaseRate + c.baseRateSpread);
+  near(r.legalRate, expected, 1e-9);
+  assert.ok(r.legalRate < c.ceilingRate, '기준금리가 낮아 ②가 적용된다');
+});
+
+test('전월세 전환율 — 1억을 월세로 돌리면 상한 월세', () => {
+  const r = calcRentConversion(500_000_000, 100_000_000, Y);
+  // 기준금리 2.75% + 2% = 4.75% → 1억 × 4.75% ÷ 12
+  near(r.maxMonthlyRent, 100_000_000 * 0.0475 / 12, 10);
+  assert.equal(r.remainingDeposit, 400_000_000);
+});
+
+test('전월세 전환율 — 보증금보다 많이 전환할 수 없다', () => {
+  const r = calcRentConversion(100_000_000, 999_000_000, Y);
+  assert.equal(r.convertedDeposit, 100_000_000);
+  assert.equal(r.remainingDeposit, 0);
+});
+
+// ─────────────────────── 종합부동산세 ───────────────────────
+test('종부세 — 공제금액 이하면 과세 대상이 아니다', () => {
+  const one = calcComprehensivePropertyTax(1_200_000_000, true, false, Y);
+  const other = calcComprehensivePropertyTax(900_000_000, false, false, Y);
+  assert.equal(one.exempt, true);
+  assert.equal(one.total, 0);
+  assert.equal(other.exempt, true);
+});
+
+test('종부세 — 1세대 1주택 공제 12억, 그 밖 9억', () => {
+  const one = calcComprehensivePropertyTax(2_000_000_000, true, false, Y);
+  const other = calcComprehensivePropertyTax(2_000_000_000, false, false, Y);
+  assert.equal(one.deduction, 1_200_000_000);
+  assert.equal(other.deduction, 900_000_000);
+  assert.ok(other.total > one.total, '공제가 적으면 세금이 많다');
+});
+
+test('종부세 — 과세표준은 공제 후 금액 × 60%', () => {
+  const r = calcComprehensivePropertyTax(2_000_000_000, true, false, Y);
+  assert.equal(r.taxBase, Math.floor((2_000_000_000 - 1_200_000_000) * 0.6));
+});
+
+test('종부세 — 3주택 이상은 고구간에서 세율이 더 높다', () => {
+  const two = calcComprehensivePropertyTax(5_000_000_000, false, false, Y);
+  const three = calcComprehensivePropertyTax(5_000_000_000, false, true, Y);
+  assert.ok(three.total > two.total);
+});
+
+test('종부세 — 농어촌특별세는 종부세의 20%', () => {
+  const r = calcComprehensivePropertyTax(3_000_000_000, false, false, Y);
+  assert.equal(r.ruralTax, Math.floor(r.tax * 0.2 / 10) * 10);
+});
+
+// ─────────────────────── 양도소득세 ───────────────────────
+const TR = {
+  year: Y, buyPrice: 500_000_000, expenses: 20_000_000,
+  holdYears: 5, liveYears: 5, oneHouse: true, heavyHouseCount: 0 as const,
+};
+
+test('양도세 — 1세대 1주택 12억 이하는 전액 비과세', () => {
+  const r = calcTransferTax({ ...TR, salePrice: 1_000_000_000 });
+  assert.equal(r.fullyExempt, true);
+  assert.equal(r.taxableRatio, 0);
+  assert.equal(r.total, 0);
+});
+
+test('양도세 — 12억 초과분에 해당하는 양도차익만 과세', () => {
+  const sale = 1_500_000_000;
+  const r = calcTransferTax({ ...TR, salePrice: sale });
+  near(r.taxableRatio, (sale - 1_200_000_000) / sale, 1e-9, '3억/15억 = 20%');
+  assert.ok(r.total > 0);
+});
+
+test('양도세 — 1년 미만 보유는 70% 단일세율', () => {
+  const r = calcTransferTax({ ...TR, salePrice: 2_000_000_000, oneHouse: false, holdYears: 0.5, liveYears: 0 });
+  assert.ok(r.rateLabel.includes('70%'));
+  assert.equal(r.longTermDeduction, 0, '3년 미만은 장특공제 없음');
+});
+
+test('양도세 — 보유가 길수록 장기보유특별공제가 커진다', () => {
+  const at = (holdYears: number) =>
+    calcTransferTax({ ...TR, salePrice: 2_000_000_000, oneHouse: false, holdYears, liveYears: 0 }).longTermRate;
+  assert.equal(at(2), 0, '3년 미만');
+  near(at(3), 0.06, 1e-9, '3년 6%');
+  near(at(10), 0.20, 1e-9, '10년 20%');
+  near(at(20), 0.30, 1e-9, '15년 이상 30% 한도');
+});
+
+test('양도세 — 1세대 1주택은 보유+거주로 최대 80%까지 공제', () => {
+  const r = calcTransferTax({ ...TR, salePrice: 2_000_000_000, holdYears: 10, liveYears: 10 });
+  near(r.longTermRate, 0.80, 1e-9, '보유 40% + 거주 40%');
+});
+
+test('양도세 — 거주 요건을 못 채우면 일반 표1이 적용된다', () => {
+  const lived = calcTransferTax({ ...TR, salePrice: 2_000_000_000, holdYears: 10, liveYears: 10 });
+  const not = calcTransferTax({ ...TR, salePrice: 2_000_000_000, holdYears: 10, liveYears: 1 });
+  near(not.longTermRate, 0.20, 1e-9, '표1 10년 = 20%');
+  assert.ok(not.total > lived.total);
+});
+
+// 2026-05-09에 다주택 중과 유예가 끝났다 — 연도별로 값이 달라야 한다
+test('양도세 — 다주택 중과는 2026년부터 다시 적용된다', () => {
+  assert.equal(getRates('2025').transferTax.heavySurcharge.twoHouse, 0, '2025년은 유예 중');
+  assert.equal(getRates('2026').transferTax.heavySurcharge.twoHouse, 0.2, '2026년 재적용');
+
+  const plain = calcTransferTax({ ...TR, salePrice: 2_000_000_000, oneHouse: false, heavyHouseCount: 0 });
+  const heavy = calcTransferTax({ ...TR, salePrice: 2_000_000_000, oneHouse: false, heavyHouseCount: 3 });
+  assert.ok(heavy.total > plain.total, '3주택 중과가 더 많다');
+});
+
+test('양도세 — 양도차익이 없으면 세금도 없다', () => {
+  const r = calcTransferTax({ ...TR, salePrice: 400_000_000, oneHouse: false });
+  assert.equal(r.gain, 0);
+  assert.equal(r.total, 0);
+});
+
+// ─────────── 새 항목의 전 연도 무결성 ───────────
+test('전 연도 — 새 계산기 6종 데이터와 source가 모든 연도에 있다', () => {
+  for (const y of availableYears()) {
+    const r = getRates(y);
+    for (const key of ['annualLeave', 'giftTax', 'carAcquisitionTax',
+      'rentConversion', 'comprehensivePropertyTax', 'transferTax'] as const) {
+      assert.ok((r[key] as { source?: string }).source, `${y}/${key}에 source 필요`);
+    }
+    assert.equal(r.giftTax.brackets[r.giftTax.brackets.length - 1].upTo, null, `${y}: 증여세 마지막 구간`);
+    assert.ok(r.rentConversion.bokBaseRate > 0, `${y}: 기준금리`);
   }
 });

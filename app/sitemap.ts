@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getRates, latestYear } from '@/lib/rates';
-import { SALARY, NET } from '@/lib/salaryPages';
+import { SALARY, NET, LEAVE_YEARS, GIFT } from '@/lib/salaryPages';
 import { PRICE } from '@/lib/propertyPages';
 import { CC, PUBLIC_PRICE } from '@/lib/localTaxPages';
 import { CATEGORIES, allCalcHrefs } from '@/lib/catalog';
@@ -16,6 +16,8 @@ const GENERATED: { base: string; values: number[] }[] = [
   { base: '/car-tax', values: CC.all() },
   { base: '/property-tax', values: PUBLIC_PRICE.all() },
   { base: '/net-salary', values: NET.all() },
+  { base: '/annual-leave', values: LEAVE_YEARS.all() },
+  { base: '/gift-tax', values: GIFT.all() },
 ];
 
 // lastmod에 빌드시각을 넣지 않는다 — 내용이 안 바뀌었는데 매 배포마다 갱신됐다고 하면
