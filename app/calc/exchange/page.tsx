@@ -52,7 +52,7 @@ export default async function Page() {
       ]}
     >
       {snapshot ? (
-        <ExchangeCalc rates={snapshot.rates} date={snapshot.date} />
+        <ExchangeCalc rates={snapshot.rates} date={snapshot.date} stale={snapshot.stale} />
       ) : (
         // 환율을 못 가져왔을 때 지난 값을 슬쩍 보여주지 않는다.
         // 언제 값인지 모르는 환율은 틀린 환율이다.

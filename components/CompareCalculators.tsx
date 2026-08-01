@@ -3,6 +3,7 @@ import { useState, useMemo } from 'react';
 import { calcReverseSalary, calcEmployerCost, calcEmploymentCompare } from '@/lib/calc/compare';
 import { getRates } from '@/lib/rates';
 import { Breakdown, InputCard, Field, calcStyles as s } from './Breakdown';
+import { AmountInput } from './AmountInput';
 
 const 만 = 10_000;
 const fmt = (n: number) => Math.round(n).toLocaleString('ko-KR');
@@ -27,11 +28,7 @@ export function ReverseSalaryCalc({ year }: { year: string }) {
     <>
       <InputCard>
         <Field label="목표 월 실수령액" hint="통장에 찍히기를 바라는 금액">
-          <div className={s.row}>
-            <input type="number" step={100_000} min={0} className={`${s.input} num`} value={targetNet}
-              onChange={e => setTargetNet(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={targetNet} onChange={setTargetNet} unit="원" step={100_000} />
         </Field>
         <div className={s.quick}>
           {[200, 250, 300, 350, 400, 500].map(v => (
@@ -56,11 +53,7 @@ export function ReverseSalaryCalc({ year }: { year: string }) {
             </div>
           </Field>
           <Field label="월 비과세액" hint={`식대 한도 ${fmt(nonTaxableMax)}원`}>
-            <div className={s.row}>
-              <input type="number" step={10_000} min={0} className={`${s.input} num`} value={monthlyNonTaxable}
-                onChange={e => setNonTaxable(Math.max(0, Number(e.target.value)))} />
-              <span className={s.unit}>원</span>
-            </div>
+            <AmountInput value={monthlyNonTaxable} onChange={setNonTaxable} unit="원" step={10_000} />
           </Field>
         </div>
       </InputCard>
@@ -100,11 +93,7 @@ export function EmployerCostCalc({ year }: { year: string }) {
     <>
       <InputCard>
         <Field label="직원 월 급여 (세전)">
-          <div className={s.row}>
-            <input type="number" step={100_000} min={0} className={`${s.input} num`} value={monthlySalary}
-              onChange={e => setSalary(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={monthlySalary} onChange={setSalary} unit="원" step={100_000} />
         </Field>
         <div className={s.quick}>
           {[250, 300, 350, 400, 500].map(v => (
@@ -129,11 +118,7 @@ export function EmployerCostCalc({ year }: { year: string }) {
             </div>
           </Field>
           <Field label="월 비과세액" hint="식대 등">
-            <div className={s.row}>
-              <input type="number" step={10_000} min={0} className={`${s.input} num`} value={monthlyNonTaxable}
-                onChange={e => setNonTaxable(Math.max(0, Number(e.target.value)))} />
-              <span className={s.unit}>원</span>
-            </div>
+            <AmountInput value={monthlyNonTaxable} onChange={setNonTaxable} unit="원" step={10_000} />
           </Field>
         </div>
       </InputCard>
@@ -176,11 +161,7 @@ export function EmploymentCompareCalc({ year }: { year: string }) {
     <>
       <InputCard>
         <Field label="월 계약금액" hint="두 경우 모두 같은 금액을 받는다고 가정합니다">
-          <div className={s.row}>
-            <input type="number" step={100_000} min={0} className={`${s.input} num`} value={amount}
-              onChange={e => setAmount(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={amount} onChange={setAmount} unit="원" step={100_000} />
         </Field>
         <div className={s.quick}>
           {[250, 300, 400, 500, 700].map(v => (
@@ -190,11 +171,7 @@ export function EmploymentCompareCalc({ year }: { year: string }) {
           ))}
         </div>
         <Field label="월 비과세액 (정규직)" hint={`식대 한도 ${fmt(nonTaxableMax)}원. 프리랜서에는 적용되지 않습니다.`}>
-          <div className={s.row}>
-            <input type="number" step={10_000} min={0} className={`${s.input} num`} value={monthlyNonTaxable}
-              onChange={e => setNonTaxable(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={monthlyNonTaxable} onChange={setNonTaxable} unit="원" step={10_000} />
         </Field>
       </InputCard>
 

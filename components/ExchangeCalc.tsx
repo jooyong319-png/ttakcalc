@@ -2,13 +2,14 @@
 import { useState, useMemo } from 'react';
 import { calcExchange, type Rate } from '@/lib/exchange';
 import { Breakdown, InputCard, Field, calcStyles as s } from './Breakdown';
+import { AmountInput } from './AmountInput';
 
 const fmt = (n: number) => Math.round(n).toLocaleString('ko-KR');
 
 /** 자주 쓰는 통화를 앞으로 — 목록이 40개가 넘어서 그냥 두면 못 찾는다 */
 const PINNED = ['USD', 'JPY', 'EUR', 'CNH', 'GBP', 'AUD', 'CAD', 'HKD', 'THB', 'VND'];
 
-export function ExchangeCalc({ rates, date }: { rates: Rate[]; date: string }) {
+export function ExchangeCalc({ rates, date, stale }: { rates: Rate[]; date: string; stale: boolean }) {
   const sorted = useMemo(() => {
     // 고시 목록에 KRW가 섞여 있다 — 원화를 원화로 환전할 일은 없으니 뺀다
     const usable = rates.filter(r => r.code !== 'KRW');
@@ -53,11 +54,7 @@ export function ExchangeCalc({ rates, date }: { rates: Rate[]; date: string }) {
             </select>
           </Field>
           <Field label="금액" hint={rate.unit > 1 ? `${rate.unit}단위로 고시되는 통화입니다` : undefined}>
-            <div className={s.row}>
-              <input type="number" step={100} min={0} className={`${s.input} num`} value={amount}
-                onChange={e => setAmount(Math.max(0, Number(e.target.value)))} />
-              <span className={s.unit}>{rate.code}</span>
-            </div>
+            <AmountInput value={amount} onChange={setAmount} unit={rate.code} step={100} />
           </Field>
         </div>
         <div className={s.quick}>
@@ -100,7 +97,9 @@ export function ExchangeCalc({ rates, date }: { rates: Rate[]; date: string }) {
         caption="계산 근거 — 왜 이 금액인지"
         footer={
           <span>
-            {date} 한국수출입은행 고시환율 기준 · 스프레드와 우대율은 은행·지점마다 달라 직접 넣습니다
+            <strong>{date}</strong> 한국수출입은행 고시환율 기준
+            {stale && ' (오늘은 비영업일이라 가장 최근 고시를 씁니다)'}
+            {' '}· 스프레드와 우대율은 은행·지점마다 달라 직접 넣습니다
           </span>
         }
       />

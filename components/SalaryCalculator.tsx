@@ -2,6 +2,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { calcSalary } from '@/lib/calc/salary';
 import { Breakdown, InputCard, Field, calcStyles as s, type Row } from './Breakdown';
+import { AmountInput } from './AmountInput';
 
 interface Props {
   years: string[];
@@ -69,15 +70,7 @@ export function SalaryCalculator({ years, defaultYear }: Props) {
     <>
       <InputCard>
         <Field label="연봉 (세전)">
-          <div className={s.row}>
-            <input
-              type="number" inputMode="numeric" min={0} step={1_000_000}
-              value={annual}
-              onChange={e => setAnnual(Math.max(0, Number(e.target.value)))}
-              className={s.input}
-            />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={annual} onChange={setAnnual} unit="원" step={1_000_000} />
           <div className={s.quick} style={{ marginTop: '0.5rem' }}>
             {[30, 40, 50, 60, 80, 100].map(m => (
               <button key={m} type="button"

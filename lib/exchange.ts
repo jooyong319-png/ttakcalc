@@ -57,6 +57,8 @@ export function toRate(row: ExchangeRow): Rate {
 export interface ExchangeSnapshot {
   /** 고시 기준일 (YYYY-MM-DD) */
   date: string;
+  /** 오늘 고시가 아니라 과거 영업일 고시인지 — 화면에 그 사실을 밝힌다 */
+  stale: boolean;
   rates: Rate[];
 }
 

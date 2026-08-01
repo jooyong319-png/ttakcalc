@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react';
 import { calcAcquisitionTax, calcBrokerage, calcLoan, type LoanMethod } from '@/lib/calc/property';
 import { Breakdown, InputCard, Field, calcStyles as s } from './Breakdown';
+import { AmountInput } from './AmountInput';
 
 const 억 = 100_000_000;
 
@@ -21,11 +22,7 @@ export function AcquisitionTaxCalc({ year }: { year: string }) {
     <>
       <InputCard>
         <Field label="취득가액">
-          <div className={s.row}>
-            <input type="number" step={10_000_000} className={`${s.input} num`} value={price}
-              onChange={e => setPrice(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={price} onChange={setPrice} unit="원" step={10_000_000} />
         </Field>
         <div className={s.quick}>
           {[3, 5, 6, 9, 12, 15].map(v => (
@@ -91,11 +88,7 @@ export function BrokerageCalc({ year }: { year: string }) {
           </div>
         </Field>
         <Field label="거래금액" hint={type === 'lease' ? '월세는 (보증금 + 월세×100)으로 환산해 입력' : undefined}>
-          <div className={s.row}>
-            <input type="number" step={10_000_000} className={`${s.input} num`} value={amount}
-              onChange={e => setAmount(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={amount} onChange={setAmount} unit="원" step={10_000_000} />
         </Field>
         <div className={s.quick}>
           {[1, 3, 5, 9, 12, 15].map(v => (
@@ -145,11 +138,7 @@ export function LoanCalc({ year }: { year: string }) {
           </div>
         </Field>
         <Field label="대출원금">
-          <div className={s.row}>
-            <input type="number" step={10_000_000} className={`${s.input} num`} value={principal}
-              onChange={e => setPrincipal(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={principal} onChange={setPrincipal} unit="원" step={10_000_000} />
         </Field>
         <div className={s.grid}>
           <Field label="연 이자율">

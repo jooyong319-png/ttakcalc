@@ -3,6 +3,7 @@ import { useState, useMemo } from 'react';
 import { calcCarTax, calcPropertyTax } from '@/lib/calc/localTax';
 import { calcComprehensiveTax, calcYearEnd, calcParentalLeave } from '@/lib/calc/income';
 import { Breakdown, InputCard, Field, calcStyles as s } from './Breakdown';
+import { AmountInput } from './AmountInput';
 
 const 억 = 100_000_000;
 const 만 = 10_000;
@@ -23,11 +24,7 @@ export function CarTaxCalc({ year }: { year: string }) {
     <>
       <InputCard>
         <Field label="배기량" hint="1,000cc 이하 80원 / 1,600cc 이하 140원 / 초과 200원 (cc당)">
-          <div className={s.row}>
-            <input type="number" step={100} min={0} className={`${s.input} num`} value={cc}
-              onChange={e => setCc(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>cc</span>
-          </div>
+          <AmountInput value={cc} onChange={setCc} unit="cc" step={100} />
         </Field>
         <div className={s.quick}>
           {[998, 1598, 1998, 2497, 2999].map(v => (
@@ -93,11 +90,7 @@ export function PropertyTaxCalc({ year }: { year: string }) {
     <>
       <InputCard>
         <Field label="주택 공시가격" hint="부동산공시가격 알리미에서 조회한 공동주택가격·개별주택가격">
-          <div className={s.row}>
-            <input type="number" step={10_000_000} min={0} className={`${s.input} num`} value={publicPrice}
-              onChange={e => setPublicPrice(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={publicPrice} onChange={setPublicPrice} unit="원" step={10_000_000} />
         </Field>
         <div className={s.quick}>
           {[2, 3, 5, 6, 9, 12].map(v => (
@@ -161,11 +154,7 @@ export function ComprehensiveTaxCalc({ year }: { year: string }) {
     <>
       <InputCard>
         <Field label="연간 총수입금액" hint="3.3% 떼기 전 계약금액의 합">
-          <div className={s.row}>
-            <input type="number" step={1_000_000} min={0} className={`${s.input} num`} value={revenue}
-              onChange={e => setRevenueAndWithheld(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={revenue} onChange={setRevenueAndWithheld} unit="원" step={1_000_000} />
         </Field>
         <div className={s.quick}>
           {[2000, 3000, 4000, 5000, 7000].map(v => (
@@ -193,19 +182,11 @@ export function ComprehensiveTaxCalc({ year }: { year: string }) {
             </div>
           </Field>
           <Field label="그 밖의 소득공제" hint="국민연금 보험료 등">
-            <div className={s.row}>
-              <input type="number" step={100_000} min={0} className={`${s.input} num`} value={otherDeduction}
-                onChange={e => setOther(Math.max(0, Number(e.target.value)))} />
-              <span className={s.unit}>원</span>
-            </div>
+            <AmountInput value={otherDeduction} onChange={setOther} unit="원" step={100_000} />
           </Field>
         </div>
         <Field label="기납부세액" hint="원천징수된 소득세(3.3% 중 3%분). 총수입금액을 바꾸면 자동으로 다시 계산됩니다.">
-          <div className={s.row}>
-            <input type="number" step={10_000} min={0} className={`${s.input} num`} value={withheldTax}
-              onChange={e => setWithheld(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={withheldTax} onChange={setWithheld} unit="원" step={10_000} />
         </Field>
       </InputCard>
 
@@ -241,11 +222,7 @@ export function YearEndCalc({ year }: { year: string }) {
     <>
       <InputCard>
         <Field label="총급여" hint="원천징수영수증의 '총급여' 항목(비과세 제외)">
-          <div className={s.row}>
-            <input type="number" step={1_000_000} min={0} className={`${s.input} num`} value={grossSalary}
-              onChange={e => setGross(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={grossSalary} onChange={setGross} unit="원" step={1_000_000} />
         </Field>
         <div className={s.grid3}>
           <Field label="부양가족 (본인 포함)">
@@ -263,27 +240,15 @@ export function YearEndCalc({ year }: { year: string }) {
             </div>
           </Field>
           <Field label="4대보험료 납부액" hint="1년 합계">
-            <div className={s.row}>
-              <input type="number" step={100_000} min={0} className={`${s.input} num`} value={insurancePaid}
-                onChange={e => setInsurance(Math.max(0, Number(e.target.value)))} />
-              <span className={s.unit}>원</span>
-            </div>
+            <AmountInput value={insurancePaid} onChange={setInsurance} unit="원" step={100_000} />
           </Field>
         </div>
         <div className={s.grid}>
           <Field label="기납부세액" hint="원천징수영수증의 '기납부세액 - 소득세'">
-            <div className={s.row}>
-              <input type="number" step={10_000} min={0} className={`${s.input} num`} value={withheldTax}
-                onChange={e => setWithheld(Math.max(0, Number(e.target.value)))} />
-              <span className={s.unit}>원</span>
-            </div>
+            <AmountInput value={withheldTax} onChange={setWithheld} unit="원" step={10_000} />
           </Field>
           <Field label="특별공제 합계" hint="0으로 두면 표준세액공제 13만원을 적용합니다">
-            <div className={s.row}>
-              <input type="number" step={100_000} min={0} className={`${s.input} num`} value={specialDeduction}
-                onChange={e => setSpecial(Math.max(0, Number(e.target.value)))} />
-              <span className={s.unit}>원</span>
-            </div>
+            <AmountInput value={specialDeduction} onChange={setSpecial} unit="원" step={100_000} />
           </Field>
         </div>
       </InputCard>
@@ -317,11 +282,7 @@ export function ParentalLeaveCalc({ year }: { year: string }) {
     <>
       <InputCard>
         <Field label="월 통상임금" hint="육아휴직 시작일 기준. 기본급 + 고정수당">
-          <div className={s.row}>
-            <input type="number" step={100_000} min={0} className={`${s.input} num`} value={wage}
-              onChange={e => setWage(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={wage} onChange={setWage} unit="원" step={100_000} />
         </Field>
         <div className={s.quick}>
           {[200, 250, 300, 350, 400].map(v => (

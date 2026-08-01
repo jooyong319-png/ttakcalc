@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react';
 import { calcArea, calcVat, calcPercent, calcCompound, type PercentMode } from '@/lib/calc/basic';
 import { Breakdown, InputCard, Field, calcStyles as s } from './Breakdown';
+import { AmountInput } from './AmountInput';
 
 const 만 = 10_000;
 const fmt = (n: number) => Math.round(n).toLocaleString('ko-KR');
@@ -78,11 +79,7 @@ export function VatCalc({ year }: { year: string }) {
           </div>
         </Field>
         <Field label="금액">
-          <div className={s.row}>
-            <input type="number" step={10_000} min={0} className={`${s.input} num`} value={amount}
-              onChange={e => setAmount(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={amount} onChange={setAmount} unit="원" step={10_000} />
         </Field>
         <div className={s.quick}>
           {[10, 50, 100, 300, 500, 1000].map(v => (
@@ -193,11 +190,7 @@ export function CompoundCalc({ year }: { year: string }) {
     <>
       <InputCard>
         <Field label="원금">
-          <div className={s.row}>
-            <input type="number" step={1_000_000} min={0} className={`${s.input} num`} value={principal}
-              onChange={e => setPrincipal(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={principal} onChange={setPrincipal} unit="원" step={1_000_000} />
         </Field>
         <div className={s.quick}>
           {[500, 1000, 3000, 5000, 10000].map(v => (

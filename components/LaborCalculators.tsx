@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react';
 import { calcSeverance, calcFreelancer, calcUnemployment, calcHolidayPay } from '@/lib/calc/labor';
 import { Breakdown, InputCard, Field, calcStyles as s } from './Breakdown';
+import { AmountInput } from './AmountInput';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const yearsAgo = (n: number) => {
@@ -83,11 +84,7 @@ export function FreelancerCalc({ year }: { year: string }) {
           </div>
         </Field>
         <Field label={mode === 'gross' ? '계약금액 (세전)' : '받고 싶은 실수령액'}>
-          <div className={s.row}>
-            <input type="number" step={100000} className={`${s.input} num`} value={amount}
-              onChange={e => setAmount(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={amount} onChange={setAmount} unit="원" step={100000} />
         </Field>
         <div className={s.quick}>
           {[1_000_000, 2_000_000, 3_000_000, 5_000_000, 10_000_000].map(v => (
@@ -124,11 +121,7 @@ export function UnemploymentCalc({ year }: { year: string }) {
     <>
       <InputCard>
         <Field label="퇴직 전 3개월 월평균 임금 (세전)">
-          <div className={s.row}>
-            <input type="number" step={100000} className={`${s.input} num`} value={monthlySalary}
-              onChange={e => setMonthlySalary(Math.max(0, Number(e.target.value)))} />
-            <span className={s.unit}>원</span>
-          </div>
+          <AmountInput value={monthlySalary} onChange={setMonthlySalary} unit="원" step={100000} />
         </Field>
         <div className={s.grid}>
           <Field label="고용보험 가입기간" hint="이직 전 총 피보험 단위기간">
@@ -179,11 +172,7 @@ export function HolidayPayCalc({ year, minimumWage }: { year: string; minimumWag
       <InputCard>
         <div className={s.grid}>
           <Field label="시급" hint={`${year}년 최저시급 ${minimumWage.toLocaleString()}원`}>
-            <div className={s.row}>
-              <input type="number" step={10} className={`${s.input} num`} value={hourlyWage}
-                onChange={e => setHourlyWage(Math.max(0, Number(e.target.value)))} />
-              <span className={s.unit}>원</span>
-            </div>
+            <AmountInput value={hourlyWage} onChange={setHourlyWage} unit="원" step={10} />
           </Field>
           <Field label="주 소정근로시간" hint="15시간 이상이어야 발생">
             <div className={s.row}>
