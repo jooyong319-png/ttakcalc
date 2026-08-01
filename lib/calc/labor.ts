@@ -2,7 +2,11 @@
 // 전부 순수 함수이고 요율은 lib/rates에서만 온다(하드코딩 금지).
 import { getRates } from '../rates';
 
-export interface Step { label: string; value: number | string; basis?: string; unit?: string }
+/** 계산 한 단계. tone은 화면 강조용 — 라벨 문자열로 추측하지 않고 계산 쪽에서 명시한다. */
+export interface Step {
+  label: string; value: number | string; basis?: string; unit?: string;
+  tone?: 'minus' | 'total' | 'result' | 'info';
+}
 
 const won = (n: number) => Math.floor(n / 10) * 10;
 const day = 24 * 60 * 60 * 1000;

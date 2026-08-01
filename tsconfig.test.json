@@ -9,5 +9,5 @@
     "incremental": false
   },
   "include": ["lib/**/*.ts", "test/**/*.ts", "data/**/*.json"],
-  "exclude": ["node_modules", "app", "components"]
+  "exclude": ["node_modules", "app", "components", "lib/exchangeFetch.ts"]
 }

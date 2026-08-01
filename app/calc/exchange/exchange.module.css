@@ -1,0 +1,20 @@
+/* 환율을 못 가져왔을 때 — 조용히 빈 화면을 내지 않고 이유를 설명한다 */
+.empty {
+  padding: 1.6rem 1.4rem;
+  background: var(--paper-sunken);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.emptyTitle {
+  margin: 0 0 0.6rem;
+  font-size: 1rem; font-weight: 800; color: var(--ink);
+}
+.emptyBody {
+  margin: 0 0 0.55rem;
+  font-size: 0.88rem; line-height: 1.7; color: var(--ink-soft);
+}
+.emptyBody:last-child { margin-bottom: 0; }
+.emptyBody a {
+  color: var(--tone-key, var(--accent)); font-weight: 700;
+  text-decoration: underline; text-underline-offset: 2px;
+}
