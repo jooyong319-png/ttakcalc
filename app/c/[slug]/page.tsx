@@ -29,7 +29,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
     <div className={`container ${s[c.tone]}`}>
       <header className={s.head}>
         <p className={s.eyebrow}>
-          <a href="/" className={s.home}>딱계산</a>
+          <a href="/" className={s.home}>딱칼크</a>
           <span aria-hidden="true"> · </span>{rates.label} 기준
         </p>
         <h1 className={s.title}>

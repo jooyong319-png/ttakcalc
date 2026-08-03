@@ -39,7 +39,7 @@ export default function HomePage() {
       <section className={styles.proof} aria-labelledby="proof-title">
         <div className={styles.proofHead}>
           <h2 id="proof-title" className={styles.proofTitle}>
-            다른 계산기는 여기까지, <span className={styles.mark}>딱계산은 여기까지</span>
+            다른 계산기는 여기까지, <span className={styles.mark}>딱칼크는 여기까지</span>
           </h2>
           <p className={styles.proofLead}>
             연봉 {proof.man.toLocaleString('ko-KR')}만원의 실수령액입니다. 숫자 하나만 받고 끝나면
@@ -57,7 +57,7 @@ export default function HomePage() {
           </div>
 
           <div className={styles.proofFull}>
-            <span className={styles.proofFullTag}>딱계산이 더 보여주는 것</span>
+            <span className={styles.proofFullTag}>딱칼크가 더 보여주는 것</span>
             <table className={styles.proofTable}>
               <caption className="sr-only">
                 연봉 {proof.man}만원 월 공제 명세와 각 금액의 근거

@@ -5,7 +5,7 @@ import s from '../legal.module.css';
 export const metadata: Metadata = {
   title: '이용약관',
   description:
-    '딱계산 이용약관과 면책 조항입니다. 계산 결과는 참고용 추정치이며 세무·법률 자문을 대신하지 않습니다.',
+    '딱칼크 이용약관과 면책 조항입니다. 계산 결과는 참고용 추정치이며 세무·법률 자문을 대신하지 않습니다.',
   alternates: { canonical: `${SITE.url}/terms` },
 };
 

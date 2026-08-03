@@ -17,8 +17,8 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://ttakcalc.com'),
   title: {
-    default: '딱계산 — 연봉·세금·부동산 계산기',
-    template: '%s | 딱계산',
+    default: '딱칼크 — 연봉·세금·부동산 계산기',
+    template: '%s | 딱칼크',
   },
   description:
     '연봉 실수령액, 퇴직금, 세금을 근거까지 명세서처럼 보여드립니다. 제도가 바뀌면 바로 반영하고, 무엇이 어떻게 바뀌었는지도 알려드립니다.',
@@ -27,10 +27,10 @@ export const metadata: Metadata = {
   // 각 페이지의 title/description이 이미 답을 담고 있어 효용이 적다.
   openGraph: {
     type: 'website',
-    siteName: '딱계산',
+    siteName: '딱칼크',
     locale: 'ko_KR',
     url: 'https://ttakcalc.com',
-    images: [{ url: '/og.png', width: 1200, height: 630, alt: '딱계산 — 연봉·세금·부동산 계산기' }],
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: '딱칼크 — 연봉·세금·부동산 계산기' }],
   },
   twitter: {
     card: 'summary_large_image',

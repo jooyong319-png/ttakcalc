@@ -8,7 +8,7 @@ import s from '../legal.module.css';
 export const metadata: Metadata = {
   title: '사이트 소개',
   description:
-    '딱계산은 계산 결과만 던지지 않고 어떤 수치를 어떤 순서로 적용했는지 함께 보여줍니다. 요율 검증 방식과 운영 원칙을 소개합니다.',
+    '딱칼크는 계산 결과만 던지지 않고 어떤 수치를 어떤 순서로 적용했는지 함께 보여줍니다. 요율 검증 방식과 운영 원칙을 소개합니다.',
   alternates: { canonical: `${SITE.url}/about` },
 };
 
@@ -24,7 +24,7 @@ export default function AboutPage() {
         <p className={s.eyebrow}>사이트 소개</p>
         <h1 className={s.title}>답만 주는 계산기는 이미 많습니다</h1>
         <p className={s.lead}>
-          {SITE.name}은 계산 결과와 함께 <strong>그 숫자가 어떻게 나왔는지</strong>를 보여줍니다.
+          {SITE.name}는 계산 결과와 함께 <strong>그 숫자가 어떻게 나왔는지</strong>를 보여줍니다.
           어떤 요율을, 어느 구간에, 어떤 순서로 적용했는지 명세서처럼 펼쳐 놓습니다. 결과를 믿을지
           말지는 근거를 본 다음에 정하는 편이 낫다고 생각합니다.
         </p>

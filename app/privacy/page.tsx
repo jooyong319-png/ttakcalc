@@ -5,7 +5,7 @@ import s from '../legal.module.css';
 export const metadata: Metadata = {
   title: '개인정보처리방침',
   description:
-    '딱계산이 수집하는 정보와 그 이유를 밝힙니다. 계산은 브라우저 안에서 끝나며 입력하신 금액은 서버로 전송되지 않습니다.',
+    '딱칼크가 수집하는 정보와 그 이유를 밝힙니다. 계산은 브라우저 안에서 끝나며 입력하신 금액은 서버로 전송되지 않습니다.',
   alternates: { canonical: `${SITE.url}/privacy` },
 };
 

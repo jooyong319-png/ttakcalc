@@ -13,26 +13,17 @@ const nextConfig = {
         destination: 'https://ttakcalc.com/:path*',
         permanent: true,
       },
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.ttakcalc.com' }],
-        destination: 'https://ttakcalc.com/:path*',
-        permanent: true,
-      },
-      // 2026-08-03: 잠깐 autokca.com으로 옮겼다가 되돌렸다. 그 도메인이 살아 있는 동안
-      // 같은 내용이 두 곳에서 열리면 검색이 갈린다. 경로를 유지한 채 정규 도메인으로 넘긴다.
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'autokca.com' }],
-        destination: 'https://ttakcalc.com/:path*',
-        permanent: true,
-      },
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.autokca.com' }],
-        destination: 'https://ttakcalc.com/:path*',
-        permanent: true,
-      },
+      // ⚠️ www ↔ apex 리다이렉트를 여기에 두지 말 것 (2026-08-03 사고)
+      //
+      // 'www.ttakcalc.com → ttakcalc.com'을 코드에 넣어 뒀는데, Vercel 쪽에서는 반대로
+      // apex를 www로 보내고 있었다. 서로를 가리켜 무한 루프가 났고 사이트가 통째로 죽었다.
+      //
+      //   ttakcalc.com     → 308 → www.ttakcalc.com   (Vercel 도메인 설정)
+      //   www.ttakcalc.com → 308 → ttakcalc.com       (여기 있던 규칙)
+      //
+      // apex/www 중 무엇을 정본으로 할지는 **Vercel 도메인 설정 한 곳에서만** 정한다.
+      // 코드가 같은 판단을 중복으로 하면 언젠가 서로 어긋난다. 위의 vercel.app 규칙은
+      // Vercel이 관리하지 않는 호스트라 코드에 남겨 둔다.
     ];
   },
 
