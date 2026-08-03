@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { JetBrains_Mono } from 'next/font/google';
 import { SiteNav } from '@/components/SiteNav';
+import { Analytics } from '@/components/Analytics';
 import './globals.css';
 
 /* 숫자 전용 등폭. 계산기라 자릿수가 흔들리면 안 되고, 0에 슬래시가 있어 6/8과 헷갈리지 않는다. */
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <Analytics />
         <SiteNav />
 
         <main>{children}</main>
