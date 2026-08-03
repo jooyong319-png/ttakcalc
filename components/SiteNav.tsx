@@ -13,7 +13,8 @@ export function SiteNav() {
     <header className={s.header}>
       <div className={s.inner}>
         <a href="/" className={s.wordmark}>
-          딱<b>계산</b><small>ttakcalc</small>
+          {/* 태그로 쪼개져 있어 "딱칼크" 문자열 검색에 안 걸린다 — 이름을 바꿀 때 여기를 놓치기 쉽다 */}
+          딱<b>칼크</b><small>ttakcalc</small>
         </a>
 
         <nav className={s.tabs} aria-label="계산기 카테고리">
