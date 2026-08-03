@@ -27,8 +27,21 @@ const nextConfig = {
       {
         source: '/:path*',
         headers: [
-          // 계산기 사이트라 남의 프레임에 끼워 넣을 이유가 없다 — 클릭재킹 차단
-          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          // 클릭재킹 차단. X-Frame-Options: SAMEORIGIN 을 쓰다가 CSP로 바꿨다.
+          //
+          // 이유(2026-08-03): SAMEORIGIN은 예외를 둘 수 없어서 구글 태그 어시스턴트까지
+          // 막힌다. 어시스턴트는 사이트를 tagassistant.google.com 안에 iframe으로 띄워
+          // 검사하는데, 그게 차단되니 "태그가 감지되지 않음"으로 나온다. GA 태그 자체는
+          // HTML에 정상적으로 들어 있고 Googlebot도 읽어간다 — 프레임만 막힌 것이다.
+          //
+          // frame-ancestors는 허용 목록을 쓸 수 있다(X-Frame-Options의 ALLOW-FROM은
+          // 폐기됐다). 두 헤더가 같이 있으면 브라우저 동작이 갈리므로 XFO는 제거한다.
+          // 나열한 구글 도메인 외에는 여전히 전부 차단이라 방어 수준은 그대로다.
+          {
+            key: 'Content-Security-Policy',
+            value:
+              "frame-ancestors 'self' https://tagassistant.google.com https://tagmanager.google.com",
+          },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
         ],
