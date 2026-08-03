@@ -19,6 +19,10 @@ export const LEAVE_YEARS = makeRange(1, 30, 1);
 /** 증여 금액(만원). 1,000만~10억, 1,000만원 간격 = 100개. */
 export const GIFT = makeRange(1_000, 100_000, 1_000);
 
+/** 연간 배당금(만원). 500만~2억, 500만원 간격 = 40개.
+ *  2천만원(=2,000만) 경계를 반드시 포함하도록 간격을 잡았다 — 그 지점이 이 계산의 전부다. */
+export const DIVIDEND = makeRange(500, 20_000, 500);
+
 /** 목록·본문에 쓰는 "많이 찾는 연봉" — 500만원 간격의 라운드 넘버 */
 export function popularMan(): number[] {
   return SALARY.all().filter(m => m % 500 === 0);

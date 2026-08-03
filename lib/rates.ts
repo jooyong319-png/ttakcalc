@@ -175,6 +175,18 @@ export interface YearRates {
     maxMonths: number;
     source: string;
   };
+  /** 배당소득. Gross-up률은 개정 이력이 있어(2023·2024년 개정) 원문으로 확인한 2026년만 넣었다. */
+  dividend?: {
+    /** 배당소득 원천징수세율(소득세법 제129조①2나) */
+    withholdingRate: number;
+    /** 이 금액을 넘으면 초과분이 종합과세된다(제14조③6) */
+    comprehensiveThreshold: number;
+    /** 내국법인 배당 귀속법인세 가산율(제17조③ 단서) */
+    grossUpRate: number;
+    note: string;
+    source: string;
+    verifiedAt: string;
+  };
 }
 
 const YEARS = (ratesJson as unknown as { years: Record<string, YearRates> }).years;
