@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
+import Link from 'next/link';
 import { JetBrains_Mono } from 'next/font/google';
+import { SITE } from '@/lib/site';
 import { SiteNav } from '@/components/SiteNav';
 import { Analytics } from '@/components/Analytics';
 import './globals.css';
@@ -63,15 +65,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();",
           }}
         />
+        {/* 구글의 태그 감지기는 HTML을 읽지 하이드레이션을 기다리지 않는다 — 생 script여야 한다 */}
+        <Analytics />
       </head>
       <body>
-        <Analytics />
         <SiteNav />
 
         <main>{children}</main>
 
         <footer className="site-footer">
           <div className="container">
+            {/* 개인정보처리방침은 다른 링크와 구분되게 표시하도록 권고된다(개인정보 보호법 제30조 ②) */}
+            <nav className="footer-nav" aria-label="사이트 정보">
+              <Link href="/about">사이트 소개</Link>
+              <Link href="/changes">제도 변화</Link>
+              <Link href="/terms">이용약관</Link>
+              <Link href="/privacy" className="footer-strong">개인정보처리방침</Link>
+              <a href={`mailto:${SITE.email}`}>문의</a>
+            </nav>
+
             <p>
               * 계산 결과는 참고용 추정치입니다. 실제 원천징수액은 국세청 간이세액표·회사 정책에 따라
               달라질 수 있고, 연말정산으로 정산됩니다.

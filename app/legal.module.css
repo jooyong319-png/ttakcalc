@@ -1,0 +1,112 @@
+/* 법적 고지 페이지(개인정보처리방침·이용약관·사이트 소개) 공용 스타일.
+   읽으라고 만든 페이지지 장식하라고 만든 페이지가 아니다 — 본문 폭과 행간에만 신경 쓴다. */
+
+.head {
+  padding: 2.6rem 0 1.6rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 2rem;
+}
+.eyebrow {
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em;
+  color: var(--ink-faint);
+  margin: 0 0 0.7rem;
+}
+.title {
+  font-size: clamp(1.65rem, 4.6vw, 2.2rem);
+  font-weight: 900; letter-spacing: -0.04em; line-height: 1.2;
+  text-wrap: balance;
+}
+.lead {
+  margin: 0.8rem 0 0;
+  color: var(--ink-soft); font-size: 0.95rem; line-height: 1.7;
+  max-width: 36rem;
+}
+.effective {
+  margin: 1rem 0 0;
+  font-size: 0.78rem; color: var(--ink-faint);
+}
+
+/* ─── 본문 ─── */
+.body { padding-bottom: 3rem; }
+.body section + section { margin-top: 2.2rem; }
+
+.body h2 {
+  font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em;
+  margin: 0 0 0.7rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.body h3 {
+  font-size: 0.92rem; font-weight: 700;
+  margin: 1.3rem 0 0.5rem;
+}
+.body p {
+  margin: 0 0 0.7rem;
+  font-size: 0.9rem; line-height: 1.8; color: var(--ink-soft);
+  max-width: 40rem;
+}
+.body strong { color: var(--ink); font-weight: 700; }
+
+.body ul, .body ol {
+  margin: 0 0 0.9rem;
+  padding-left: 1.15rem;
+  max-width: 40rem;
+}
+.body li {
+  font-size: 0.9rem; line-height: 1.8; color: var(--ink-soft);
+  margin-bottom: 0.3rem;
+}
+.body li::marker { color: var(--ink-faint); }
+
+/* 본문 링크 — 색만으로 구분하면 WCAG link-in-text-block에 걸린다. 밑줄을 상시 유지한다. */
+.body a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+.body a:hover { text-decoration-thickness: 2px; }
+
+/* ─── 강조 박스 — 계산기 사이트라 면책이 제일 중요한 문단이다 ─── */
+.callout {
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.15rem;
+  margin: 0 0 1.2rem;
+  background: var(--paper-sunken);
+}
+.callout p:last-child { margin-bottom: 0; }
+
+/* ─── 표 ─── */
+.tableWrap { overflow-x: auto; margin: 0 0 1.1rem; }
+.table {
+  width: 100%; min-width: 34rem;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+/* 자동 배분에 맡기면 가운데 열의 "Google Analytics 4 (쿠키)"가 세 줄로 쪼개진다.
+   설명이 들어가는 마지막 열에 남는 폭을 몰아준다. */
+.table th:first-child, .table td:first-child { width: 30%; }
+.table th:nth-child(2), .table td:nth-child(2) { width: 22%; }
+.table th, .table td {
+  text-align: left; vertical-align: top;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--rule);
+  line-height: 1.65;
+}
+.table th {
+  font-weight: 700; color: var(--ink);
+  white-space: nowrap;
+  background: var(--paper-sunken);
+}
+.table td { color: var(--ink-soft); }
+
+/* ─── 연락처 ─── */
+.contact {
+  display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+}
+.contactLabel { color: var(--ink-faint); margin-right: 0.4rem; }
