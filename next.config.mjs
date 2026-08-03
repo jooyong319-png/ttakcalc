@@ -19,6 +19,20 @@ const nextConfig = {
         destination: 'https://ttakcalc.com/:path*',
         permanent: true,
       },
+      // 2026-08-03: 잠깐 autokca.com으로 옮겼다가 되돌렸다. 그 도메인이 살아 있는 동안
+      // 같은 내용이 두 곳에서 열리면 검색이 갈린다. 경로를 유지한 채 정규 도메인으로 넘긴다.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'autokca.com' }],
+        destination: 'https://ttakcalc.com/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.autokca.com' }],
+        destination: 'https://ttakcalc.com/:path*',
+        permanent: true,
+      },
     ];
   },
 
