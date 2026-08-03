@@ -33,6 +33,11 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: ['/og.png'],
   },
+  // Google Search Console 소유 확인. HTML에 그대로 나가는 공개 값이라 환경변수로 숨길 이유가 없다.
+  // 지우면 소유 확인이 풀리므로 건드리지 말 것.
+  verification: {
+    google: 'kMo3vdFCTcpE6GNyFbxKA5iv0vYXUMZut9fGA5zR1u8',
+  },
 };
 
 export const viewport: Viewport = {
