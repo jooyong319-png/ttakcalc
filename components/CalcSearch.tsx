@@ -119,7 +119,7 @@ export function CalcSearch() {
           onChange={e => { setQ(e.target.value); setOpen(true); }}
           onFocus={() => setOpen(true)}
           onKeyDown={onKeyDown}
-          placeholder="연봉, 퇴직금, 취득세… 또는 숫자만 입력"
+          placeholder="뭘 계산해 드릴까요?"
           aria-label="계산기 검색"
           role="combobox"
           aria-expanded={show}

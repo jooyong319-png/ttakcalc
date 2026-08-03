@@ -1,7 +1,8 @@
 /* 홈 히어로의 계산기 검색바.
    계산기가 계속 늘어날 예정이라 목록을 훑게 두면 안 된다 — 첫 화면에서 바로 찾아 들어가게 한다. */
 
-.box { position: relative; max-width: 34rem; }
+/* 컬럼 폭을 그대로 쓴다 — 히어로가 검색 하나로 이뤄져 있어 좁히면 오히려 비어 보인다 */
+.box { position: relative; width: 100%; }
 
 .field {
   display: flex; align-items: center; gap: 0.6rem;
@@ -17,14 +18,14 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
-.icon { color: var(--ink-faint); font-size: 1.15rem; line-height: 1; flex: 0 0 auto; }
+.icon { color: var(--ink-faint); font-size: 1.3rem; line-height: 1; flex: 0 0 auto; }
 
 .input {
   flex: 1 1 auto; min-width: 0;
   border: 0; outline: none; background: transparent;
   color: var(--ink);
-  font: inherit; font-size: 1rem;
-  padding: 0.85rem 0;
+  font: inherit; font-size: 1.05rem;
+  padding: 1.05rem 0;
 }
 .input::placeholder { color: var(--ink-faint); }
 /* 검색 타입의 기본 취소 버튼 — 브라우저마다 모양이 달라 지우고 Esc로 통일한다 */

@@ -27,13 +27,14 @@ export default function HomePage() {
       {/* 히어로 = 검색. 계산기가 계속 늘어날 예정이라 슬로건을 읽히는 것보다
           찾는 걸 바로 찾게 하는 게 낫다. 설명은 검색 아래 한 줄로 줄인다. */}
       <section className={styles.hero}>
-        <h1 className={styles.title}>
-          뭘 계산해 드릴까요?
-        </h1>
+        {/* h1을 화면에서만 감춘다. 검색이 첫 화면을 다 쓰는 구성이라 큰 제목을 둘 자리가 없지만,
+            페이지에 h1이 아예 없으면 검색엔진과 스크린리더가 이 페이지가 뭔지 알 수 없다. */}
+        <h1 className="sr-only">딱칼크 — 연봉·세금·부동산 계산기</h1>
         <CalcSearch />
         <p className={styles.lead}>
           계산기 <strong>{allCalcHrefs().length}종</strong> · {rates.label} 제도 반영 ·
-          결과 숫자만 던지지 않고 <strong>어떤 요율로 얼마를 뗐는지</strong> 함께 보여드립니다.
+          <strong>&ldquo;월급&rdquo;, &ldquo;복비&rdquo;</strong>처럼 편한 말이나{' '}
+          <strong>숫자만</strong>(예: 5000) 넣어도 찾아드립니다.
         </p>
       </section>
 
