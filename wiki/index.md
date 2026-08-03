@@ -7,7 +7,9 @@
 슬로건: *"제도는 바뀝니다. 계산은 항상 최신으로."*
 WhenStage(콘서트 캘린더)의 인프라·SEO 노하우를 물려받아 2026-07-30 시작.
 
-- 로컬 경로: `d:/Gcalen/ttakcalc` · 도메인/배포: 미정
+- 로컬 경로: `d:/Gcalen/ttakcalc`
+- **운영: https://ttakcalc.com** (Vercel) · 저장소: github.com/jooyong319-png/ttakcalc
+- 계산기 28종 · 435페이지(정적) · 회귀 테스트 120개
 
 ## 코어
 - [[SCHEMA]] — 위키 사용법 + **제1원칙(계산이 틀리면 끝이다)** + 2단 구조 + 3동작 (먼저 읽기)
