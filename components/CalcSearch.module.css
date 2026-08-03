@@ -1,0 +1,100 @@
+/* 홈 히어로의 계산기 검색바.
+   계산기가 계속 늘어날 예정이라 목록을 훑게 두면 안 된다 — 첫 화면에서 바로 찾아 들어가게 한다. */
+
+.box { position: relative; max-width: 34rem; }
+
+.field {
+  display: flex; align-items: center; gap: 0.6rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--paper-card);
+  padding: 0 0.95rem;
+  transition: border-color 0.12s;
+}
+/* 포커스 링을 필드 전체에 그린다 — input에만 주면 테두리와 어긋나 보인다 */
+.field:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.icon { color: var(--ink-faint); font-size: 1.15rem; line-height: 1; flex: 0 0 auto; }
+
+.input {
+  flex: 1 1 auto; min-width: 0;
+  border: 0; outline: none; background: transparent;
+  color: var(--ink);
+  font: inherit; font-size: 1rem;
+  padding: 0.85rem 0;
+}
+.input::placeholder { color: var(--ink-faint); }
+/* 검색 타입의 기본 취소 버튼 — 브라우저마다 모양이 달라 지우고 Esc로 통일한다 */
+.input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+
+/* ─── 결과 목록 ─── */
+.list {
+  position: absolute; z-index: 40;
+  top: calc(100% + 0.5rem); left: 0; right: 0;
+  margin: 0; padding: 0.35rem;
+  list-style: none;
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-paper);
+  max-height: 24rem; overflow-y: auto;
+}
+
+.hit {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--ink);
+}
+/* 키보드 이동과 마우스 오버가 같은 표시를 쓴다 — 지금 어디에 있는지가 한 군데로만 보이도록 */
+.hitOn { background: var(--c-bg, var(--paper-sunken)); }
+
+.hitIcon {
+  flex: 0 0 auto;
+  width: 1.85rem; height: 1.85rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--c-bg, var(--paper-sunken));
+  color: var(--c-key, var(--ink-soft));
+  font-size: 0.9rem; font-weight: 700;
+}
+.hitOn .hitIcon { background: var(--c-key, var(--accent)); color: var(--on-key); }
+
+.hitBody { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 0.1rem; }
+.hitName { font-size: 0.92rem; font-weight: 700; }
+.hitDesc {
+  font-size: 0.78rem; color: var(--ink-soft);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.hitTag {
+  flex: 0 0 auto;
+  font-size: 0.7rem; font-weight: 600;
+  color: var(--c-key, var(--ink-faint));
+  white-space: nowrap;
+}
+
+/* 카테고리 색 — 항목마다 변수만 갈아끼우고 규칙은 하나로 둔다 */
+.c1 { --c-bg: var(--c1-bg); --c-key: var(--c1-key); }
+.c2 { --c-bg: var(--c2-bg); --c-key: var(--c2-key); }
+.c3 { --c-bg: var(--c3-bg); --c-key: var(--c3-key); }
+.c4 { --c-bg: var(--c4-bg); --c-key: var(--c4-key); }
+
+.empty {
+  position: absolute; z-index: 40;
+  top: calc(100% + 0.5rem); left: 0; right: 0;
+  margin: 0; padding: 0.9rem 1rem;
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-paper);
+  color: var(--ink-soft); font-size: 0.85rem; line-height: 1.6;
+}
+
+@media (max-width: 560px) {
+  .input { font-size: 16px; }  /* iOS는 16px 미만이면 포커스 시 화면을 확대한다 */
+  .hitTag { display: none; }
+}

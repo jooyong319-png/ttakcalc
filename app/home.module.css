@@ -1,5 +1,5 @@
 /* 검색 유입이 첫 답에 바로 닿도록 히어로는 최소한으로 */
-.hero { padding: 2.2rem 0 1.6rem; }
+.hero { padding: 2.4rem 0 1.8rem; display: flex; flex-direction: column; gap: 1rem; }
 
 .title {
   font-size: clamp(1.6rem, 4.5vw, 2.3rem);
@@ -16,7 +16,7 @@
   );
 }
 .lead {
-  margin: 0.65rem 0 0;
+  margin: 0;
   color: var(--ink-soft); font-size: 0.97rem; line-height: 1.6;
   max-width: 34rem;
 }
@@ -177,133 +177,3 @@
 .c2 { --tone-bg: var(--c2-bg); --tone-ink: var(--c2-ink); --tone-soft: var(--c2-soft); --tone-key: var(--c2-key); }
 .c3 { --tone-bg: var(--c3-bg); --tone-ink: var(--c3-ink); --tone-soft: var(--c3-soft); --tone-key: var(--c3-key); }
 .c4 { --tone-bg: var(--c4-bg); --tone-ink: var(--c4-ink); --tone-soft: var(--c4-soft); --tone-key: var(--c4-key); }
-
-/* ─── 증거 블록 ───────────────────────────────────────────────────────
-   "근거를 보여준다"는 말은 아무 힘이 없다. 실제 계산 하나를 펼쳐 놓고,
-   왼쪽(보통 받는 것)과 오른쪽(우리가 더 주는 것)의 밀도 차이로 말한다.
-   왼쪽을 일부러 휑하게 둔 게 이 블록의 설계다 — 그 여백이 메시지다. */
-.proof {
-  margin: 1.6rem 0 2.6rem;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--paper-card);
-}
-
-.proofHead {
-  padding: 1.3rem 1.3rem 1.1rem;
-  border-bottom: 1px solid var(--rule);
-}
-.proofTitle {
-  font-size: clamp(1.05rem, 3vw, 1.35rem);
-  font-weight: 800; letter-spacing: -0.03em; line-height: 1.35;
-  text-wrap: balance;
-}
-/* 제목 안의 형광펜은 줄바꿈을 허용해야 한다 — .mark는 nowrap이라 좁은 화면에서 넘친다 */
-.proofTitle .mark { white-space: normal; }
-.proofLead {
-  margin: 0.5rem 0 0;
-  color: var(--ink-soft); font-size: 0.88rem; line-height: 1.65;
-  max-width: 34rem;
-}
-
-.proofBody {
-  display: grid;
-  grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
-  align-items: stretch;
-}
-@media (max-width: 760px) {
-  .proofBody { grid-template-columns: 1fr; }
-}
-
-/* 왼쪽 — 숫자 하나뿐 */
-.proofOnly {
-  display: flex; flex-direction: column; justify-content: center;
-  gap: 0.35rem;
-  padding: 1.5rem 1.3rem;
-  background: var(--paper-sunken);
-  border-right: 1px solid var(--rule);
-}
-@media (max-width: 760px) {
-  .proofOnly { border-right: 0; border-bottom: 1px solid var(--rule); }
-}
-.proofOnlyTag, .proofFullTag {
-  font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em;
-  color: var(--ink-faint);
-}
-.proofOnlyNum {
-  font-size: clamp(1.3rem, 4vw, 1.7rem);
-  font-weight: 800; letter-spacing: -0.03em;
-  color: var(--ink);
-}
-.proofOnlyNum em { font-style: normal; font-size: 0.6em; font-weight: 700; margin-left: 0.12em; }
-.proofOnlyNote { font-size: 0.78rem; color: var(--ink-faint); }
-
-/* 오른쪽 — 명세와 근거 */
-.proofFull { padding: 1.3rem; display: flex; flex-direction: column; gap: 0.9rem; }
-
-.proofTable {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.82rem;
-}
-.proofTable th, .proofTable td {
-  text-align: left; vertical-align: top;
-  padding: 0.42rem 0.5rem 0.42rem 0;
-  border-bottom: 1px solid var(--rule);
-  line-height: 1.5;
-}
-.proofTable thead th {
-  font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em;
-  color: var(--ink-faint);
-  padding-bottom: 0.4rem;
-}
-.proofTable tbody th { font-weight: 700; color: var(--ink); white-space: nowrap; }
-.proofAmt {
-  text-align: right; white-space: nowrap;
-  font-weight: 700; color: var(--minus);
-  padding-right: 0.9rem !important;
-  font-variant-numeric: tabular-nums;
-}
-.proofBasis { color: var(--ink-soft); font-size: 0.78rem; }
-
-.proofSum th, .proofSum td {
-  border-top: 1px solid var(--rule-strong);
-  border-bottom: 0;
-  padding-top: 0.55rem;
-}
-.proofSum th { font-weight: 800; }
-
-/* 출처 — 접어 둔다. 펼치면 조문·고시번호가 그대로 나온다 */
-.proofSources {
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-sm);
-  background: var(--paper-sunken);
-  padding: 0.55rem 0.8rem;
-  font-size: 0.78rem;
-}
-.proofSources summary {
-  cursor: pointer;
-  font-weight: 700; color: var(--ink-soft);
-  list-style: none;
-}
-.proofSources summary::-webkit-details-marker { display: none; }
-.proofSources summary::before { content: '▸ '; color: var(--ink-faint); }
-.proofSources[open] summary::before { content: '▾ '; }
-.proofSources summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.proofSources ul { margin: 0.6rem 0 0; padding-left: 1.05rem; }
-.proofSources li { color: var(--ink-soft); line-height: 1.6; margin-bottom: 0.35rem; }
-.proofSources p {
-  margin: 0.6rem 0 0; padding-top: 0.55rem;
-  border-top: 1px solid var(--rule);
-  color: var(--ink-faint); line-height: 1.6;
-}
-
-.proofGo {
-  align-self: flex-start;
-  font-size: 0.83rem; font-weight: 700;
-  color: var(--accent);
-  text-decoration: none;
-}
-.proofGo:hover { text-decoration: underline; }
-.proofGo:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
