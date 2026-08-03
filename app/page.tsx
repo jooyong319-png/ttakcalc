@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import { latestYear, getRates } from '@/lib/rates';
 import { CATEGORIES } from '@/lib/catalog';
 import { quickAnswers } from '@/lib/quickAnswers';
+import { SITE } from '@/lib/site';
 import styles from './home.module.css';
+
+/* title/description은 layout의 기본값을 그대로 쓴다. canonical만 여기서 지정한다 —
+   layout에 넣으면 canonical을 빠뜨린 페이지가 전부 홈을 정본으로 가리키게 되어,
+   없는 것보다 나쁜 상태가 된다. */
+export const metadata: Metadata = {
+  alternates: { canonical: SITE.url },
+};
 
 /* 홈 = 답이 먼저 있는 페이지.
    계산기가 25개를 넘어가면서 목록을 다 늘어놓는 건 불가능해졌다. 대신
