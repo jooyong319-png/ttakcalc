@@ -37,6 +37,7 @@ const KEYWORDS: Record<string, string[]> = {
   '/calc/severance': ['퇴직', '퇴사', '평균임금', '퇴직연금'],
   '/calc/unemployment': ['구직급여', '실업', '고용보험', '퇴사', '실직'],
   '/calc/holiday-pay': ['주휴', '알바', '시급', '아르바이트'],
+  '/calc/overtime': ['연장', '야간', '휴일', '야근', '특근', '가산수당', '초과근무', '잔업', '시간외', '주말근무'],
   '/calc/parental-leave': ['육아휴직', '출산', '육휴', '출산휴가'],
   '/calc/annual-leave': ['연차', '휴가', '미사용연차', '월차'],
   '/calc/gift-tax': ['증여', '물려받', '용돈', '자녀증여'],

@@ -224,6 +224,17 @@ export interface YearRates {
     source: string;
     verifiedAt: string;
   };
+  /** 연장·야간·휴일 가산수당 — 근로기준법 제56조 */
+  overtime?: {
+    name: string;
+    overtimeRate: number; nightRate: number;
+    holidayWithin8Rate: number; holidayOver8Rate: number;
+    holidayBaseHours: number;
+    nightFromHour: number; nightToHour: number;
+    /** 이 인원 미만이면 제56조가 적용되지 않는다(제11조 ①) */
+    minEmployees: number;
+    note: string; source: string; verifiedAt: string;
+  };
   /** 배당소득. Gross-up률은 개정 이력이 있어(2023·2024년 개정) 원문으로 확인한 2026년만 넣었다. */
   dividend?: {
     /** 배당소득 원천징수세율(소득세법 제129조①2나) */

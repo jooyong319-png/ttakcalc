@@ -47,6 +47,7 @@ export const CATEGORIES: Category[] = [
       { href: '/calc/severance', name: '퇴직금', desc: '평균임금 기준 예상 퇴직금', icon: '◷' },
       { href: '/calc/unemployment', name: '실업급여', desc: '구직급여 일액·수급 기간', icon: '◇' },
       { href: '/calc/holiday-pay', name: '주휴수당', desc: '주 15시간 이상 근무 시', icon: '◴' },
+      { href: '/calc/overtime', name: '연장·야간·휴일수당', desc: '가산은 겹친다 · 야간 연장 2.0배', icon: '◑', featured: true },
       { href: '/calc/parental-leave', name: '육아휴직급여', desc: '개월별 지급액 · 2025 개편 반영', icon: '☺' },
       { href: '/calc/annual-leave', name: '연차수당', desc: '근속연수별 발생일수 · 미사용 수당', icon: '◷' },
       { href: '/calc/gift-tax', name: '증여세', desc: '관계별 공제 · 10년 합산', icon: '⊛' },
