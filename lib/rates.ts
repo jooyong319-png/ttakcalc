@@ -198,6 +198,32 @@ export interface YearRates {
     source: string;
     verifiedAt: string;
   };
+  /** 국민연금 노령연금. A값은 매년 바뀌므로 연도별로 둔다. */
+  pension?: {
+    name: string;
+    /** 전체 가입자 3년 평균소득월액의 평균(A값) */
+    aValue: number;
+    aValueNote: string;
+    /** 기본연금액 계수 — 제51조 ① 1천분의 1290 */
+    multiplier: number;
+    /** 20년 초과 1년당 가산율 — 제51조 ① 단서 */
+    over20BonusPerYear: number;
+    /** 노령연금 최소 가입기간(년) */
+    minYears: number;
+    /** 10~20년 구간의 기본 지급률과 1년당 가산 — 제63조 ①2 */
+    under20BaseRate: number;
+    under20PerYear: number;
+    /** 조기수령 지급률 — 제63조 ② */
+    earlyRates: { yearsEarly: number; rate: number }[];
+    /** 연기 1개월당 가산 — 제62조 ② */
+    deferPerMonth: number;
+    deferMaxMonths: number;
+    dependentSpouseAnnual: number;
+    dependentChildAnnual: number;
+    note: string;
+    source: string;
+    verifiedAt: string;
+  };
   /** 배당소득. Gross-up률은 개정 이력이 있어(2023·2024년 개정) 원문으로 확인한 2026년만 넣었다. */
   dividend?: {
     /** 배당소득 원천징수세율(소득세법 제129조①2나) */

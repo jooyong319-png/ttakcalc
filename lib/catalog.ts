@@ -82,6 +82,7 @@ export const CATEGORIES: Category[] = [
     icon: '↗',
     calcs: [
       { href: '/calc/dividend-tax', name: '배당소득세', desc: '2천만원 넘으면 얼마나 달라지나', icon: '％', featured: true },
+      { href: '/calc/pension', name: '국민연금 예상 수령액', desc: '조기·연기 수령 비교까지', icon: '◷', featured: true },
       { href: '/calc/loan', name: '대출 이자', desc: '원리금균등·원금균등 비교', icon: '↗', featured: true },
       { href: '/calc/car-tax', name: '자동차세', desc: '배기량·차령 · 연납 할인', icon: '◈', featured: true },
       { href: '/calc/car-cost', name: '자동차 유지비', desc: '기름값·세금·보험료 다 합쳐 월 얼마', icon: '◐', featured: true },
