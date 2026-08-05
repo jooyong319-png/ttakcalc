@@ -175,6 +175,29 @@ export interface YearRates {
     maxMonths: number;
     source: string;
   };
+  /** 상속세. 세율·신고세액공제는 giftTax의 것을 함께 쓴다(제26조·제69조가 같은 표를 가리킨다). */
+  inheritanceTax?: {
+    name: string;
+    /** 기초공제(제18조) */
+    basicDeduction: number;
+    /** 일괄공제(제21조) — 기초+인적 합계와 비교해 큰 쪽을 쓴다 */
+    lumpSumDeduction: number;
+    childDeduction: number;
+    minorPerYear: number;
+    minorUntilAge: number;
+    elderlyDeduction: number;
+    elderlyFromAge: number;
+    /** 배우자공제 최소액(제19조 ④) */
+    spouseMin: number;
+    /** 배우자공제 상한(제19조 ①2) */
+    spouseMax: number;
+    /** 배우자 법정상속분 가산율 — 직계비속의 1.5배(민법 제1009조 ②) */
+    spouseShareBonus: number;
+    financial: { smallThreshold: number; rate: number; floor: number; cap: number };
+    note: string;
+    source: string;
+    verifiedAt: string;
+  };
   /** 배당소득. Gross-up률은 개정 이력이 있어(2023·2024년 개정) 원문으로 확인한 2026년만 넣었다. */
   dividend?: {
     /** 배당소득 원천징수세율(소득세법 제129조①2나) */

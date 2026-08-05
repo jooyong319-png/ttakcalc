@@ -10,7 +10,7 @@
 // 사람들은 "연봉 실수령액"이 아니라 "월급", "세후", "실수령"이라고 친다. 동의어가 검색
 // 품질의 대부분이다 — 화면에 안 보이지만 이게 없으면 검색바는 있으나 마나다.
 import { CATEGORIES, type Tone } from './catalog';
-import { SALARY, NET, LEAVE_YEARS, GIFT, DIVIDEND } from './salaryPages';
+import { SALARY, NET, LEAVE_YEARS, GIFT, DIVIDEND, INHERIT } from './salaryPages';
 import { PRICE } from './propertyPages';
 import { CC, PUBLIC_PRICE } from './localTaxPages';
 
@@ -40,6 +40,7 @@ const KEYWORDS: Record<string, string[]> = {
   '/calc/parental-leave': ['육아휴직', '출산', '육휴', '출산휴가'],
   '/calc/annual-leave': ['연차', '휴가', '미사용연차', '월차'],
   '/calc/gift-tax': ['증여', '물려받', '용돈', '자녀증여'],
+  '/calc/inheritance-tax': ['상속', '유산', '물려받', '일괄공제', '배우자공제', '상속재산', '부모님재산'],
   '/calc/employer-cost': ['사업주', '회사부담', '인건비', '4대보험', '고용주'],
   '/calc/acquisition-tax': ['집사기', '매수', '아파트', '주택구입', '취득'],
   '/calc/property-tax': ['보유세', '공시가격', '재산'],
@@ -92,6 +93,7 @@ export const NUMERIC_ROUTES: NumericRoute[] = [
   { base: '/net-salary', label: '월 실수령', unit: '만원이면 연봉은', ...pick(NET), tone: 'c1' },
   { base: '/annual-leave', label: '근속', unit: '년차 연차 일수', ...pick(LEAVE_YEARS), tone: 'c1' },
   { base: '/gift-tax', label: '증여', unit: '만원 증여세', ...pick(GIFT), tone: 'c1' },
+  { base: '/inheritance-tax', label: '상속재산', unit: '만원 상속세', ...pick(INHERIT), tone: 'c1' },
   { base: '/dividend-tax', label: '배당', unit: '만원 배당소득세', ...pick(DIVIDEND), tone: 'c3' },
   { base: '/acquisition-tax', label: '주택', unit: '만원 취득세', ...pick(PRICE), tone: 'c2' },
   { base: '/brokerage-fee', label: '주택', unit: '만원 중개수수료', ...pick(PRICE), tone: 'c2' },

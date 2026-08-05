@@ -50,6 +50,7 @@ export const CATEGORIES: Category[] = [
       { href: '/calc/parental-leave', name: '육아휴직급여', desc: '개월별 지급액 · 2025 개편 반영', icon: '☺' },
       { href: '/calc/annual-leave', name: '연차수당', desc: '근속연수별 발생일수 · 미사용 수당', icon: '◷' },
       { href: '/calc/gift-tax', name: '증여세', desc: '관계별 공제 · 10년 합산', icon: '⊛' },
+      { href: '/calc/inheritance-tax', name: '상속세', desc: '일괄공제·배우자공제로 갈린다', icon: '⌂', featured: true },
       { href: '/calc/employer-cost', name: '사업주 4대보험 부담', desc: '직원 1명의 실제 인건비', icon: '⊡' },
     ],
   },
