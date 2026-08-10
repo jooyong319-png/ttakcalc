@@ -36,10 +36,17 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: ['/og.png'],
   },
-  // Google Search Console 소유 확인. HTML에 그대로 나가는 공개 값이라 환경변수로 숨길 이유가 없다.
+  // 검색엔진 소유 확인. HTML에 그대로 나가는 공개 값이라 환경변수로 숨길 이유가 없다.
   // 지우면 소유 확인이 풀리므로 건드리지 말 것.
+  //
+  // 네이버를 빠뜨리고 있었다(2026-08-06 추가). 연봉·세금 계산은 한국에서 네이버 검색
+  // 비중이 커서 구글만 붙여 두면 채널 하나를 통째로 버리는 셈이다.
   verification: {
     google: 'kMo3vdFCTcpE6GNyFbxKA5iv0vYXUMZut9fGA5zR1u8',
+    // Next의 verification에는 네이버 항목이 없어 other로 넣는다
+    other: {
+      'naver-site-verification': '7051dbc1a2cbf72d201c3c3b26140a2e76c61e75',
+    },
   },
 };
 
