@@ -22,11 +22,31 @@ const GENERATED: { base: string; values: number[] }[] = [
   { base: '/inheritance-tax', values: INHERIT.all() },
 ];
 
-// lastmod에 빌드시각을 넣지 않는다 — 내용이 안 바뀌었는데 매 배포마다 갱신됐다고 하면
-// 검색엔진이 lastmod를 무시하게 된다. 이 사이트의 내용은 요율 데이터가 바뀔 때만 바뀌므로
-// 요율의 verifiedAt을 그대로 쓴다.
+/** 요율 데이터 전체에서 가장 최근 확인일을 찾는다.
+ *
+ *  처음엔 연도 블록의 verifiedAt 하나만 썼는데, **계산기를 추가하는 경우를 빠뜨렸다**(2026-08-06).
+ *  상속세·국민연금·가산수당을 넣으면서 34개 URL이 새로 생겼는데도 lastmod는 사흘 전 날짜
+ *  그대로 나갔다. 구글이 lastmod를 믿으면 재크롤을 미루므로 새 페이지가 늦게 잡힌다.
+ *
+ *  섹션마다 붙은 verifiedAt 중 최댓값을 쓰면 새 데이터를 넣을 때 자동으로 올라간다.
+ *  빌드시각을 쓰지 않는 이유는 그대로다 — 내용이 안 바뀌었는데 매 배포마다 갱신됐다고 하면
+ *  검색엔진이 lastmod 자체를 무시하게 된다. */
+function latestVerifiedAt(): string {
+  const seen: string[] = [];
+  const walk = (node: unknown) => {
+    if (Array.isArray(node)) return node.forEach(walk);
+    if (!node || typeof node !== 'object') return;
+    for (const [k, v] of Object.entries(node as Record<string, unknown>)) {
+      if (k === 'verifiedAt' && typeof v === 'string') seen.push(v);
+      else walk(v);
+    }
+  };
+  walk(getRates(latestYear()));
+  return seen.sort().pop() ?? new Date().toISOString().slice(0, 10);
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date(getRates(latestYear()).verifiedAt);
+  const lastModified = new Date(latestVerifiedAt());
   const at = (url: string, priority: number): MetadataRoute.Sitemap[number] =>
     ({ url, lastModified, changeFrequency: 'monthly', priority });
 
