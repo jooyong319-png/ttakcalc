@@ -4,7 +4,7 @@ import { BrokerageCalc } from '@/components/PropertyCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '부동산 중개수수료 계산기',
+  title: `${latestYear()}년 부동산 중개수수료 계산기`,
   description: '매매·임대차 거래금액별 중개보수 상한을 요율과 한도액까지 근거와 함께 계산합니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/brokerage-fee' },
 };

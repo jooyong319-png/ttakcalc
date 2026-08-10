@@ -4,7 +4,7 @@ import { PercentCalc } from '@/components/BasicCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '퍼센트 계산기',
+  title: `${latestYear()}년 퍼센트 계산기`,
   description:
     'A의 B%, 증감률, 비율을 계산식과 함께 계산합니다. 연봉 인상률처럼 자주 쓰는 퍼센트 계산을 한 화면에서.',
   alternates: { canonical: 'https://ttakcalc.com/calc/percent' },

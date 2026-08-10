@@ -4,7 +4,7 @@ import { OvertimeCalc } from '@/components/OvertimeCalculator';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '연장·야간·휴일수당 계산기',
+  title: `${latestYear()}년 연장·야간·휴일수당 계산기`,
   description:
     '연장·야간·휴일근로 가산수당을 계산합니다. 가산은 겹칩니다 — 야간에 하는 연장근로는 2.0배, 휴일 8시간 초과분을 야간에 하면 2.5배입니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/overtime' },

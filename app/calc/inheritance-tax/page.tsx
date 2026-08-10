@@ -4,7 +4,7 @@ import { InheritanceCalc } from '@/components/InheritanceCalculator';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '상속세 계산기',
+  title: `${latestYear()}년 상속세 계산기`,
   description:
     '상속재산과 가족 구성만 넣으면 상속세를 계산합니다. 일괄공제와 인적공제 중 어느 쪽이 유리한지, 배우자공제가 얼마인지 근거 조문과 함께 보여드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/inheritance-tax' },

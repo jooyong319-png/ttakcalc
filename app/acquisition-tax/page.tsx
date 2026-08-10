@@ -6,7 +6,7 @@ import { PRICE, ACQ_CASES, DEFAULT_YEAR } from '@/lib/propertyPages';
 import { calcAcquisitionTax } from '@/lib/calc/property';
 
 export const metadata: Metadata = {
-  title: '주택 가격별 취득세 표',
+  title: '아파트·주택 가격별 취득세 표',
   description:
     '1억원부터 20억원까지 5,000만원 단위 주택 취득세를 한 표에 정리했습니다. 1주택·전용 85㎡ 이하 기준입니다.',
   alternates: { canonical: 'https://ttakcalc.com/acquisition-tax' },

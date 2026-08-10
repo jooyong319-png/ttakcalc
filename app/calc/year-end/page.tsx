@@ -4,7 +4,7 @@ import { YearEndCalc } from '@/components/TaxCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '연말정산 환급금 계산기',
+  title: `${latestYear()}년 연말정산 환급금 계산기`,
   description:
     '총급여와 기납부세액으로 연말정산 환급금 또는 추가 납부액을 계산합니다. 결정세액이 어떻게 나오는지 단계별 근거까지 보여드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/year-end' },

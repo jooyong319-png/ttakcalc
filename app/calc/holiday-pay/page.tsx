@@ -4,7 +4,7 @@ import { HolidayPayCalc } from '@/components/LaborCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '주휴수당 계산기',
+  title: `${latestYear()}년 주휴수당 계산기`,
   description: '시급과 주 근로시간으로 주휴수당을 계산합니다. 주 40시간 미만이면 비례 계산까지 근거와 함께 보여드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/holiday-pay' },
 };

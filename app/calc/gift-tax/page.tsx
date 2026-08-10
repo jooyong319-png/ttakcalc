@@ -4,7 +4,7 @@ import { GiftTaxCalc } from '@/components/ExtraCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '증여세 계산기',
+  title: `${latestYear()}년 증여세 계산기`,
   description:
     '부모·배우자·자녀에게 받은 돈의 증여세를 계산합니다. 10년 합산 공제 규정까지 반영해 실제 낼 세금을 보여드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/gift-tax' },

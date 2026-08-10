@@ -6,7 +6,7 @@ import { latestYear, getRates } from '@/lib/rates';
 import s from './exchange.module.css';
 
 export const metadata: Metadata = {
-  title: '환전 계산기',
+  title: `${latestYear()}년 환전 계산기`,
   description:
     '1,000달러를 환전하면 실제로 얼마가 드는지 계산합니다. 한국수출입은행 고시환율에 환전 스프레드와 우대율을 반영해 보여드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/exchange' },

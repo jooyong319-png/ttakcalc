@@ -4,7 +4,7 @@ import { PensionCalc } from '@/components/PensionCalculator';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '국민연금 예상 수령액 계산기',
+  title: `${latestYear()}년 국민연금 예상 수령액 계산기`,
   description:
     '가입기간과 평균 소득을 넣으면 노령연금 월 예상 수령액을 계산합니다. 조기수령·연기수령을 나란히 비교하고, 산식의 근거 조문까지 보여드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/pension' },

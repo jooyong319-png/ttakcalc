@@ -4,7 +4,7 @@ import { AcquisitionTaxCalc } from '@/components/PropertyCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '취득세 계산기',
+  title: `${latestYear()}년 취득세 계산기`,
   description: '주택 취득가액·면적·주택 수로 취득세와 지방교육세, 농어촌특별세까지 계산합니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/acquisition-tax' },
 };

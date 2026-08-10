@@ -4,7 +4,7 @@ import { DividendTaxCalc, DividendReverseCalc } from '@/components/DividendCalcu
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '배당소득세 계산기',
+  title: `${latestYear()}년 배당소득세 계산기`,
   description:
     '배당금에서 세금이 얼마나 빠지는지, 금융소득 2천만원을 넘으면 얼마나 달라지는지 계산합니다. 세후 월 배당 목표에서 필요한 배당금도 역산합니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/dividend-tax' },

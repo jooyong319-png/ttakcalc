@@ -4,7 +4,7 @@ import { EmploymentCompareCalc } from '@/components/CompareCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '정규직 vs 프리랜서 3.3% 비교',
+  title: `${latestYear()}년 정규직 vs 프리랜서 3.3% 비교`,
   description:
     '같은 계약금액일 때 정규직과 프리랜서 중 손에 쥐는 돈이 얼마나 다른지 비교합니다. 4대보험·퇴직금·연차까지 함께 따져봅니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/employment-compare' },

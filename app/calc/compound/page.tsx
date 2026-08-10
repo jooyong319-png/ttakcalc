@@ -4,7 +4,7 @@ import { CompoundCalc } from '@/components/BasicCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '예·적금 이자 계산기',
+  title: `${latestYear()}년 예·적금 이자 계산기`,
   description:
     '단리·월복리 만기 수령액을 이자소득세 15.4%까지 반영해 계산합니다. 세전 이자율과 실제 손에 쥐는 금액의 차이를 보여드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/compound' },

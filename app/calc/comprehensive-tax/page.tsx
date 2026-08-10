@@ -4,7 +4,7 @@ import { ComprehensiveTaxCalc } from '@/components/TaxCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '종합소득세 계산기',
+  title: `${latestYear()}년 종합소득세 계산기`,
   description:
     '프리랜서·사업자의 5월 종합소득세를 계산합니다. 3.3%로 뗀 기납부세액과 비교해 환급인지 추가 납부인지 보여드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/comprehensive-tax' },

@@ -4,7 +4,7 @@ import { CarTaxCalc } from '@/components/TaxCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '자동차세 계산기',
+  title: `${latestYear()}년 자동차세 계산기`,
   description:
     '배기량과 차령을 넣으면 연간 자동차세와 지방교육세, 1월 연납 할인액까지 근거와 함께 계산합니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/car-tax' },

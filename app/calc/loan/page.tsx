@@ -4,7 +4,7 @@ import { LoanCalc } from '@/components/PropertyCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '대출 이자 계산기',
+  title: `${latestYear()}년 대출 이자 계산기`,
   description: '원리금균등·원금균등·만기일시 상환 방식별 월 상환액과 총 이자를 계산식과 함께 비교합니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/loan' },
 };

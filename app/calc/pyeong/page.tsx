@@ -4,7 +4,7 @@ import { AreaCalc } from '@/components/BasicCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '평 ↔ ㎡ 변환',
+  title: `${latestYear()}년 평 ↔ ㎡ 변환`,
   description:
     '전용면적 84㎡가 몇 평인지 바로 변환합니다. 85㎡를 넘으면 취득세에 농어촌특별세가 붙는다는 점까지 함께 알려드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/pyeong' },

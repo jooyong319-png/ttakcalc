@@ -4,7 +4,7 @@ import { VatCalc } from '@/components/BasicCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '부가가치세 계산기',
+  title: `${latestYear()}년 부가가치세 계산기`,
   description:
     '공급가액에서 부가세를, 합계금액에서 공급가액을 되짚어 계산합니다. 합계에서 10%를 빼면 왜 틀리는지도 알려드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/vat' },

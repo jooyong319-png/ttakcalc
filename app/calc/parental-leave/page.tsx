@@ -4,7 +4,7 @@ import { ParentalLeaveCalc } from '@/components/TaxCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '육아휴직급여 계산기',
+  title: `${latestYear()}년 육아휴직급여 계산기`,
   description:
     '월 통상임금으로 육아휴직급여를 개월별로 계산합니다. 2025년부터 상한이 250만원으로 오르고 사후지급금이 폐지됐습니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/parental-leave' },

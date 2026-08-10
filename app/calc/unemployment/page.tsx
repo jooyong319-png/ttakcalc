@@ -4,7 +4,7 @@ import { UnemploymentCalc } from '@/components/LaborCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '실업급여 계산기',
+  title: `${latestYear()}년 실업급여 계산기`,
   description: '퇴직 전 평균임금·고용보험 가입기간·연령으로 구직급여 일액과 소정급여일수, 총 예상 수령액을 계산합니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/unemployment' },
 };

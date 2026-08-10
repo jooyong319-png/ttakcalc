@@ -27,7 +27,9 @@ export function generateMetadata({ params }: { params: { man: string } }): Metad
   const r = calc(man, ACQ_CASES[0], DEFAULT_YEAR);
   const label = manLabel(man);
   return {
-    title: `${label} 주택 취득세 — 총 ${won(r.total)}원`,
+    // 검색어는 "주택"이 아니라 "아파트"로 들어온다(GSC 노출 1위: "20억 아파트 취득세").
+    // 화면 제목은 법령 용어인 "주택"을 유지하되, 검색 결과에 나가는 title에는 둘 다 담는다.
+    title: `${label} 아파트·주택 취득세 — 총 ${won(r.total)}원`,
     description:
       `${DEFAULT_YEAR}년 기준 ${label} 주택을 살 때 취득세는 ${won(r.acquisitionTax)}원, ` +
       `지방교육세까지 합치면 ${won(r.total)}원입니다(1주택·전용 85㎡ 이하 기준). ` +
@@ -68,7 +70,7 @@ export default function AcquisitionTaxPage({ params }: { params: { man: string }
     mainEntity: [
       {
         '@type': 'Question',
-        name: `${label} 주택 취득세는 얼마인가요?`,
+        name: `${label} 아파트 취득세는 얼마인가요?`,
         acceptedAnswer: {
           '@type': 'Answer',
           text:

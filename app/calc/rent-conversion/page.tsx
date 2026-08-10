@@ -4,7 +4,7 @@ import { RentConversionCalc } from '@/components/ExtraCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '전월세 전환율 계산기',
+  title: `${latestYear()}년 전월세 전환율 계산기`,
   description:
     '보증금을 월세로 돌릴 때의 법정 상한 월세를 계산합니다. 한국은행 기준금리에 연동된 전환율을 반영합니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/rent-conversion' },

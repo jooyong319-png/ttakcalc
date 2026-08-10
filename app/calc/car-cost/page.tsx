@@ -4,7 +4,7 @@ import { CarCostCalc } from '@/components/CarCostCalculator';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '자동차 유지비 계산기',
+  title: `${latestYear()}년 자동차 유지비 계산기`,
   description:
     '기름값·자동차세·보험료·정비비·주차비를 한 번에 더해 월 유지비와 1km당 비용을 냅니다. 자동차세는 지방세법 조문대로 계산합니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/car-cost' },

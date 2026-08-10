@@ -4,7 +4,7 @@ import { SalaryCalculator } from '@/components/SalaryCalculator';
 import { availableYears, latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '연봉 실수령액 계산기',
+  title: `${latestYear()}년 연봉 실수령액 계산기`,
   description:
     '연봉을 넣으면 4대보험·소득세를 각각 얼마씩 떼는지 근거까지 보여드립니다. 연도별 요율을 그대로 보관해 과거 기준으로도 계산할 수 있어요.',
   alternates: { canonical: 'https://ttakcalc.com/calc/salary' },

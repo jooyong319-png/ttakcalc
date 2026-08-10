@@ -4,7 +4,7 @@ import { ComprehensivePropertyCalc } from '@/components/ExtraCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '종합부동산세 계산기',
+  title: `${latestYear()}년 종합부동산세 계산기`,
   description:
     '보유 주택 공시가격 합계로 종합부동산세를 계산합니다. 1세대 1주택 12억 공제와 구간별 누진세율을 반영합니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/comprehensive-property-tax' },

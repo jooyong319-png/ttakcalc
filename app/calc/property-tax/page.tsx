@@ -4,7 +4,7 @@ import { PropertyTaxCalc } from '@/components/TaxCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '재산세 계산기',
+  title: `${latestYear()}년 재산세 계산기`,
   description:
     '주택 공시가격으로 재산세·도시지역분·지방교육세를 계산합니다. 1세대 1주택 공정시장가액비율과 특례세율도 반영합니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/property-tax' },

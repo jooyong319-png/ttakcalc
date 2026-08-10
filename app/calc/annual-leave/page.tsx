@@ -4,7 +4,7 @@ import { AnnualLeaveCalc } from '@/components/ExtraCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '연차수당 계산기',
+  title: `${latestYear()}년 연차수당 계산기`,
   description:
     '근속연수별 연차 발생일수와 미사용 연차수당을 계산합니다. 3년째부터 2년마다 1일씩 늘어나는 가산휴가까지 반영합니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/annual-leave' },

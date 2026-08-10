@@ -4,7 +4,7 @@ import { FreelancerCalc } from '@/components/LaborCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '프리랜서 3.3% 계산기',
+  title: `${latestYear()}년 프리랜서 3.3% 계산기`,
   description: '계약금액에서 3.3%를 뗀 실수령액을, 반대로 원하는 실수령액에서 필요한 계약금액도 역산해 드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/freelancer' },
 };

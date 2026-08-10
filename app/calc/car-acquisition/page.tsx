@@ -4,7 +4,7 @@ import { CarAcquisitionCalc } from '@/components/ExtraCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '자동차 취득세 계산기',
+  title: `${latestYear()}년 자동차 취득세 계산기`,
   description:
     '차량 가격으로 자동차 취득세를 계산합니다. 승용 7%, 경차 4%, 이륜차 2% 등 종류별 세율을 근거와 함께 보여드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/car-acquisition' },

@@ -4,7 +4,7 @@ import { TransferTaxCalc } from '@/components/ExtraCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '양도소득세 계산기',
+  title: `${latestYear()}년 양도소득세 계산기`,
   description:
     '집을 팔 때 내는 양도소득세를 계산합니다. 1세대 1주택 12억 비과세, 장기보유특별공제, 다주택 중과까지 반영합니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/transfer-tax' },

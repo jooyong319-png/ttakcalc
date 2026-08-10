@@ -4,7 +4,7 @@ import { EmployerCostCalc } from '@/components/CompareCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '4대보험 사업주 부담 계산기',
+  title: `${latestYear()}년 4대보험 사업주 부담 계산기`,
   description:
     '직원 1명을 고용하면 회사가 실제로 얼마를 쓰는지 계산합니다. 국민연금·건강보험·고용보험·산재보험 사업주 부담분을 항목별로 보여드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/employer-cost' },

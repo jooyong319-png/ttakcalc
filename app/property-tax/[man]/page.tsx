@@ -23,7 +23,7 @@ export function generateMetadata({ params }: { params: { man: string } }): Metad
   const r = calcPropertyTax({ year: DEFAULT_YEAR, publicPrice: manToWon(man), ...PROPERTY_ASSUMPTION });
   const label = manLabel(man);
   return {
-    title: `공시가격 ${label} 재산세 — 연 ${won(r.total)}원`,
+    title: `공시가격 ${label} 아파트 재산세 — 연 ${won(r.total)}원`,
     description:
       `${DEFAULT_YEAR}년 기준 공시가격 ${label} 주택의 재산세는 도시지역분·지방교육세를 포함해 ` +
       `연 ${won(r.total)}원입니다(1세대 1주택 기준). 7월·9월에 ${won(r.half)}원씩 나눠 냅니다.`,

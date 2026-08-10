@@ -4,7 +4,7 @@ import { ReverseSalaryCalc } from '@/components/CompareCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '실수령액으로 연봉 역산하기',
+  title: `${latestYear()}년 실수령액으로 연봉 역산하기`,
   description:
     '월 실수령액 300만원을 받으려면 연봉이 얼마여야 하는지 역산합니다. 4대보험·세금을 거꾸로 되짚어 필요한 세전 연봉을 알려드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/reverse-salary' },

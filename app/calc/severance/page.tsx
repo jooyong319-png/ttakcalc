@@ -4,7 +4,7 @@ import { SeveranceCalc } from '@/components/LaborCalculators';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: '퇴직금 계산기',
+  title: `${latestYear()}년 퇴직금 계산기`,
   description: '입사일·퇴사일과 월급을 넣으면 1일 평균임금부터 예상 퇴직금까지 계산 근거를 함께 보여드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/severance' },
 };
