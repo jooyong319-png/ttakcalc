@@ -60,6 +60,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     at(`${BASE}/privacy`, 0.3),
     ...CATEGORIES.map(c => at(`${BASE}/c/${c.slug}`, 0.9)),
     ...allCalcHrefs().map(h => at(`${BASE}${h}`, 0.9)),
+    // 목록 페이지 — 상세 페이지로 가는 크롤링 경로다. 상세보다 우선순위를 높게 준다.
+    ...GENERATED.map(g => at(`${BASE}${g.base}`, 0.7)),
     ...GENERATED.flatMap(g => g.values.map(v => at(`${BASE}${g.base}/${v}`, 0.6))),
-  ];
+  ]
+    // 카탈로그와 GENERATED에 같은 URL이 들어가는 경우가 있다(예: /salary는 목록 페이지이면서
+    // 카탈로그 항목이기도 하다). 사이트맵에 같은 loc이 두 번 나오면 안 된다.
+    .filter((e, i, all) => all.findIndex(x => x.url === e.url) === i);
 }

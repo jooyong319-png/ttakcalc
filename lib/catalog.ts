@@ -13,6 +13,9 @@ export interface CalcItem {
   icon: string;
   /** 카테고리 허브·홈에서 앞줄에 세울 것 */
   featured?: boolean;
+  /** 'table'은 계산기가 아니라 값별 페이지의 목록이다.
+   *  허브에 링크를 노출해 크롤 경로를 만들되, "계산기 N종" 집계에서는 뺀다. */
+  kind?: 'table';
 }
 
 export interface Category {
@@ -38,7 +41,7 @@ export const CATEGORIES: Category[] = [
     icon: '₩',
     calcs: [
       { href: '/calc/salary', name: '연봉 실수령액', desc: '4대보험·세금 공제 내역까지', icon: '₩', featured: true },
-      { href: '/salary', name: '연봉별 실수령액 표', desc: '2천만~1억, 100만원 단위', icon: '☰', featured: true },
+      { href: '/salary', name: '연봉별 실수령액 표', desc: '2천만~1억, 100만원 단위', icon: '☰', featured: true, kind: 'table' },
       { href: '/calc/reverse-salary', name: '연봉 역산', desc: '실수령액 → 필요한 연봉', icon: '⇄', featured: true },
       { href: '/calc/year-end', name: '연말정산 환급금', desc: '결정세액 vs 기납부세액', icon: '↺' },
       { href: '/calc/comprehensive-tax', name: '종합소득세', desc: '5월 신고 · 환급·추가납부', icon: '⊞' },
@@ -53,6 +56,10 @@ export const CATEGORIES: Category[] = [
       { href: '/calc/gift-tax', name: '증여세', desc: '관계별 공제 · 10년 합산', icon: '⊛' },
       { href: '/calc/inheritance-tax', name: '상속세', desc: '일괄공제·배우자공제로 갈린다', icon: '⌂', featured: true },
       { href: '/calc/employer-cost', name: '사업주 4대보험 부담', desc: '직원 1명의 실제 인건비', icon: '⊡' },
+      { href: '/net-salary', name: '월 실수령액별 필요 연봉 표', desc: '150만~700만, 10만원 단위', icon: '☰', kind: 'table' },
+      { href: '/gift-tax', name: '증여 금액별 증여세 표', desc: '1천만~10억, 1천만원 단위', icon: '☰', kind: 'table' },
+      { href: '/inheritance-tax', name: '상속재산별 상속세 표', desc: '1억~30억, 1억원 단위', icon: '☰', kind: 'table' },
+      { href: '/annual-leave', name: '근속연수별 연차 일수 표', desc: '1~30년차', icon: '☰', kind: 'table' },
     ],
   },
   {
@@ -71,6 +78,9 @@ export const CATEGORIES: Category[] = [
       { href: '/calc/comprehensive-property-tax', name: '종합부동산세', desc: '공시가격 합계 · 12월 부과', icon: '⌸' },
       { href: '/calc/rent-conversion', name: '전월세 전환율', desc: '보증금 → 월세 법정 상한', icon: '⇆' },
       { href: '/calc/brokerage-fee', name: '중개수수료', desc: '거래금액별 상한요율', icon: '◎' },
+      { href: '/acquisition-tax', name: '주택 가격별 취득세 표', desc: '1억~20억, 5천만원 단위', icon: '☰', kind: 'table' },
+      { href: '/brokerage-fee', name: '거래 금액별 중개수수료 표', desc: '매매·임대차 상한', icon: '☰', kind: 'table' },
+      { href: '/property-tax', name: '공시가격별 재산세 표', desc: '1억~15억, 5천만원 단위', icon: '☰', kind: 'table' },
     ],
   },
   {
@@ -89,6 +99,8 @@ export const CATEGORIES: Category[] = [
       { href: '/calc/car-cost', name: '자동차 유지비', desc: '기름값·세금·보험료 다 합쳐 월 얼마', icon: '◐', featured: true },
       { href: '/calc/exchange', name: '환전', desc: '고시환율 + 스프레드·우대율', icon: '⇌', featured: true },
       { href: '/calc/car-acquisition', name: '자동차 취득세', desc: '차 살 때 · 승용 7%', icon: '⊙' },
+      { href: '/dividend-tax', name: '배당금별 배당소득세 표', desc: '500만~2억, 500만원 단위', icon: '☰', kind: 'table' },
+      { href: '/car-tax', name: '배기량별 자동차세 표', desc: '800~3,000cc', icon: '☰', kind: 'table' },
     ],
   },
   {
@@ -114,6 +126,11 @@ export function categoryBySlug(slug: string): Category | undefined {
 }
 
 /** 사이트맵·검증용 — 모든 계산기 경로 */
+/** 계산기 수 — 값별 페이지의 목록(kind: 'table')은 계산기가 아니므로 뺀다. */
+export function calcCount(): number {
+  return CATEGORIES.reduce((n, c) => n + c.calcs.filter(x => x.kind !== 'table').length, 0);
+}
+
 export function allCalcHrefs(): string[] {
   return CATEGORIES.flatMap(c => c.calcs.map(x => x.href));
 }

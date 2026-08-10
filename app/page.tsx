@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { latestYear, getRates } from '@/lib/rates';
-import { CATEGORIES, allCalcHrefs } from '@/lib/catalog';
+import { CATEGORIES, calcCount } from '@/lib/catalog';
 import { quickAnswers } from '@/lib/quickAnswers';
 import { CalcSearch } from '@/components/CalcSearch';
 import { SITE } from '@/lib/site';
@@ -32,7 +32,7 @@ export default function HomePage() {
         <h1 className="sr-only">딱칼크 — 연봉·세금·부동산 계산기</h1>
         <CalcSearch />
         <p className={styles.lead}>
-          계산기 <strong>{allCalcHrefs().length}종</strong> · {rates.label} 제도 반영 ·
+          계산기 <strong>{calcCount()}종</strong> · {rates.label} 제도 반영 ·
           <strong>&ldquo;월급&rdquo;, &ldquo;복비&rdquo;</strong>처럼 편한 말이나{' '}
           <strong>숫자만</strong>(예: 5000) 넣어도 찾아드립니다.
         </p>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SITE } from '@/lib/site';
-import { CATEGORIES, allCalcHrefs } from '@/lib/catalog';
+import { CATEGORIES, calcCount } from '@/lib/catalog';
 import { availableYears, getRates, latestYear } from '@/lib/rates';
 import s from '../legal.module.css';
 
@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 
 // 숫자를 손으로 적지 않는다 — 계산기를 추가했는데 소개 페이지만 옛날 숫자로 남는 일을 막는다.
 export default function AboutPage() {
-  const calcCount = allCalcHrefs().length;
   const years = availableYears();
   const verifiedAt = getRates(latestYear()).verifiedAt;
 
@@ -34,7 +33,7 @@ export default function AboutPage() {
         <section>
           <h2>무엇을 제공하나요</h2>
           <p>
-            현재 <strong>계산기 {calcCount}종</strong>을 {CATEGORIES.length}개 분야로 나누어
+            현재 <strong>계산기 {calcCount()}종</strong>을 {CATEGORIES.length}개 분야로 나누어
             제공합니다. 모두 무료이며 회원가입이 없습니다.
           </p>
           <ul>
