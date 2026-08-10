@@ -173,6 +173,21 @@ export interface YearRates {
     name: string; note: string;
     tiers: { untilMonth: number | null; rate: number; max: number; min: number; label: string }[];
     maxMonths: number;
+    /** 휴직 **기간** 규정 — 급여(고용보험법)와 기간(남녀고용평등법)은 근거 법이 다르다 */
+    period?: {
+      baseMonths: number;
+      /** 요건 충족 시 추가되는 개월 */
+      extraMonths: number;
+      /** 부모가 각각 이만큼 이상 써야 추가분을 받는다 */
+      extraConditionMonths: number;
+      /** 분할 횟수 한도 */
+      splitLimit: number;
+      /** 만 N세 이하 */
+      childAgeLimit: number;
+      /** 초등학교 N학년 이하 */
+      schoolGradeLimit: number;
+      note: string; source: string; verifiedAt: string;
+    };
     source: string;
   };
   /** 상속세. 세율·신고세액공제는 giftTax의 것을 함께 쓴다(제26조·제69조가 같은 표를 가리킨다). */

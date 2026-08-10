@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { CalcPage } from '@/components/CalcPage';
 import { ParentalLeaveCalc } from '@/components/TaxCalculators';
+import { LeavePeriodCalc } from '@/components/LeavePeriodCalculator';
 import { latestYear, getRates } from '@/lib/rates';
 
 export const metadata: Metadata = {
-  title: `${latestYear()}년 육아휴직급여 계산기`,
+  title: `${latestYear()}년 육아휴직 급여·기간 계산기`,
   description:
-    '월 통상임금으로 육아휴직급여를 개월별로 계산합니다. 2025년부터 상한이 250만원으로 오르고 사후지급금이 폐지됐습니다.',
+    '육아휴직급여와 사용 기간을 함께 계산합니다. 자녀 생년월일을 넣으면 언제까지 쓸 수 있는지, 몇 개월 남았는지, 분할은 몇 번 가능한지 조문 근거와 함께 보여드립니다.',
   alternates: { canonical: 'https://ttakcalc.com/calc/parental-leave' },
 };
 
@@ -49,6 +50,14 @@ export default function Page() {
       ]}
     >
       <ParentalLeaveCalc year={year} />
+
+      <h2 style={{ marginTop: '2.4rem' }}>언제까지, 얼마나 쓸 수 있나</h2>
+      <p style={{ color: 'var(--ink-soft)', fontSize: '0.9rem', lineHeight: 1.7, maxWidth: '38rem' }}>
+        급여만큼 자주 묻는 게 <strong>기간</strong>입니다. 자녀 생년월일을 넣으면 신청 기한과
+        남은 개월, 분할 가능 횟수를 계산합니다.
+      </p>
+      <LeavePeriodCalc year={year} />
+
     </CalcPage>
   );
 }
