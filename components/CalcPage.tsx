@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { linkifyLaw } from '@/lib/lawLink';
 import type { Tone } from '@/lib/catalog';
 import styles from './CalcPage.module.css';
 
@@ -58,7 +59,8 @@ export function CalcPage({
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>계산에 적용된 기준</h2>
           <ul className={styles.basisList}>
-            {basisItems.map(b => <li key={b}>{b}</li>)}
+            {/* 조문은 국가법령정보센터 원문으로 링크한다 — YMYL 신뢰 신호 */}
+            {basisItems.map(b => <li key={b}>{linkifyLaw(b, styles.lawLink)}</li>)}
           </ul>
           <div className={styles.verified}>
             <span className="stamp">확인 {verifiedAt}</span>

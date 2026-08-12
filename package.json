@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test": "tsc -p tsconfig.test.json && node --test dist-test/test/*.test.js"
+    "test": "tsc -p tsconfig.test.json && node --test dist-test/test/*.test.js",
+    "axe": "node scripts/axe.mjs"
   },
   "dependencies": {
     "next": "14.2.35",
@@ -19,6 +20,7 @@
     "@types/node": "22.10.2",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
+    "axe-core": "^4.13.0",
     "typescript": "5.5.3"
   },
   "engines": {
