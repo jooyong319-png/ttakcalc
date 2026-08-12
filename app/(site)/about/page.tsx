@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SITE } from '@/lib/site';
 import { CATEGORIES, calcCount } from '@/lib/catalog';
-import { availableYears, getRates, latestYear } from '@/lib/rates';
+import { availableYears } from '@/lib/rates';
 import { valueCorrectionCount } from '@/lib/corrections';
+import { latestVerifiedAt } from '@/lib/jsonLd';
 import s from '../legal.module.css';
 
 export const metadata: Metadata = {
@@ -16,7 +17,9 @@ export const metadata: Metadata = {
 // 숫자를 손으로 적지 않는다 — 계산기를 추가했는데 소개 페이지만 옛날 숫자로 남는 일을 막는다.
 export default function AboutPage() {
   const years = availableYears();
-  const verifiedAt = getRates(latestYear()).verifiedAt;
+  // 연도 블록의 verifiedAt만 읽으면 그 뒤에 개별 항목을 확인한 날이 반영되지 않는다.
+  // 실제보다 오래 방치된 것처럼 보이게 되는데, 하필 신뢰를 이야기하는 페이지에서 그러면 안 된다.
+  const verifiedAt = latestVerifiedAt();
 
   return (
     <div className="container-narrow">
@@ -31,6 +34,38 @@ export default function AboutPage() {
       </header>
 
       <div className={s.body}>
+        <section>
+          <h2>누가 만들고 관리하나요</h2>
+          <p>
+            개인이 만들어 혼자 관리하는 사이트입니다. 법인이나 대행사가 아니고, 광고 대행이나
+            제휴 링크로 운영하지도 않습니다.
+          </p>
+          <div className={s.contact}>
+            <span>
+              <span className={s.contactLabel}>운영자</span>
+              {SITE.operator}
+            </span>
+            <span>
+              <span className={s.contactLabel}>운영 시작</span>
+              <span className="num">{SITE.since}</span>
+            </span>
+            <span>
+              <span className={s.contactLabel}>연락처</span>
+              <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            </span>
+          </div>
+          <p>
+            계산기를 쓸 때마다 <strong>&ldquo;이 숫자가 어디서 나온 거지&rdquo;</strong>가 궁금했는데
+            답을 주는 곳이 없어서 직접 만들었습니다. 그래서 이 사이트는 결과보다 근거를 먼저
+            보여주는 쪽으로 만들어져 있습니다.
+          </p>
+          <p>
+            혼자 관리하는 사이트라 사람이 놓치는 부분이 생깁니다. 그래서 요율은 손으로 외우지 않고
+            데이터로 관리하고, 근거 없이 값이 바뀌면 배포가 막히도록 자동 검사를 걸어 두었습니다.
+            그래도 틀린 적이 있고, 그건 <Link href="/corrections">정정 이력</Link>에 적어 두었습니다.
+          </p>
+        </section>
+
         <section>
           <h2>무엇을 제공하나요</h2>
           <p>

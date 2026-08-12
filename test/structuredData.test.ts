@@ -10,6 +10,7 @@ import { join } from 'node:path';
 
 import { breadcrumbLd, categoryHrefByName, latestVerifiedAt, ldJson } from '../lib/jsonLd';
 import { CATEGORIES } from '../lib/catalog';
+import { getRates, latestYear } from '../lib/rates';
 
 test('구조화데이터 — 카테고리 이름은 반드시 카탈로그에 있어야 한다', () => {
   // 계산기 페이지가 넘기는 category가 카탈로그에 없으면 눈썹줄 링크가 홈으로 새고
@@ -70,4 +71,23 @@ test('구조화데이터 — 계산기 페이지의 category가 실제 카탈로
     if (want && want !== used) bad.push(`${file}: "${used}" ≠ 카탈로그의 "${want}"`);
   }
   assert.deepEqual(bad, []);
+});
+
+test('구조화데이터 — 대조일은 데이터 어디에 있든 가장 최근 것을 집는다', () => {
+  // 연도 블록의 verifiedAt만 읽던 시절, 그 뒤 개별 항목(2027년 최저임금 예고)을
+  // 확인한 날이 반영되지 않아 소개 페이지가 9일 오래된 날짜를 보여주고 있었다.
+  // 하필 신뢰를 이야기하는 페이지에서 실제보다 방치된 것처럼 보이는 문제였다.
+  const rates = getRates(latestYear()) as unknown as Record<string, unknown>;
+  const nested: string[] = [];
+  const walk = (n: unknown) => {
+    if (Array.isArray(n)) return n.forEach(walk);
+    if (!n || typeof n !== 'object') return;
+    for (const [k, v] of Object.entries(n as Record<string, unknown>)) {
+      if (k === 'verifiedAt' && typeof v === 'string') nested.push(v);
+      else walk(v);
+    }
+  };
+  walk(rates);
+  const deepest = nested.slice().sort().pop();
+  assert.equal(latestVerifiedAt(), deepest, '중첩된 verifiedAt을 놓치고 있다');
 });
