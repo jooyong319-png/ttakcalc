@@ -5,7 +5,7 @@ import { JetBrains_Mono } from 'next/font/google';
 import { SITE } from '@/lib/site';
 import { SiteNav } from '@/components/SiteNav';
 import { Analytics } from '@/components/Analytics';
-import './globals.css';
+import '../globals.css';
 
 /* 숫자 전용 등폭. 계산기라 자릿수가 흔들리면 안 되고, 0에 슬래시가 있어 6/8과 헷갈리지 않는다. */
 const mono = JetBrains_Mono({
@@ -93,6 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav className="footer-nav" aria-label="사이트 정보">
               <Link href="/about">사이트 소개</Link>
               <Link href="/changes">제도 변화</Link>
+              <Link href="/embed">계산기 임베드</Link>
               <Link href="/terms">이용약관</Link>
               <Link href="/privacy" className="footer-strong">개인정보처리방침</Link>
               <a href={`mailto:${SITE.email}`}>문의</a>

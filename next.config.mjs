@@ -30,7 +30,11 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/:path*',
+        // ⚠️ 경로에서 /embed/ 를 빼 두는 이유 — 한 응답에 CSP 헤더가 두 번 붙으면
+        // 브라우저는 **둘 다** 만족시키려 하므로 더 좁은 'self'가 이긴다. 아래에서
+        // /embed/* 에 frame-ancestors * 를 줘도 여기 규칙이 같이 붙으면 무효가 된다.
+        // (안내 페이지 /embed 자체는 여기 남는다 — 프레임에 들어갈 일이 없다)
+        source: '/:path((?!embed/).*)',
         headers: [
           // 클릭재킹 차단. X-Frame-Options: SAMEORIGIN 을 쓰다가 CSP로 바꿨다.
           //
@@ -50,6 +54,18 @@ const nextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
         ],
+      },
+      {
+        // 임베드만 아무 사이트에서나 프레임에 넣을 수 있어야 한다.
+        //
+        // /embed/* 는 계산기 하나와 출처 한 줄뿐이라 클릭재킹으로 얻어낼 게 없다.
+        // 로그인도 없고, 누르면 상태가 바뀌는 버튼도 없고, 개인정보 입력도 없다.
+        // 나머지 경로는 위의 'self' 규칙이 그대로 적용돼 여전히 전부 차단이다.
+        //
+        // ⚠️ 이 예외를 다른 경로로 넓히지 말 것. 넓히는 순간 사이트 전체가 클릭재킹
+        //    대상이 된다. 임베드에 상태를 바꾸는 기능을 추가할 때도 이 줄을 다시 볼 것.
+        source: '/embed/:path+',  // + 는 1개 이상 — 안내 페이지 /embed 자체는 제외된다
+        headers: [{ key: 'Content-Security-Policy', value: 'frame-ancestors *' }],
       },
       {
         // 폰트는 내용이 바뀌면 파일명이 바뀌므로 영구 캐시해도 안전하다

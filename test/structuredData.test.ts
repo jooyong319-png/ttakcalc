@@ -53,9 +53,14 @@ test('구조화데이터 — 계산기 페이지의 category가 실제 카탈로
   const byHref = new Map<string, string>();
   for (const c of CATEGORIES) for (const x of c.calcs) byHref.set(x.href, c.name);
 
+  // 라우트 그룹(app/(site)/…)이 생기면서 경로가 한 번 바뀌었다. 다시 바뀌어도
+  // 테스트가 조용히 통과해 버리지 않도록, 찾아서 없으면 실패시킨다.
+  const root = ['app/calc', 'app/(site)/calc'].find(existsSync);
+  assert.ok(root, '계산기 라우트 디렉터리를 못 찾았다 — 경로가 바뀌었나?');
+
   const bad: string[] = [];
-  for (const dir of readdirSync('app/calc')) {
-    const file = join('app/calc', dir, 'page.tsx');
+  for (const dir of readdirSync(root)) {
+    const file = join(root, dir, 'page.tsx');
     if (!existsSync(file)) continue;
     const m = readFileSync(file, 'utf-8').match(/category="([^"]+)"/);
     if (!m) continue;
