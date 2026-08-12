@@ -125,7 +125,7 @@ export default function BrokerageFeePage({ params }: { params: { man: string } }
         </AnswerSection>
 
         <AnswerSection title="매매 vs 임대차 — 같은 금액, 다른 요율">
-          <AnswerTable>
+          <AnswerTable label="매매 vs 임대차 — 같은 금액, 다른 요율">
             <thead>
               <tr>
                 <th scope="col">거래 유형</th>

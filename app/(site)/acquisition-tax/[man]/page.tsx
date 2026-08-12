@@ -142,7 +142,7 @@ export default function AcquisitionTaxPage({ params }: { params: { man: string }
 
         {/* 이 표가 페이지의 존재 이유 — 같은 가격인데 조건에 따라 세금이 몇 배로 갈린다 */}
         <AnswerSection title="조건별 비교 — 같은 가격, 다른 세금">
-          <AnswerTable>
+          <AnswerTable label="조건별 비교 — 같은 가격, 다른 세금">
             <thead>
               <tr>
                 <th scope="col">조건</th>

@@ -124,7 +124,7 @@ export default function PropertyTaxPage({ params }: { params: { man: string } })
         </AnswerSection>
 
         <AnswerSection title="1세대 1주택 여부에 따른 차이">
-          <AnswerTable>
+          <AnswerTable label="1세대 1주택 여부에 따른 차이">
             <thead>
               <tr>
                 <th scope="col">조건</th>

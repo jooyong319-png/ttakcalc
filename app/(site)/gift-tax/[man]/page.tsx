@@ -139,7 +139,7 @@ export default function GiftTaxPage({ params }: { params: { man: string } }) {
         </AnswerSection>
 
         <AnswerSection title="누구에게 받느냐로 갈린다">
-          <AnswerTable>
+          <AnswerTable label="누구에게 받느냐로 갈린다">
             <thead>
               <tr>
                 <th scope="col">관계</th>

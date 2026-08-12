@@ -7,18 +7,20 @@ import {
 import { getRates } from '@/lib/rates';
 import { won, manLabel, manToWon } from '@/lib/format';
 import {
-  SALARY, popularMan, resultFor, byYear, ASSUMPTION, nonTaxableFor, DEFAULT_YEAR,
+  popularMan, resultFor, byYear, ASSUMPTION, nonTaxableFor, DEFAULT_YEAR,
+  FAMILY_SIZES, hasFamilyPage, allSalaryValues, parseSalaryMan, salaryNeighbors,
 } from '@/lib/salaryPages';
+import { salaryInsights } from '@/lib/insights';
 import s from './salaryPage.module.css';
 
 export function generateStaticParams() {
-  return SALARY.all().map(m => ({ man: String(m) }));
+  return allSalaryValues().map(m => ({ man: String(m) }));
 }
 // 범위 밖(/salary/1234)은 얇은 페이지를 만들지 않고 확실히 404 — soft-404 방지
 export const dynamicParams = false;
 
 export function generateMetadata({ params }: { params: { man: string } }): Metadata {
-  const man = SALARY.parse(params.man);
+  const man = parseSalaryMan(params.man);
   if (man === null) return {};
   const r = resultFor(man, DEFAULT_YEAR);
   const label = manLabel(man);
@@ -32,7 +34,7 @@ export function generateMetadata({ params }: { params: { man: string } }): Metad
 }
 
 export default function SalaryAmountPage({ params }: { params: { man: string } }) {
-  const man = SALARY.parse(params.man);
+  const man = parseSalaryMan(params.man);
   if (man === null) notFound();
 
   const year = DEFAULT_YEAR;
@@ -40,9 +42,10 @@ export default function SalaryAmountPage({ params }: { params: { man: string } }
   const r = resultFor(man, year);
   const label = manLabel(man);
   const years = byYear(man);
-  const { prev, next } = SALARY.neighbors(man);
+  const { prev, next } = salaryNeighbors(man);
   const nonTaxable = nonTaxableFor(year);
   const rate1 = (r.deductionRate * 100).toFixed(1);
+  const insights = salaryInsights(man, year);
 
   const rows = [
     { label: '월 급여 (세전)', value: r.monthlyGross, basis: `연봉 ${won(manToWon(man))}원 ÷ 12` },
@@ -112,6 +115,17 @@ export default function SalaryAmountPage({ params }: { params: { man: string } }
           }
         />
 
+        {/* 이 연봉에서만 성립하는 사실. 값만 바뀌는 페이지가 되지 않으려면 이게 있어야 한다. */}
+        {insights.length > 0 && (
+          <AnswerSection title={`연봉 ${label}이라서 달라지는 것`}>
+            <ul className={s.insights}>
+              {insights.map(i => (
+                <li key={i.text} className={i.notable ? s.notable : undefined}>{i.text}</li>
+              ))}
+            </ul>
+          </AnswerSection>
+        )}
+
         <AnswerSection title="계산 조건">
           <Assumptions items={[
             <>부양가족 <strong>{ASSUMPTION.dependents}명</strong> (본인만)</>,
@@ -122,11 +136,23 @@ export default function SalaryAmountPage({ params }: { params: { man: string } }
             조건이 다르면 금액도 달라집니다. 부양가족이 늘면 소득세가 줄고, 비과세 항목이 많으면
             4대보험료까지 함께 줄어듭니다. <a href="/calc/salary">계산기</a>에서 직접 바꿔보세요.
           </AnswerNote>
+          {/* 부양가족 조합 페이지로 가는 유일한 크롤 경로 — 사이트맵만으로는 잘 안 긁힌다 */}
+          {hasFamilyPage(man) && (
+            <p className={s.familyLinks}>
+              부양가족이 있다면:{' '}
+              {FAMILY_SIZES.map((n, i) => (
+                <span key={n}>
+                  {i > 0 && ' · '}
+                  <a href={`/salary/${man}/family-${n}`}>{n}명일 때</a>
+                </span>
+              ))}
+            </p>
+          )}
         </AnswerSection>
 
         {/* 이 표가 이 페이지의 존재 이유 — 연도별 요율을 보관하는 사이트만 만들 수 있다 */}
         <AnswerSection title="연도별 실수령액 — 같은 연봉, 다른 결과">
-          <AnswerTable>
+          <AnswerTable label="연도별 실수령액 — 같은 연봉, 다른 결과">
             <thead>
               <tr>
                 <th scope="col">기준 연도</th>

@@ -138,7 +138,7 @@ export default function NetSalaryPage({ params }: { params: { man: string } }) {
 
         {/* 같은 실수령액이라도 부양가족 수에 따라 필요한 연봉이 달라진다 */}
         <AnswerSection title="부양가족에 따라 필요한 연봉이 달라진다">
-          <AnswerTable>
+          <AnswerTable label="부양가족에 따라 필요한 연봉이 달라진다">
             <thead>
               <tr>
                 <th scope="col">부양가족</th>

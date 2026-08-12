@@ -7,7 +7,9 @@ import {
 import { getRates } from '@/lib/rates';
 import { calcCarTax } from '@/lib/calc/localTax';
 import { won, pct } from '@/lib/format';
-import { CC, popularCc, CAR_ASSUMPTION, CAR_AGE_ROWS, DEFAULT_YEAR } from '@/lib/localTaxPages';
+import {
+  CC, popularCc, CAR_ASSUMPTION, CAR_AGE_ROWS, DEFAULT_YEAR, hasAgePage,
+} from '@/lib/localTaxPages';
 import s from './carTax.module.css';
 
 export function generateStaticParams() {
@@ -122,7 +124,7 @@ export default function CarTaxPage({ params }: { params: { cc: string } }) {
 
         {/* 이 표가 페이지의 존재 이유 — 같은 차라도 해가 갈수록 세금이 줄어든다 */}
         <AnswerSection title="차령별 자동차세 — 오래 탈수록 줄어든다">
-          <AnswerTable>
+          <AnswerTable label="차령별 자동차세 — 오래 탈수록 줄어든다">
             <thead>
               <tr>
                 <th scope="col">차령</th>
@@ -135,7 +137,10 @@ export default function CarTaxPage({ params }: { params: { cc: string } }) {
               {byAge.map(a => (
                 <tr key={a.age} className={a.age === CAR_ASSUMPTION.ageYears ? s.current : undefined}>
                   <th scope="row">
-                    {a.age}년
+                    {/* 연식별 페이지로 가는 유일한 크롤 경로다 — 사이트맵만으로는 잘 안 긁힌다 */}
+                    {hasAgePage(cc, a.age)
+                      ? <a href={`/car-tax/${cc}/${a.age}`}>{a.age}년</a>
+                      : `${a.age}년`}
                     {a.age === CAR_ASSUMPTION.ageYears && <span className={s.badge}>기준</span>}
                   </th>
                   <td className="num">{a.r.ageDiscountRate > 0 ? pct(a.r.ageDiscountRate, 0) : '—'}</td>
@@ -152,7 +157,7 @@ export default function CarTaxPage({ params }: { params: { cc: string } }) {
         </AnswerSection>
 
         <AnswerSection title="연납 신청 시기별 할인">
-          <AnswerTable>
+          <AnswerTable label="연납 신청 시기별 할인">
             <thead>
               <tr>
                 <th scope="col">신청 시기</th>

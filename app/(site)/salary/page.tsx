@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { getRates } from '@/lib/rates';
 import { manLabel, won } from '@/lib/format';
-import { SALARY, resultFor, DEFAULT_YEAR } from '@/lib/salaryPages';
+import {
+  SALARY, resultFor, DEFAULT_YEAR, salaryComparePairs, allSalaryValues,
+} from '@/lib/salaryPages';
 import { breadcrumbLd, datasetLd, latestVerifiedAt, ldJson } from '@/lib/jsonLd';
 import s from './salaryIndex.module.css';
 
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
 export default function SalaryIndexPage() {
   const year = DEFAULT_YEAR;
   const rates = getRates(year);
-  const rows = SALARY.all().map(m => ({ man: m, r: resultFor(m, year) }));
+  const rows = allSalaryValues().map(m => ({ man: m, r: resultFor(m, year) }));
 
   // 이 페이지는 RouteIndex보다 먼저 만든 자체 구현이라 구조화 데이터를 직접 붙인다.
   // 실제로 데이터셋(연봉 구간별 계산표)이라 그렇게 말해 준다.
@@ -75,6 +77,24 @@ export default function SalaryIndexPage() {
           </tbody>
         </table>
       </div>
+
+      {/* 비교 페이지로 가는 크롤 경로. 사이트맵만으로는 잘 안 긁힌다. */}
+      <section className={s.compare}>
+        <h2 className={s.compareTitle}>연봉을 올리면 실수령액은 얼마나 늘까</h2>
+        <p className={s.compareLead}>
+          세전으로 오른 금액이 그대로 통장에 들어오지는 않습니다. 두 연봉을 나란히 놓고
+          <strong> 오른 만큼 얼마가 남는지</strong> 보여드립니다.
+        </p>
+        <ul className={s.compareList}>
+          {salaryComparePairs().map(({ from, to }) => (
+            <li key={`${from}-${to}`}>
+              <a href={`/salary/compare/${from}-${to}`}>
+                {manLabel(from)} → {manLabel(to)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <p className={s.outro}>
         조건이 다르면 금액도 달라집니다. 부양가족·자녀 수, 비과세액을 직접 넣으려면{' '}

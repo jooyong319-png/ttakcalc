@@ -153,7 +153,7 @@ export default function InheritanceTaxPage({ params }: { params: { man: string }
           상속세는 세율보다 <strong>공제를 어떻게 짜느냐</strong>로 갈립니다. 같은{' '}
           {label}인데도 누가 상속받느냐에 따라 세금이 달라집니다.
         </p>
-        <AnswerTable>
+        <AnswerTable label="가족 구성에 따라 이만큼 갈립니다">
           <thead>
             <tr>
               <th scope="col">가족 구성</th>
@@ -192,7 +192,7 @@ export default function InheritanceTaxPage({ params }: { params: { man: string }
       </AnswerSection>
 
       <AnswerSection title="어떤 공제가 있나">
-        <AnswerTable>
+        <AnswerTable label="어떤 공제가 있나">
           <thead>
             <tr>
               <th scope="col">공제</th>

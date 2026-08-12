@@ -1,0 +1,41 @@
+/* 부양가족 조합 페이지 — 공통 레이아웃은 components/AnswerPage.module.css */
+
+.current { background: var(--c1-bg); }
+
+.badge {
+  margin-left: 0.4rem;
+  padding: 0.1rem 0.4rem;
+  background: var(--c1-key);
+  color: var(--on-key);
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* "기본" 표시는 강조가 아니라 설명이라 배지보다 약하게 */
+.note {
+  margin-left: 0.4rem;
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+/* 늘어나는 돈이라 초록. 부호(+)도 함께 써서 색만으로 구분되지 않게 한다. */
+.plus { color: var(--plus); }
+.same { color: var(--ink-faint); }
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.2rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.9rem;
+}
+.links a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}

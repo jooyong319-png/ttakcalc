@@ -125,7 +125,7 @@ export default function AnnualLeavePage({ params }: { params: { years: string } 
         </AnswerSection>
 
         <AnswerSection title="근속연수별 연차 — 2년마다 하루씩">
-          <AnswerTable>
+          <AnswerTable label="근속연수별 연차 — 2년마다 하루씩">
             <thead>
               <tr>
                 <th scope="col">근속</th>

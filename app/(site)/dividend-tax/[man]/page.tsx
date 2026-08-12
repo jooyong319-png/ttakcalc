@@ -151,7 +151,7 @@ export default function DividendTaxPage({ params }: { params: { man: string } })
           초과분이 그 소득 위에 얹혀 더 높은 세율 구간을 타기 때문입니다. 직장을 다니며 배당을
           받는 경우와 배당만으로 사는 경우가 다른 이유입니다.
         </p>
-        <AnswerTable>
+        <AnswerTable label="근로소득이 있으면 달라집니다">
           <thead>
             <tr>
               <th scope="col">다른 종합소득금액</th>
@@ -184,7 +184,7 @@ export default function DividendTaxPage({ params }: { params: { man: string } })
           같은 금액을 세액공제로 빼 이중과세를 조정합니다(Gross-up). 해외 주식·ETF는 대상이
           아닙니다.
         </p>
-        <AnswerTable>
+        <AnswerTable label="국내 주식이면 조금 다릅니다">
           <thead>
             <tr>
               <th scope="col">배당 종류</th>

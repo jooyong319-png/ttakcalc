@@ -1,8 +1,11 @@
 import type { MetadataRoute } from 'next';
 import { getRates, latestYear } from '@/lib/rates';
-import { SALARY, NET, LEAVE_YEARS, GIFT, DIVIDEND, INHERIT } from '@/lib/salaryPages';
+import {
+  SALARY, NET, LEAVE_YEARS, GIFT, DIVIDEND, INHERIT, salaryComparePairs, familyPairs,
+  allSalaryValues,
+} from '@/lib/salaryPages';
 import { PRICE } from '@/lib/propertyPages';
-import { CC, PUBLIC_PRICE } from '@/lib/localTaxPages';
+import { CC, PUBLIC_PRICE, carAgePairs } from '@/lib/localTaxPages';
 import { CATEGORIES, allCalcHrefs } from '@/lib/catalog';
 
 const BASE = 'https://ttakcalc.com';
@@ -10,7 +13,7 @@ const BASE = 'https://ttakcalc.com';
 
 /** 값 하나당 페이지 하나인 프로그래매틱 라우트 */
 const GENERATED: { base: string; values: number[] }[] = [
-  { base: '/salary', values: SALARY.all() },
+  { base: '/salary', values: allSalaryValues() },
   { base: '/acquisition-tax', values: PRICE.all() },
   { base: '/brokerage-fee', values: PRICE.all() },
   { base: '/car-tax', values: CC.all() },
@@ -68,6 +71,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 목록 페이지 — 상세 페이지로 가는 크롤링 경로다. 상세보다 우선순위를 높게 준다.
     ...GENERATED.map(g => at(`${BASE}${g.base}`, 0.7)),
     ...GENERATED.flatMap(g => g.values.map(v => at(`${BASE}${g.base}/${v}`, 0.6))),
+    // 배기량 × 차령 조합. 차령 경감 때문에 조합마다 세액이 달라 각각 다른 답을 준다.
+    ...carAgePairs().map(({ cc, age }) => at(`${BASE}/car-tax/${cc}/${age}`, 0.5)),
+    // 연봉 비교. 개별 페이지와 다른 질문("올리면 얼마나 더 남나")에 답한다.
+    ...salaryComparePairs().map(({ from, to }) => at(`${BASE}/salary/compare/${from}-${to}`, 0.5)),
+    // 부양가족 조합. 인적공제 때문에 사람 수마다 실수령액이 실제로 달라진다.
+    ...familyPairs().map(({ man, family }) => at(`${BASE}/salary/${man}/family-${family}`, 0.4)),
   ]
     // 카탈로그와 GENERATED에 같은 URL이 들어가는 경우가 있다(예: /salary는 목록 페이지이면서
     // 카탈로그 항목이기도 하다). 사이트맵에 같은 loc이 두 번 나오면 안 된다.

@@ -64,8 +64,15 @@ export function Assumptions({ items }: { items: ReactNode[] }) {
 }
 
 /** 가로로 넘칠 수 있는 표를 감싼다 — 본문이 가로 스크롤되지 않게 */
-export function AnswerTable({ children }: { children: ReactNode }) {
-  return <div className={s.tableWrap}><table className={s.table}>{children}</table></div>;
+export function AnswerTable({ children, label }: { children: ReactNode; label?: string }) {
+  // 좁은 화면에서 가로로 넘치면 그 영역은 키보드로도 스크롤할 수 있어야 한다
+  // (axe scrollable-region-focusable). tabIndex만 주면 스크린리더에 정체불명의
+  // 정지점이 생기므로 이름도 함께 붙인다 — 감싸는 섹션 제목을 넘겨 쓰면 된다.
+  return (
+    <div className={s.tableWrap} tabIndex={0} role="region" aria-label={label ?? '표'}>
+      <table className={s.table}>{children}</table>
+    </div>
+  );
 }
 
 /** 앞뒤 값 + 주요 값 링크. 크롤링 경로이자 실제로 비교하려는 사용자에게도 쓸모 있다. */

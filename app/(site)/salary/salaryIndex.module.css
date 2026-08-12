@@ -60,3 +60,29 @@
   color: var(--accent); font-weight: 700;
   text-decoration: underline; text-underline-offset: 2px;
 }
+
+/* 비교 페이지 목록 — 표 아래에 두어 "값 하나"에서 "두 값의 차이"로 넘어가게 한다 */
+.compare { margin-top: 2.4rem; }
+.compareTitle { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+.compareLead { color: var(--ink-soft); line-height: 1.8; margin-bottom: 0.9rem; }
+.compareLead strong { color: var(--ink); }
+
+.compareList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+}
+.compareList a {
+  display: block;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+.compareList a:hover { border-color: var(--rule-strong); }
+.compareList a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

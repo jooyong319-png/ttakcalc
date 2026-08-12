@@ -46,6 +46,10 @@ export interface SalaryResult {
   annualNet: number;
   /** 세전 대비 공제 비율(0~1). */
   deductionRate: number;
+  /** 연간 과세표준. 어느 세율 구간에 있는지 설명하려면 이 값이 필요하다.
+   *  화면에 직접 쓰지는 않지만, 값별 페이지가 "이 구간에서 세율이 올라간다"고
+   *  말할 근거가 여기서 나온다 — 계산기 밖에서 다시 구하면 두 곳이 어긋난다. */
+  annualTaxBase: number;
 }
 
 const won = (n: number) => Math.floor(n / 10) * 10; // 원 단위 절사(급여 실무 관행)
@@ -162,5 +166,6 @@ export function calcSalary(input: SalaryInput): SalaryResult {
     monthlyNet,
     annualNet: monthlyNet * 12,
     deductionRate: monthlyGross > 0 ? totalDeduction / monthlyGross : 0,
+    annualTaxBase: taxBase,
   };
 }

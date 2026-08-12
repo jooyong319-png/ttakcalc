@@ -1,0 +1,63 @@
+/* 연봉 비교 페이지 — 두 값을 나란히 놓고 그 사이의 차이를 크게 보여준다.
+   이 페이지를 여는 사람이 알고 싶은 건 각각의 금액이 아니라 그 "차이"라서,
+   차이 쪽에 시선이 먼저 가도록 크기와 색을 배분했다. */
+
+.headline {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.8rem 1rem;
+  padding: 1.4rem 1.2rem;
+  background: var(--c1-bg);
+  border-radius: var(--radius);
+}
+
+.side { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.sideLabel { font-size: 0.8rem; color: var(--c1-soft); }
+.sideNum { font-size: 1.5rem; font-weight: 700; color: var(--c1-ink); letter-spacing: -0.02em; }
+.sideNum em { font-size: 0.6em; font-style: normal; margin-left: 0.1em; }
+.sideSub { font-size: 0.78rem; color: var(--c1-soft); }
+
+.arrow { font-size: 1.2rem; color: var(--c1-soft); }
+
+/* 차이는 한 줄 아래에서 전체 폭을 쓴다 — 이 페이지의 답이다 */
+.gap {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.7rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--c1-key);
+}
+.gapLabel { font-size: 0.82rem; color: var(--c1-soft); }
+.gapNum { font-size: 1.9rem; font-weight: 700; color: var(--c1-ink); letter-spacing: -0.02em; }
+.gapNum em { font-size: 0.55em; font-style: normal; margin-left: 0.1em; }
+.gapSub { font-size: 0.85rem; color: var(--c1-soft); }
+
+@media (max-width: 30rem) {
+  .headline { grid-template-columns: 1fr; }
+  /* 좁은 화면에서 가로 화살표는 방향을 잘못 알린다 — 세로로 돌린다 */
+  .arrow { transform: rotate(90deg); justify-self: center; }
+}
+
+.points { display: flex; flex-direction: column; gap: 0.7rem; padding-left: 1.1rem; }
+.points li { color: var(--ink-soft); line-height: 1.8; }
+.points strong { color: var(--ink); }
+
+/* 늘어난 공제는 빠지는 돈이라 붉게. 색만으로 구분되지 않도록 부호(+)도 함께 쓴다. */
+.more { color: var(--minus); }
+.same { color: var(--ink-faint); }
+.totalRow { font-weight: 600; }
+.totalRow th, .totalRow td { border-top: 1px solid var(--rule-strong); }
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.2rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.9rem;
+}
+.links a { color: var(--accent); text-decoration: underline; text-underline-offset: 0.16em; }
