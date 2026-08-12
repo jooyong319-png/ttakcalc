@@ -39,6 +39,9 @@ export default function Page() {
       basisItems={[
         `구직급여일액 = 평균임금 × ${u.wageReplacementRate * 100}%, 상한 ${u.dailyMax.toLocaleString()}원 — ${u.source}`,
         `하한 = 최저시급 ${r.minimumWage.hourly.toLocaleString()}원 × ${u.lowerBoundRateOfMinimumWage * 100}% × ${u.dailyWorkHours}시간 = ${lower.toLocaleString()}원`,
+        ...(r.minimumWage.next
+          ? [`${r.minimumWage.next.year}년 최저시급이 ${r.minimumWage.next.hourly.toLocaleString()}원으로 확정돼 ${r.minimumWage.next.year}년에는 하한도 함께 오릅니다. 위 계산은 ${year}년 기준입니다`]
+          : []),
         '소정급여일수 120~270일 (가입기간·연령별)',
       ]}
     >

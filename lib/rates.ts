@@ -31,7 +31,16 @@ export interface YearRates {
     source: string;
   };
   nonTaxable: { mealAllowanceMonthlyMax: number; note: string; source: string };
-  minimumWage: { hourly: number; note: string; source: string };
+  minimumWage: {
+    hourly: number; note: string; source: string;
+    /** 다음 해 최저임금이 먼저 확정됐을 때 담는다.
+     *  최저임금 고시는 8월 초에 나오는데 4대보험·세율 등 나머지 제도는 11월~1월에 확정된다.
+     *  그 시차 동안 연도 블록을 미리 만들면 검증 안 된 값이 새 연도로 둔갑하므로, 여기에만 둔다. */
+    next?: {
+      year: string; hourly: number; monthlyAt209h: number;
+      note: string; source: string; verifiedAt: string;
+    };
+  };
   freelancer: {
     name: string; incomeTaxRate: number; localTaxRate: number; note: string; source: string;
   };

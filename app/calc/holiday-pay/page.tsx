@@ -35,6 +35,9 @@ export default function Page() {
         `주 ${h.weeklyHoursMin}시간 이상 근무 시 발생 — ${h.source}`,
         `주휴시간 = min(주 소정근로시간, ${h.standardWeeklyHours}) ÷ ${h.standardWeeklyHours} × ${h.standardHolidayHours}시간`,
         `${year}년 최저시급 ${r.minimumWage.hourly.toLocaleString()}원 — ${r.minimumWage.source}`,
+        ...(r.minimumWage.next
+          ? [`${r.minimumWage.next.year}년 최저시급 ${r.minimumWage.next.hourly.toLocaleString()}원으로 확정 — ${r.minimumWage.next.year}년 1월 1일부터 적용. 위 계산은 ${year}년 기준입니다`]
+          : []),
       ]}
     >
       <HolidayPayCalc year={year} minimumWage={r.minimumWage.hourly} />

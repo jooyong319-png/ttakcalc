@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { yearDiffs } from '@/lib/diff';
+import { getRates, latestYear } from '@/lib/rates';
 import s from './changes.module.css';
 
 export const metadata: Metadata = {
@@ -15,6 +16,8 @@ export const metadata: Metadata = {
 export default function ChangesPage() {
   const diffs = yearDiffs();
   const changed = diffs.filter(d => d.changes.length > 0);
+  // 다음 해 최저임금이 먼저 고시된 경우 — 연도 블록은 아직 없지만 사용자에겐 알려야 한다
+  const next = getRates(latestYear()).minimumWage.next;
 
   return (
     <div className="container-narrow">
@@ -26,6 +29,37 @@ export default function ChangesPage() {
           기록합니다. 공식 고시를 대조해 관리하고, 바뀌면 계산기도 같은 날 갱신됩니다.
         </p>
       </header>
+
+      {next && (
+        <section className={s.year}>
+          <div className={s.yearHead}>
+            <h2 className={s.yearTitle}>{next.year}년 예고</h2>
+            <span className={s.verified}>최종 확인 {next.verifiedAt}</span>
+          </div>
+          <ul className={s.list}>
+            <li>
+              <div className={s.itemHead}>
+                <strong className={s.name}>최저임금</strong>
+                <span className={s.change}>
+                  <span className={`${s.from} num`}>{getRates(latestYear()).minimumWage.hourly.toLocaleString('ko-KR')}원</span>
+                  <span className={s.arrowUp} aria-hidden="true">→</span>
+                  <span className={`${s.to} num`}>{next.hourly.toLocaleString('ko-KR')}원</span>
+                </span>
+              </div>
+              <p className={s.note}>
+                시간급 기준. 월 환산 {next.monthlyAt209h.toLocaleString('ko-KR')}원(주 40시간·월 209시간).
+                {' '}<strong>{next.year}년 1월 1일부터 적용</strong>됩니다.
+              </p>
+              <p className={s.source}>{next.source}</p>
+            </li>
+          </ul>
+          <p className={s.frozen}>
+            <strong>아직 계산에는 반영하지 않았습니다.</strong> {next.year}년은 최저임금만 확정됐고
+            4대보험 요율·세율 등 나머지 제도는 고시·개정 전입니다. 확인되지 않은 값을 {next.year}년
+            것처럼 계산하지 않으려고, 나머지가 확정되는 시점에 함께 반영합니다.
+          </p>
+        </section>
+      )}
 
       {changed.map(d => (
         <section key={d.year} className={s.year}>
