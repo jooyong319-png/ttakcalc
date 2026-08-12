@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { ldJson, organizationLd, websiteLd } from '@/lib/jsonLd';
 import Link from 'next/link';
 import { JetBrains_Mono } from 'next/font/google';
 import { SITE } from '@/lib/site';
@@ -72,6 +73,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();",
           }}
         />
+        {/* 사이트 전역 신원. 세금 계산은 YMYL이라 "누가 운영하나"가 신뢰 신호로 작동한다.
+            여기 적는 이름·연락처는 /about·/privacy에 실제로 적혀 있는 것과 같아야 한다. */}
+        {[organizationLd(), websiteLd()].map((ld, i) => (
+          <script key={i} type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: ldJson(ld) }} />
+        ))}
         {/* 구글의 태그 감지기는 HTML을 읽지 하이드레이션을 기다리지 않는다 — 생 script여야 한다 */}
         <Analytics />
       </head>

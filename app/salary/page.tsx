@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { getRates } from '@/lib/rates';
 import { manLabel, won } from '@/lib/format';
 import { SALARY, resultFor, DEFAULT_YEAR } from '@/lib/salaryPages';
+import { breadcrumbLd, datasetLd, latestVerifiedAt, ldJson } from '@/lib/jsonLd';
 import s from './salaryIndex.module.css';
 
 export const metadata: Metadata = {
@@ -17,8 +18,25 @@ export default function SalaryIndexPage() {
   const rates = getRates(year);
   const rows = SALARY.all().map(m => ({ man: m, r: resultFor(m, year) }));
 
+  // 이 페이지는 RouteIndex보다 먼저 만든 자체 구현이라 구조화 데이터를 직접 붙인다.
+  // 실제로 데이터셋(연봉 구간별 계산표)이라 그렇게 말해 준다.
+  const dateModified = latestVerifiedAt();
+  const lds = [
+    breadcrumbLd([{ name: '연봉 실수령액', href: '/calc/salary' }, { name: '연봉별 실수령액 표' }]),
+    datasetLd({
+      name: '연봉별 실수령액 표',
+      description: `연봉 ${manLabel(SALARY.min)}~${manLabel(SALARY.max)} 100만원 단위 월 실수령액`,
+      dateModified,
+      rowCount: rows.length,
+    }),
+  ];
+
   return (
     <div className={`container-narrow ${s.c1}`}>
+      {lds.map((ld, i) => (
+        <script key={i} type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: ldJson(ld) }} />
+      ))}
       <header className={s.head}>
         <p className={s.eyebrow}>
           <a href="/calc/salary" className={s.category}>연봉 실수령액</a>

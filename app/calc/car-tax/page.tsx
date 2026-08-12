@@ -17,7 +17,7 @@ export default function Page() {
 
   return (
     <CalcPage
-      category="자동차"
+      category="금융·자동차"
       tone="c3"
       year={year}
       title={`${year}년 자동차세 계산기`}

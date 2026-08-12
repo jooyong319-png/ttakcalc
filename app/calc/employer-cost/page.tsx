@@ -16,7 +16,7 @@ export default function Page() {
   const e = r.employer;
   return (
     <CalcPage
-      category="급여·노동"
+      category="급여·세금"
       tone="c1"
       year={year}
       title={`${year}년 4대보험 사업주 부담 계산기`}

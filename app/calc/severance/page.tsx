@@ -14,7 +14,7 @@ export default function Page() {
   const r = getRates(year);
   return (
     <CalcPage
-      category="급여·노동"
+      category="급여·세금"
       tone="c1"
       year={year}
       title="퇴직금 계산기"

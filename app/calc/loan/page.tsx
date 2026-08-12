@@ -14,7 +14,7 @@ export default function Page() {
   const r = getRates(year);
   return (
     <CalcPage
-      category="금융"
+      category="금융·자동차"
       tone="c3"
       year={year}
       title="대출 이자 계산기"

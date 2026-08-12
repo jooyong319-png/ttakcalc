@@ -15,7 +15,7 @@ export default function Page() {
   const f = r.freelancer;
   return (
     <CalcPage
-      category="급여·노동"
+      category="급여·세금"
       tone="c1"
       year={year}
       title="프리랜서 3.3% 계산기"

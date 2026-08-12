@@ -16,7 +16,7 @@ export default function Page() {
   const lower = Math.round(r.minimumWage.hourly * u.lowerBoundRateOfMinimumWage * u.dailyWorkHours);
   return (
     <CalcPage
-      category="급여·노동"
+      category="급여·세금"
       tone="c1"
       year={year}
       title="실업급여 계산기"

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { manLabel } from '@/lib/format';
+import { breadcrumbLd, ldJson } from '@/lib/jsonLd';
 import type { Tone } from '@/lib/catalog';
 import s from './AnswerPage.module.css';
 
@@ -18,8 +19,14 @@ export function AnswerPage({
   lead: ReactNode;
   children: ReactNode;
 }) {
+  // 값별 페이지는 수가 많아 검색 결과에서 서로 구분이 안 된다. 어느 갈래의 몇 번째
+  // 값인지 경로를 붙여 준다 — 현재 페이지 항목은 URL 없이 이름만 넣는다.
+  const crumbLd = breadcrumbLd([{ name: category, href: categoryHref }, { name: title }]);
+
   return (
     <div className={`container-narrow ${s[tone]}`}>
+      <script type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: ldJson(crumbLd) }} />
       <header className={s.head}>
         <p className={s.eyebrow}>
           <a href={categoryHref} className={s.category}>{category}</a>

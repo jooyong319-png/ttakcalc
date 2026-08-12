@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { breadcrumbLd, datasetLd, latestVerifiedAt, ldJson } from '@/lib/jsonLd';
 import type { Tone } from '@/lib/catalog';
 import s from './RouteIndex.module.css';
 
@@ -44,8 +45,19 @@ export function RouteIndex({
   rows: IndexRow[];
   outro: ReactNode;
 }) {
+  // 이 페이지는 실제로 데이터셋이다 — 값별로 계산해 둔 표. 그렇게 말해 준다.
+  const dateModified = latestVerifiedAt();
+  const lds = [
+    breadcrumbLd([{ name: category, href: categoryHref }, { name: title }]),
+    datasetLd({ name: title, description: caption, dateModified, rowCount: rows.length }),
+  ];
+
   return (
     <div className={`container-narrow ${s[tone]}`}>
+      {lds.map((ld, i) => (
+        <script key={i} type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: ldJson(ld) }} />
+      ))}
       <header className={s.head}>
         <p className={s.eyebrow}>
           <a href={categoryHref} className={s.category}>{category}</a>

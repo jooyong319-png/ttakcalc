@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { linkifyLaw } from '@/lib/lawLink';
+import { breadcrumbLd, categoryHrefByName, ldJson, webApplicationLd } from '@/lib/jsonLd';
 import type { Tone } from '@/lib/catalog';
 import styles from './CalcPage.module.css';
 
@@ -27,15 +28,27 @@ export function CalcPage({
     })),
   };
 
+  // 눈썹줄 링크와 같은 곳을 가리켜야 한다 — 화면과 다른 경로를 마크업하면 그건 거짓말이다
+  const catHref = categoryHrefByName(category);
+  const crumbLd = breadcrumbLd([{ name: category, href: catHref }, { name: title }]);
+  // 마지막 대조일을 그대로 쓴다. 화면의 "확인 {verifiedAt}"과 같은 날짜다.
+  const appLd = webApplicationLd({
+    name: title,
+    description: `${category} 계산기. 적용한 요율과 근거 조문을 함께 표시합니다.`,
+    dateModified: verifiedAt,
+  });
+
   return (
     <>
-      <script type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd).replace(/</g, '\\u003c') }} />
+      {[faqLd, crumbLd, appLd].map((ld, i) => (
+        <script key={i} type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: ldJson(ld) }} />
+      ))}
 
       <div className={`container-narrow ${styles[tone]}`} style={{ paddingTop: '1.8rem' }}>
         <header className={styles.head}>
           <p className={styles.eyebrow}>
-            <a href="/" className={styles.category}>{category}</a>
+            <a href={catHref} className={styles.category}>{category}</a>
             <span aria-hidden="true"> · </span>{year}년 기준
           </p>
           <h1 className={styles.title}>{title}</h1>
