@@ -47,7 +47,7 @@ export default function PrivacyPage() {
           <p>
             사이트는 서비스 이용 통계를 위해 아래 정보를 <strong>자동으로</strong> 수집합니다.
           </p>
-          <div className={s.tableWrap}>
+          <div className={s.tableWrap} tabIndex={0} role="region" aria-label="수집하는 개인정보 항목">
             <table className={s.table}>
               <thead>
                 <tr>
@@ -61,6 +61,18 @@ export default function PrivacyPage() {
                   <td>방문한 페이지 주소, 방문 일시, 체류 시간, 유입 경로</td>
                   <td>Google Analytics 4 (쿠키)</td>
                   <td>어떤 계산기가 실제로 쓰이는지 파악해 개선 우선순위를 정하기 위해</td>
+                </tr>
+                <tr>
+                  <td>
+                    계산기에서 계산이 실행되었다는 사실과 그 계산기의 이름
+                    {' '}(예: &ldquo;연봉 실수령액 계산기에서 계산함&rdquo;)
+                  </td>
+                  <td>Google Analytics 4 (쿠키)</td>
+                  <td>
+                    열어만 보고 나간 계산기와 실제로 쓰인 계산기를 구분하기 위해.
+                    {' '}<strong>입력하신 금액은 수집하지 않습니다</strong> — 연봉·재산·대출금 등은
+                    전송되지 않으며, 계산은 전부 이용자의 기기 안에서만 이루어집니다.
+                  </td>
                 </tr>
                 <tr>
                   <td>기기 종류, 운영체제, 브라우저, 화면 크기, 대략적인 지역(국가·도시 수준)</td>
@@ -113,7 +125,7 @@ export default function PrivacyPage() {
             사이트는 서비스 운영을 위해 아래와 같이 처리를 위탁하고 있으며, 해당 사업자의 서버가
             국외에 있어 정보가 국외로 이전됩니다.
           </p>
-          <div className={s.tableWrap}>
+          <div className={s.tableWrap} tabIndex={0} role="region" aria-label="개인정보 처리 위탁 현황">
             <table className={s.table}>
               <thead>
                 <tr>

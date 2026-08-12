@@ -7,5 +7,5 @@ export const SITE = {
   url: 'https://ttakcalc.com',
   email: 'devju546@gmail.com',
   /** 방침·약관 시행일. 내용을 고치면 이 날짜도 함께 올릴 것. */
-  effectiveDate: '2026-08-03',
+  effectiveDate: '2026-08-12',
 } as const;
