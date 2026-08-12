@@ -93,6 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav className="footer-nav" aria-label="사이트 정보">
               <Link href="/about">사이트 소개</Link>
               <Link href="/changes">제도 변화</Link>
+              <Link href="/corrections">정정 이력</Link>
               <Link href="/embed">계산기 임베드</Link>
               <Link href="/terms">이용약관</Link>
               <Link href="/privacy" className="footer-strong">개인정보처리방침</Link>

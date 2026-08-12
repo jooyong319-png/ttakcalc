@@ -54,6 +54,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     at(BASE, 1),
     at(`${BASE}/changes`, 0.8),
     at(`${BASE}/about`, 0.5),
+    // 정정 이력은 신뢰 신호라 색인되는 편이 낫다 — 숨길 내용이면 애초에 안 적는다
+    at(`${BASE}/corrections`, 0.5),
     // 임베드 안내는 사람이 찾아와 코드를 가져가는 페이지다. 개별 /embed/{계산기}는
     // noindex라 넣지 않는다 — 원본 계산기 페이지와 내용이 겹친다.
     at(`${BASE}/embed`, 0.5),

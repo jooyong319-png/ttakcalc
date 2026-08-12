@@ -8,4 +8,6 @@ export const SITE = {
   email: 'devju546@gmail.com',
   /** 방침·약관 시행일. 내용을 고치면 이 날짜도 함께 올릴 것. */
   effectiveDate: '2026-08-12',
+  /** 첫 배포일. 소개 페이지가 "얼마나 오래 운영했나"를 손으로 적지 않도록 여기 둔다. */
+  since: '2026-07-30',
 } as const;

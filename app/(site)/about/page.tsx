@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { SITE } from '@/lib/site';
 import { CATEGORIES, calcCount } from '@/lib/catalog';
 import { availableYears, getRates, latestYear } from '@/lib/rates';
+import { valueCorrectionCount } from '@/lib/corrections';
 import s from '../legal.module.css';
 
 export const metadata: Metadata = {
@@ -69,6 +70,21 @@ export default function AboutPage() {
           <p>
             무엇이 언제 어떻게 바뀌었는지는 <Link href="/changes">제도 변화</Link> 페이지에서
             연도별로 비교해 보실 수 있습니다.
+          </p>
+        </section>
+
+        <section>
+          <h2>틀리면 공개하고 고칩니다</h2>
+          <p>
+            요율을 아무리 대조해도 사람이 하는 일이라 틀립니다. 실제로{' '}
+            <strong>계산 결과가 틀린 적이 {valueCorrectionCount()}번</strong> 있었고, 그때 무엇이
+            틀렸고 얼마나 차이가 났는지, 같은 일이 다시 일어나지 않게 무엇을 바꿨는지{' '}
+            <Link href="/corrections">정정 이력</Link>에 그대로 적어 두었습니다.
+          </p>
+          <p>
+            조용히 고치고 넘어가면 아무도 모릅니다. 하지만 그건 다음에도 조용히 넘어가겠다는
+            뜻이라, 적어 두는 쪽을 택했습니다. 계산이 이상하다고 느끼셨다면 그 판단이 맞을 수
+            있습니다 — 알려주시면 원문을 대조해 확인합니다.
           </p>
         </section>
 
