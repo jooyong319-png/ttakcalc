@@ -117,7 +117,16 @@ export function webApplicationLd({
   };
 }
 
-/** 값별 페이지의 목록 표 — 실제로 데이터셋이라 그렇게 말해 준다. */
+/**
+ * 값별 페이지의 목록 표 — 실제로 데이터셋이라 그렇게 말해 준다.
+ *
+ * ⚠️ description은 **50자 이상**이어야 한다. 검색엔진이 그보다 짧으면 오류로 잡는다.
+ * 처음엔 표 아래 각주(caption)를 그대로 넘겼는데, 그건 "2026년 기준 · 최종 확인 …"이라
+ * 33자짜리 메타 정보였고 데이터셋이 무엇인지 한 마디도 하지 않았다. 길이도 내용도
+ * 틀렸던 셈이다(2026-08-13 서치콘솔 오류). 페이지 설명 문장을 그대로 넘긴다.
+ */
+export const DATASET_DESCRIPTION_MIN = 50;
+
 export function datasetLd({
   name, description, dateModified, rowCount,
 }: { name: string; description: string; dateModified: string; rowCount: number }) {

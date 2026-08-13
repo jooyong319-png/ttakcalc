@@ -7,10 +7,14 @@ import {
 import { breadcrumbLd, datasetLd, latestVerifiedAt, ldJson } from '@/lib/jsonLd';
 import s from './salaryIndex.module.css';
 
+/** 페이지 설명. 검색 결과 스니펫과 구조화 데이터가 같은 문장을 쓰도록 한곳에 둔다. */
+const DESCRIPTION =
+  '연봉 2,000만원부터 1억원까지 100만원 단위 월 실수령액을 한 표에 정리했습니다. '
+  + '4대보험·세금 공제 내역과 근거까지 확인하세요.';
+
 export const metadata: Metadata = {
   title: '연봉별 실수령액 표',
-  description:
-    '연봉 2,000만원부터 1억원까지 100만원 단위 월 실수령액을 한 표에 정리했습니다. 4대보험·세금 공제 내역과 근거까지 확인하세요.',
+  description: DESCRIPTION,
   alternates: { canonical: 'https://ttakcalc.com/salary' },
 };
 
@@ -27,7 +31,7 @@ export default function SalaryIndexPage() {
     breadcrumbLd([{ name: '연봉 실수령액', href: '/calc/salary' }, { name: '연봉별 실수령액 표' }]),
     datasetLd({
       name: '연봉별 실수령액 표',
-      description: `연봉 ${manLabel(SALARY.min)}~${manLabel(SALARY.max)} 100만원 단위 월 실수령액`,
+      description: DESCRIPTION,
       dateModified,
       rowCount: rows.length,
     }),

@@ -5,10 +5,13 @@ import { manLabel, manToWon, won } from '@/lib/format';
 import { INHERIT, DEFAULT_YEAR } from '@/lib/salaryPages';
 import { calcInheritanceTax } from '@/lib/calc/inheritance';
 
+/** 페이지 설명. 검색 결과 스니펫과 구조화 데이터가 같은 문장을 쓰도록 한곳에 둔다. */
+const DESCRIPTION =
+  '상속재산 1억원부터 30억원까지 1억원 단위 상속세를 한 표에 정리했습니다. 배우자와 자녀 2명이 상속받는 경우 기준입니다.';
+
 export const metadata: Metadata = {
   title: '상속재산별 상속세 표',
-  description:
-    '상속재산 1억원부터 30억원까지 1억원 단위 상속세를 한 표에 정리했습니다. 배우자와 자녀 2명이 상속받는 경우 기준입니다.',
+  description: DESCRIPTION,
   alternates: { canonical: 'https://ttakcalc.com/inheritance-tax' },
 };
 
@@ -43,6 +46,7 @@ export default function Page() {
           배우자와 자녀 2명이 법정상속분대로 상속받고 기한 내 신고한 경우 기준입니다.
         </>
       }
+      description={DESCRIPTION}
       caption={`${rates.label} 기준 · 최종 확인 ${rates.verifiedAt}`}
       columns={[{ label: '공제 합계', numeric: true }, { label: '상속세', numeric: true, minus: true }]}
       rows={rows}

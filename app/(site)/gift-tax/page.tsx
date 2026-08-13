@@ -5,10 +5,13 @@ import { manLabel, manToWon, won } from '@/lib/format';
 import { GIFT, DEFAULT_YEAR } from '@/lib/salaryPages';
 import { calcGiftTax } from '@/lib/calc/extra';
 
+/** 페이지 설명. 검색 결과 스니펫과 구조화 데이터가 같은 문장을 쓰도록 한곳에 둔다. */
+const DESCRIPTION =
+  '1,000만원부터 10억원까지 1,000만원 단위 증여세를 한 표에 정리했습니다. 부모가 성년 자녀에게 증여하는 경우 기준입니다.';
+
 export const metadata: Metadata = {
   title: '증여 금액별 증여세 표',
-  description:
-    '1,000만원부터 10억원까지 1,000만원 단위 증여세를 한 표에 정리했습니다. 부모가 성년 자녀에게 증여하는 경우 기준입니다.',
+  description: DESCRIPTION,
   alternates: { canonical: 'https://ttakcalc.com/gift-tax' },
 };
 
@@ -39,6 +42,7 @@ export default function Page() {
           부모가 성년 자녀에게 증여하고 10년 내 첫 증여, 기한 내 신고한 경우 기준입니다.
         </>
       }
+      description={DESCRIPTION}
       caption={`${rates.label} 기준 · 최종 확인 ${rates.verifiedAt}`}
       columns={[{ label: '과세표준', numeric: true }, { label: '증여세', numeric: true, minus: true }]}
       rows={rows}

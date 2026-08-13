@@ -8,7 +8,9 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { breadcrumbLd, categoryHrefByName, latestVerifiedAt, ldJson } from '../lib/jsonLd';
+import {
+  breadcrumbLd, categoryHrefByName, latestVerifiedAt, ldJson, DATASET_DESCRIPTION_MIN,
+} from '../lib/jsonLd';
 import { CATEGORIES } from '../lib/catalog';
 import { getRates, latestYear } from '../lib/rates';
 
@@ -90,4 +92,34 @@ test('구조화데이터 — 대조일은 데이터 어디에 있든 가장 최�
   walk(rates);
   const deepest = nested.slice().sort().pop();
   assert.equal(latestVerifiedAt(), deepest, '중첩된 verifiedAt을 놓치고 있다');
+});
+
+test('구조화데이터 — Dataset 설명은 50자 이상이고 실제로 설명이어야 한다', () => {
+  // 표 아래 각주(caption)를 설명으로 넘겼다가 서치콘솔에 걸렸다(2026-08-13).
+  // "2026년 기준 · 최종 확인 2026-08-03" — 33자였고, 무엇에 대한 데이터인지
+  // 한 마디도 하지 않았다. 길이만 재면 반쪽이라 내용도 함께 본다.
+  const bad: string[] = [];
+  const root = ['app', 'app/(site)'].find(d => existsSync(join(d, 'salary', 'page.tsx')));
+  assert.ok(root, '인덱스 페이지 경로를 못 찾았다 — 라우트가 바뀌었나?');
+
+  for (const dir of readdirSync(root)) {
+    const file = join(root, dir, 'page.tsx');
+    if (!existsSync(file)) continue;
+    const src = readFileSync(file, 'utf-8');
+    // Dataset을 내보내는 페이지만 검사한다
+    if (!src.includes('RouteIndex') && !src.includes('datasetLd')) continue;
+
+    const m = src.match(/const DESCRIPTION =\s*([\s\S]*?);\n/);
+    if (!m) { bad.push(`${file}: DESCRIPTION 상수가 없다`); continue; }
+    // 문자열 리터럴만 이어붙여 실제 길이를 잰다
+    const text = Array.from(m[1].matchAll(/'([^']*)'/g)).map(x => x[1]).join('');
+    if (text.length < DATASET_DESCRIPTION_MIN) {
+      bad.push(`${file}: ${text.length}자 (${DATASET_DESCRIPTION_MIN}자 이상 필요)`);
+    }
+    // 날짜와 "기준"만 있는 문장은 설명이 아니라 메타 정보다
+    if (/^[\d년월일\s.·기준최종확인-]+$/.test(text)) {
+      bad.push(`${file}: 설명이 아니라 메타 정보다 — "${text}"`);
+    }
+  }
+  assert.deepEqual(bad, []);
 });

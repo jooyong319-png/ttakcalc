@@ -5,10 +5,13 @@ import { won } from '@/lib/format';
 import { LEAVE_YEARS, DEFAULT_YEAR } from '@/lib/salaryPages';
 import { calcAnnualLeave } from '@/lib/calc/extra';
 
+/** 페이지 설명. 검색 결과 스니펫과 구조화 데이터가 같은 문장을 쓰도록 한곳에 둔다. */
+const DESCRIPTION =
+  '근속 1년부터 30년까지 발생하는 연차 유급휴가 일수를 한 표에 정리했습니다. 미사용 연차수당도 함께 봅니다.';
+
 export const metadata: Metadata = {
   title: '근속연수별 연차 일수 표',
-  description:
-    '근속 1년부터 30년까지 발생하는 연차 유급휴가 일수를 한 표에 정리했습니다. 미사용 연차수당도 함께 봅니다.',
+  description: DESCRIPTION,
   alternates: { canonical: 'https://ttakcalc.com/annual-leave' },
 };
 
@@ -40,6 +43,7 @@ export default function Page() {
           수당은 월 통상임금 300만원 기준으로 계산한 예시이며, 근속연수를 누르면 근거를 볼 수 있습니다.
         </>
       }
+      description={DESCRIPTION}
       caption={`${rates.label} 기준 · 최종 확인 ${rates.verifiedAt}`}
       columns={[{ label: '연차 일수', numeric: true }, { label: '1일 통상임금', numeric: true }, { label: '전부 미사용 시 수당', numeric: true }]}
       rows={rows}

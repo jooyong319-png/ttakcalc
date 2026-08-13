@@ -29,7 +29,7 @@ export interface IndexRow {
 
 export function RouteIndex({
   tone, category, categoryHref, meta, title, firstColumn, lead,
-  caption, columns, rows, outro,
+  caption, description, columns, rows, outro,
 }: {
   tone: Tone;
   category: string;
@@ -40,6 +40,10 @@ export function RouteIndex({
   firstColumn: string;
   lead: ReactNode;
   caption: string;
+  /** 구조화 데이터(Dataset)의 설명. 검색엔진이 **50자 이상**을 요구하고,
+   *  표 아래 각주(caption)는 "2026년 기준 · 최종 확인 …"이라 설명이 못 된다.
+   *  페이지 metadata.description과 같은 문장을 넘겨 두 곳이 어긋나지 않게 한다. */
+  description: string;
   /** 첫 열(링크)을 제외한 나머지 열 */
   columns: IndexColumn[];
   rows: IndexRow[];
@@ -49,7 +53,7 @@ export function RouteIndex({
   const dateModified = latestVerifiedAt();
   const lds = [
     breadcrumbLd([{ name: category, href: categoryHref }, { name: title }]),
-    datasetLd({ name: title, description: caption, dateModified, rowCount: rows.length }),
+    datasetLd({ name: title, description, dateModified, rowCount: rows.length }),
   ];
 
   return (

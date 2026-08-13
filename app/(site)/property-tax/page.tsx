@@ -5,10 +5,13 @@ import { manLabel, manToWon, won } from '@/lib/format';
 import { PUBLIC_PRICE, PROPERTY_ASSUMPTION, DEFAULT_YEAR } from '@/lib/localTaxPages';
 import { calcPropertyTax } from '@/lib/calc/localTax';
 
+/** 페이지 설명. 검색 결과 스니펫과 구조화 데이터가 같은 문장을 쓰도록 한곳에 둔다. */
+const DESCRIPTION =
+  '공시가격 1억원부터 15억원까지 5,000만원 단위 주택 재산세를 한 표에 정리했습니다. 1세대 1주택 특례세율 기준입니다.';
+
 export const metadata: Metadata = {
   title: '공시가격별 재산세 표',
-  description:
-    '공시가격 1억원부터 15억원까지 5,000만원 단위 주택 재산세를 한 표에 정리했습니다. 1세대 1주택 특례세율 기준입니다.',
+  description: DESCRIPTION,
   alternates: { canonical: 'https://ttakcalc.com/property-tax' },
 };
 
@@ -39,6 +42,7 @@ export default function Page() {
           재산세입니다. 도시지역분·지방교육세를 포함하며, 1세대 1주택 특례세율 기준입니다.
         </>
       }
+      description={DESCRIPTION}
       caption={`${rates.label} 기준 · 최종 확인 ${rates.verifiedAt}`}
       columns={[{ label: '연간 재산세', numeric: true, minus: true }, { label: '7·9월 각각', numeric: true }]}
       rows={rows}

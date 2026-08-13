@@ -5,10 +5,13 @@ import { manLabel, manToWon, won } from '@/lib/format';
 import { NET, ASSUMPTION, DEFAULT_YEAR } from '@/lib/salaryPages';
 import { calcReverseSalary } from '@/lib/calc/compare';
 
+/** 페이지 설명. 검색 결과 스니펫과 구조화 데이터가 같은 문장을 쓰도록 한곳에 둔다. */
+const DESCRIPTION =
+  '월 실수령 150만원부터 700만원까지 10만원 단위로, 그 금액을 손에 쥐려면 연봉이 얼마여야 하는지 정리했습니다.';
+
 export const metadata: Metadata = {
   title: '월 실수령액별 필요 연봉 표',
-  description:
-    '월 실수령 150만원부터 700만원까지 10만원 단위로, 그 금액을 손에 쥐려면 연봉이 얼마여야 하는지 정리했습니다.',
+  description: DESCRIPTION,
   alternates: { canonical: 'https://ttakcalc.com/net-salary' },
 };
 
@@ -44,6 +47,7 @@ export default function Page() {
           얼마여야 하는지 정리했습니다. 부양가족 본인 1인 기준이며, 금액을 누르면 근거를 볼 수 있습니다.
         </>
       }
+      description={DESCRIPTION}
       caption={`${rates.label} 기준 · 최종 확인 ${rates.verifiedAt}`}
       columns={[{ label: '필요한 연봉', numeric: true }, { label: '월 급여(세전)', numeric: true }]}
       rows={rows}

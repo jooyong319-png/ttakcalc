@@ -5,10 +5,13 @@ import { manLabel, manToWon, won } from '@/lib/format';
 import { PRICE, DEFAULT_YEAR } from '@/lib/propertyPages';
 import { calcBrokerage } from '@/lib/calc/property';
 
+/** 페이지 설명. 검색 결과 스니펫과 구조화 데이터가 같은 문장을 쓰도록 한곳에 둔다. */
+const DESCRIPTION =
+  '1억원부터 20억원까지 5,000만원 단위 부동산 중개보수 상한을 한 표에 정리했습니다. 매매·임대차를 함께 봅니다.';
+
 export const metadata: Metadata = {
   title: '거래 금액별 중개수수료 표',
-  description:
-    '1억원부터 20억원까지 5,000만원 단위 부동산 중개보수 상한을 한 표에 정리했습니다. 매매·임대차를 함께 봅니다.',
+  description: DESCRIPTION,
   alternates: { canonical: 'https://ttakcalc.com/brokerage-fee' },
 };
 
@@ -40,6 +43,7 @@ export default function Page() {
           <strong>상한</strong>입니다. 실제 보수는 이 범위 안에서 협의로 정합니다.
         </>
       }
+      description={DESCRIPTION}
       caption={`${rates.label} 기준 · 최종 확인 ${rates.verifiedAt}`}
       columns={[{ label: '매매 (VAT 포함)', numeric: true, minus: true }, { label: '임대차 (VAT 포함)', numeric: true, minus: true }]}
       rows={rows}

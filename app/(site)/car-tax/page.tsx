@@ -5,10 +5,13 @@ import { won } from '@/lib/format';
 import { CC, CAR_ASSUMPTION, DEFAULT_YEAR } from '@/lib/localTaxPages';
 import { calcCarTax } from '@/lib/calc/localTax';
 
+/** 페이지 설명. 검색 결과 스니펫과 구조화 데이터가 같은 문장을 쓰도록 한곳에 둔다. */
+const DESCRIPTION =
+  '800cc부터 3,000cc까지 100cc 단위 자동차세를 한 표에 정리했습니다. 비영업용·차령 3년 기준이며 연납 할인액도 함께 봅니다.';
+
 export const metadata: Metadata = {
   title: '배기량별 자동차세 표',
-  description:
-    '800cc부터 3,000cc까지 100cc 단위 자동차세를 한 표에 정리했습니다. 비영업용·차령 3년 기준이며 연납 할인액도 함께 봅니다.',
+  description: DESCRIPTION,
   alternates: { canonical: 'https://ttakcalc.com/car-tax' },
 };
 
@@ -39,6 +42,7 @@ export default function Page() {
           100cc 단위 자동차세입니다. 지방교육세를 포함하며, 비영업용 승용차·차령 3년 기준입니다.
         </>
       }
+      description={DESCRIPTION}
       caption={`${rates.label} 기준 · 최종 확인 ${rates.verifiedAt}`}
       columns={[{ label: '연간 자동차세', numeric: true, minus: true }, { label: '1월 연납 시', numeric: true }]}
       rows={rows}

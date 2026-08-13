@@ -5,10 +5,13 @@ import { manLabel, manToWon, won, pct } from '@/lib/format';
 import { DIVIDEND, DEFAULT_YEAR } from '@/lib/salaryPages';
 import { calcDividendTax } from '@/lib/calc/dividend';
 
+/** 페이지 설명. 검색 결과 스니펫과 구조화 데이터가 같은 문장을 쓰도록 한곳에 둔다. */
+const DESCRIPTION =
+  '연간 배당 500만원부터 2억원까지 500만원 단위 세금을 한 표에 정리했습니다. 금융소득 2천만원을 넘으면 어떻게 달라지는지 한눈에 보입니다.';
+
 export const metadata: Metadata = {
   title: '배당금별 배당소득세 표',
-  description:
-    '연간 배당 500만원부터 2억원까지 500만원 단위 세금을 한 표에 정리했습니다. 금융소득 2천만원을 넘으면 어떻게 달라지는지 한눈에 보입니다.',
+  description: DESCRIPTION,
   alternates: { canonical: 'https://ttakcalc.com/dividend-tax' },
 };
 
@@ -42,6 +45,7 @@ export default function Page() {
           해외 주식·ETF, 다른 소득 없음 기준입니다. 2천만원을 넘어도 실효세율이 한동안 15.4%에 머무는 게 보입니다.
         </>
       }
+      description={DESCRIPTION}
       caption={`${rates.label} 기준 · 최종 확인 ${rates.verifiedAt}`}
       columns={[{ label: '세금', numeric: true, minus: true }, { label: '세후 수령', numeric: true }, { label: '실효세율', numeric: true }]}
       rows={rows}

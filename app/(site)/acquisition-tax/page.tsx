@@ -5,10 +5,13 @@ import { manLabel, manToWon, won, pct } from '@/lib/format';
 import { PRICE, ACQ_CASES, DEFAULT_YEAR } from '@/lib/propertyPages';
 import { calcAcquisitionTax } from '@/lib/calc/property';
 
+/** 페이지 설명. 검색 결과 스니펫과 구조화 데이터가 같은 문장을 쓰도록 한곳에 둔다. */
+const DESCRIPTION =
+  '1억원부터 20억원까지 5,000만원 단위 주택 취득세를 한 표에 정리했습니다. 1주택·전용 85㎡ 이하 기준입니다.';
+
 export const metadata: Metadata = {
   title: '아파트·주택 가격별 취득세 표',
-  description:
-    '1억원부터 20억원까지 5,000만원 단위 주택 취득세를 한 표에 정리했습니다. 1주택·전용 85㎡ 이하 기준입니다.',
+  description: DESCRIPTION,
   alternates: { canonical: 'https://ttakcalc.com/acquisition-tax' },
 };
 
@@ -43,6 +46,7 @@ export default function Page() {
           지방교육세·농어촌특별세를 포함한 금액이며, 1주택·전용 85㎡ 이하 기준입니다.
         </>
       }
+      description={DESCRIPTION}
       caption={`${rates.label} 기준 · 최종 확인 ${rates.verifiedAt}`}
       columns={[{ label: '취득세 합계', numeric: true, minus: true }, { label: '실효세율', numeric: true }]}
       rows={rows}
