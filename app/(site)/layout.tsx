@@ -92,6 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/* 개인정보처리방침은 다른 링크와 구분되게 표시하도록 권고된다(개인정보 보호법 제30조 ②) */}
             <nav className="footer-nav" aria-label="사이트 정보">
               <Link href="/about">사이트 소개</Link>
+              <Link href="/calendar">세금 달력</Link>
               <Link href="/changes">제도 변화</Link>
               <Link href="/corrections">정정 이력</Link>
               <Link href="/embed">계산기 임베드</Link>

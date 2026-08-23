@@ -99,6 +99,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     at(BASE, 1, `${S}/page.tsx`),
     at(`${BASE}/changes`, 0.8, `${S}/changes/page.tsx`),
+    // 세금 달력 — "지금 뭘 해야 하나"에 답하는 유일한 페이지다. 계산기로 가는 허브이기도 하다.
+    at(`${BASE}/calendar`, 0.8, `${S}/calendar/page.tsx`),
     at(`${BASE}/about`, 0.5, `${S}/about/page.tsx`),
     // 정정 이력은 신뢰 신호라 색인되는 편이 낫다 — 숨길 내용이면 애초에 안 적는다
     at(`${BASE}/corrections`, 0.5, `${S}/corrections/page.tsx`),

@@ -1,0 +1,65 @@
+/* 다가오는 세금 일정 — 이 페이지에서 가장 먼저 읽혀야 하는 부분이다.
+   "지금 뭘 해야 하나"가 이 페이지를 여는 이유이기 때문이다. */
+
+/* 하이드레이션 전 자리. 내용이 들어오면서 레이아웃이 튀지 않게 높이를 잡아 둔다. */
+.placeholder { min-height: 12rem; }
+
+.wrap { margin-bottom: 2.4rem; }
+
+.title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  margin-bottom: 0.7rem;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.7rem;
+  list-style: none;
+  padding: 0;
+}
+
+.list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.9rem 1rem;
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+/* 진행 중인 일정은 테두리와 배경을 함께 바꾼다 — 색 하나만으로 구분하지 않는다 */
+.ongoing {
+  background: var(--c2-bg);
+  border-color: var(--c2-key);
+  box-shadow: inset 0 0 0 1px var(--c2-key);
+}
+
+.head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; }
+.name { font-size: 0.95rem; font-weight: 700; }
+
+.badge, .badgeNow {
+  padding: 0.1rem 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: 999px;
+  white-space: nowrap;
+  border: 1px solid currentColor;
+}
+.badge { color: var(--ink-faint); }
+.badgeNow { color: var(--on-key); background: var(--c2-key); border-color: var(--c2-key); }
+
+.period { font-size: 0.82rem; color: var(--ink-faint); }
+.what { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.7; }
+
+.calc {
+  margin-top: 0.2rem;
+  font-size: 0.85rem;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
