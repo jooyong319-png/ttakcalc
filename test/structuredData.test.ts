@@ -123,3 +123,22 @@ test('구조화데이터 — Dataset 설명은 50자 이상이고 실제로 설�
   }
   assert.deepEqual(bad, []);
 });
+
+test('사이트맵 — lastmod가 한 날짜로 뭉치지 않는다', () => {
+  // 같은 버그를 세 번 당했다(2026-08-06 계산기 추가, 08-12 /about 표시, 08-13 롱테일 179장).
+  // 마지막엔 699개 URL 전체가 2026-08-12 한 날짜로 나갔다 — 하루 뒤에 생긴 179장까지
+  // "8월 12일에 마지막 수정"이라고 신고한 셈이다.
+  //
+  // 지문은 늘 같았다: **전부 같은 날짜**. 실제로는 페이지마다 바뀐 날이 다르다.
+  // 요율 데이터만 보는 방식은 페이지가 늘어난 경우를 원리적으로 못 잡는다.
+  const src = readFileSync(join('app', 'sitemap.ts'), 'utf-8');
+  assert.ok(
+    src.includes('routeModified') && src.includes("'git'"),
+    'lastmod를 페이지별 변경일에서 가져오지 않는다 — 데이터 확인일만 쓰면 새 페이지를 놓친다',
+  );
+  // 모든 항목이 같은 값을 쓰는 구조로 되돌아가면 여기서 걸린다
+  assert.equal(
+    /const at = \([^)]*\)[^=]*=>\s*\(\{\s*url,\s*lastModified,/.test(src), false,
+    '모든 URL이 같은 lastModified를 공유한다',
+  );
+});
