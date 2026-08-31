@@ -1,0 +1,98 @@
+/* 블로그 — 읽는 페이지다. 계산기와 달리 글줄 길이와 여백이 전부다. */
+
+.head { margin-bottom: 2rem; }
+.eyebrow {
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--ink-faint); margin-bottom: 0.5rem;
+}
+.title { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.02em; }
+.lead { margin-top: 0.8rem; color: var(--ink-soft); line-height: 1.8; }
+.lead strong { color: var(--ink); }
+.lead a { color: var(--accent); text-decoration: underline; text-underline-offset: 0.16em; }
+
+.empty { color: var(--ink-faint); padding: 2rem 0; }
+
+/* ── 목록 ───────────────────────────────────────────── */
+.list { display: flex; flex-direction: column; gap: 1.4rem; list-style: none; padding: 0; }
+.item { padding-bottom: 1.4rem; border-bottom: 1px solid var(--rule); }
+.item:last-child { border-bottom: none; }
+
+.meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.7rem;
+  font-size: 0.82rem; color: var(--ink-faint); margin-bottom: 0.4rem;
+}
+.backLink { color: var(--accent); text-decoration: underline; text-underline-offset: 0.16em; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.tag {
+  padding: 0.1rem 0.45rem;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: var(--paper-sunken);
+  border-radius: 999px;
+}
+
+.itemTitle { font-size: 1.15rem; font-weight: 700; line-height: 1.5; }
+.itemTitle a { color: var(--ink); text-decoration: none; }
+.itemTitle a:hover { text-decoration: underline; text-underline-offset: 0.16em; }
+.itemTitle a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.desc { margin-top: 0.4rem; color: var(--ink-soft); line-height: 1.75; }
+
+/* ── 글 ─────────────────────────────────────────────── */
+.postHead { margin-bottom: 1.8rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--rule-strong); }
+.postTitle { font-size: 1.7rem; font-weight: 700; line-height: 1.4; letter-spacing: -0.02em; }
+.postDesc { margin-top: 0.7rem; color: var(--ink-soft); line-height: 1.8; }
+.postHead .tags { margin-top: 0.8rem; }
+
+/* 본문은 마크다운에서 생성된 태그라 클래스를 못 붙인다 — 자식 선택자로 스타일을 준다 */
+.body { color: var(--ink); line-height: 1.85; }
+.body h2 {
+  margin: 2rem 0 0.7rem;
+  font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em;
+}
+.body h3 { margin: 1.5rem 0 0.5rem; font-size: 1.02rem; font-weight: 700; }
+.body p { margin-bottom: 1rem; }
+.body strong { font-weight: 700; }
+.body a { color: var(--accent); text-decoration: underline; text-underline-offset: 0.16em; }
+.body ul, .body ol { margin: 0 0 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.45rem; }
+.body li { line-height: 1.8; }
+.body code {
+  padding: 0.1rem 0.35rem;
+  font-family: var(--f-mono), monospace; font-size: 0.88em;
+  background: var(--paper-sunken); border-radius: 3px;
+}
+.body blockquote {
+  margin: 1.2rem 0; padding: 0.9rem 1.1rem;
+  background: var(--paper-sunken); border-radius: var(--radius-sm);
+}
+.body blockquote p { margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+
+/* 표 — 세금 글의 핵심 표현 수단이다. 좁은 화면에서 가로 스크롤되며 키보드로도 닿는다. */
+.body :global(.tableWrap) { overflow-x: auto; margin: 0 0 1.2rem; }
+.body table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.body th, .body td {
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+.body thead th { font-size: 0.82rem; color: var(--ink-faint); font-weight: 700; }
+.body tbody th { font-weight: 600; }
+
+/* ── 글 끝 ──────────────────────────────────────────── */
+.calcBox {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin: 2rem 0 0; padding: 1rem 1.2rem;
+  background: var(--c1-bg); border-radius: var(--radius);
+}
+.calcLead { font-size: 0.9rem; color: var(--c1-soft); }
+.calcLink { font-weight: 700; color: var(--c1-ink); text-decoration: underline; text-underline-offset: 0.16em; }
+
+.postFoot {
+  margin-top: 1.6rem; padding-top: 1.2rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.88rem; color: var(--ink-soft); line-height: 1.8;
+}
+.postFoot p { margin-bottom: 0.5rem; }
+.postFoot a { color: var(--accent); text-decoration: underline; text-underline-offset: 0.16em; }

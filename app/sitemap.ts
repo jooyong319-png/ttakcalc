@@ -8,6 +8,7 @@ import {
 import { PRICE } from '@/lib/propertyPages';
 import { CC, PUBLIC_PRICE, carAgePairs } from '@/lib/localTaxPages';
 import { CATEGORIES, allCalcHrefs } from '@/lib/catalog';
+import { getAllPosts } from '@/lib/blog';
 
 const BASE = 'https://ttakcalc.com';
 
@@ -101,6 +102,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     at(`${BASE}/changes`, 0.8, `${S}/changes/page.tsx`),
     // 세금 달력 — "지금 뭘 해야 하나"에 답하는 유일한 페이지다. 계산기로 가는 허브이기도 하다.
     at(`${BASE}/calendar`, 0.8, `${S}/calendar/page.tsx`),
+    at(`${BASE}/blog`, 0.8, `${S}/blog/page.tsx`),
+    // 글은 각자 자기 마크다운 파일의 커밋일을 쓴다 — 글마다 쓴 날이 다르다
+    ...getAllPosts().map(p => at(`${BASE}/blog/${p.slug}`, 0.7, `content/blog/${p.slug}.md`)),
     at(`${BASE}/about`, 0.5, `${S}/about/page.tsx`),
     // 정정 이력은 신뢰 신호라 색인되는 편이 낫다 — 숨길 내용이면 애초에 안 적는다
     at(`${BASE}/corrections`, 0.5, `${S}/corrections/page.tsx`),
