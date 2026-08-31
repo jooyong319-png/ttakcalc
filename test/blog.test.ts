@@ -49,6 +49,19 @@ test('블로그 — 표를 HTML 표로 바꾼다', () => {
   assert.match(html, /tabindex="0"/);
 });
 
+test('블로그 — 한 글에 표가 여럿이면 이름이 서로 달라야 한다', () => {
+  // 이름이 같은 region이 여러 개면 스크린리더 사용자가 구분하지 못한다
+  // (axe landmark-unique). 글에 표를 두 개 넣자마자 실제로 걸렸다.
+  // 표는 줄바꿈 하나로 이어져야 한 블록이 된다. 블록 사이만 빈 줄로 나눈다.
+  const table1 = ['| 구분 | 기한 |', '| --- | --- |', '| 주택 | 7월 |'].join('\n');
+  const table2 = ['| 구간 | 세율 |', '| --- | --- |', '| 1구간 | 0.1% |'].join('\n');
+  const md = ['## 납기', table1, '## 세율', table2].join('\n\n');
+  const labels = Array.from(markdownToHtml(md).matchAll(/aria-label="([^"]+)"/g)).map(m => m[1]);
+  assert.equal(labels.length, 2);
+  assert.notEqual(labels[0], labels[1], `표 이름이 같다: ${labels.join(', ')}`);
+  assert.deepEqual(labels, ['납기', '세율']);
+});
+
 test('블로그 — 위험한 링크 주소를 그대로 내보내지 않는다', () => {
   // 우리가 쓴 글만 들어가지만, javascript:가 통과하는 변환기를 두는 것과 아닌 것은 다르다
   const bad = markdownToHtml('[누르지 마세요](javascript:alert(1))');

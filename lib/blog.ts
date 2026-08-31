@@ -217,6 +217,12 @@ export function markdownToHtml(md: string): string {
   const blocks = md.trim().split(/\r?\n\s*\r?\n/);
   const out: string[] = [];
 
+  // 표에 붙일 이름. 같은 페이지에 role="region"이 여러 개인데 이름이 전부 "표"면
+  // 스크린리더 사용자가 구분하지 못한다(axe landmark-unique). 글에 표를 두 개 넣자마자
+  // 실제로 걸렸다 — 직전 헤딩을 이름으로 쓴다.
+  let lastHeading = '';
+  let tableCount = 0;
+
   for (const raw of blocks) {
     const block = raw.trim();
     if (!block) continue;
@@ -226,6 +232,7 @@ export function markdownToHtml(md: string): string {
     const h = block.match(/^(#{2,3})\s+(.+)$/);
     if (h && lines.length === 1) {
       const level = h[1].length;
+      lastHeading = h[2].trim();
       out.push(`<h${level}>${inline(h[2])}</h${level}>`);
       continue;
     }
@@ -236,8 +243,10 @@ export function markdownToHtml(md: string): string {
         line.replace(/^\||\|$/g, '').split('|').map(c => c.trim());
       const head = cells(lines[0]);
       const body = lines.slice(2).map(cells);
+      tableCount += 1;
+      const label = lastHeading || `표 ${tableCount}`;
       out.push(
-        '<div class="tableWrap" tabindex="0" role="region" aria-label="표">'
+        `<div class="tableWrap" tabindex="0" role="region" aria-label="${escapeHtml(label)}">`
         + '<table><thead><tr>'
         + head.map(c => `<th scope="col">${inline(c)}</th>`).join('')
         + '</tr></thead><tbody>'
