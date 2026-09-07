@@ -9,8 +9,9 @@ WhenStage(콘서트 캘린더)의 인프라·SEO 노하우를 물려받아 2026-
 
 - 로컬 경로: `d:/Gcalen/ttakcalc`
 - **운영: https://ttakcalc.com** (Vercel) · 저장소: github.com/jooyong319-png/ttakcalc
-- **계산기 32종 · 정적 708장 · 사이트맵 699 URL · 회귀 테스트 213개** (2026-08-13)
-  - 운영자 표기 `devju` · 정정 이력 공개(/corrections) · 계산기 임베드 배포(/embed)
+- **계산기 32종 · 사이트맵 703 URL · 회귀 테스트 222개** (2026-09-08)
+  - 운영자 `devju` · 정정 이력(/corrections) · 임베드(/embed)
+  - **읽을거리**: 세금 달력(/calendar) · 블로그(/blog, 2편) — 계산기가 답 못 하는 것을 글로
 - 브랜드: 2026-08-03 **딱계산 → 딱칼크**. 같은 이름의 경쟁 사이트(ddakcalc.com)가 이미
   운영·수익화 중이라 검색을 나눠 가질 이유가 없었다. 도메인 ttakcalc는 그대로 두고 이름만 바꿨다.
 
