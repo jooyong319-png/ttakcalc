@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 // 계산기는 전부 클라이언트 컴포넌트라 입력값이 서버로 가지 않는다. 이건 사실이므로 적는다.
 export default function PrivacyPage() {
   return (
-    <div className="container-narrow">
+    <div className="container">
       <header className={s.head}>
         <p className={s.eyebrow}>개인정보처리방침</p>
         <h1 className={s.title}>무엇을 수집하고, 무엇을 수집하지 않는가</h1>

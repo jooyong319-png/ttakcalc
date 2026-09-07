@@ -131,3 +131,15 @@ export function upcoming(events: TaxEvent[], today: Date, limit = 3): EventStatu
     })
     .slice(0, limit);
 }
+
+/**
+ * 격자 칸에 넣을 짧은 이름.
+ *
+ * 이름 뒤 괄호("재산세 (건축물)")는 칸에서 너무 길어 떼어내지만, **7월처럼 같은 세목이
+ * 두 건 걸린 달**에서는 떼면 "재산세 / 재산세"가 된다. 그래서 떼어낸 결과가 겹치면
+ * 그 달만 원래 이름을 그대로 쓴다 — 짧은 것보다 구분되는 것이 먼저다.
+ */
+export function shortNames(events: TaxEvent[]): string[] {
+  const short = events.map(e => e.name.replace(/\s*\([^)]*\)/g, '').trim());
+  return short.map((s, i) => (short.filter(x => x === s).length > 1 ? events[i].name : s));
+}

@@ -20,7 +20,7 @@ export default function ChangesPage() {
   const next = getRates(latestYear()).minimumWage.next;
 
   return (
-    <div className="container-narrow">
+    <div className="container">
       <header className={s.head}>
         <p className={s.eyebrow}>제도 변화</p>
         <h1 className={s.title}>제도는 바뀝니다.<br />계산은 <span className={s.mark}>항상 최신</span>으로.</h1>

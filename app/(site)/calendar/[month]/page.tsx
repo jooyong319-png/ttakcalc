@@ -3,11 +3,12 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { SITE } from '@/lib/site';
 import {
-  monthsWithEvents, eventsInMonth, parseMonth, neighborMonths, CALENDAR_VERIFIED_AT,
+  monthsWithEvents, eventsInMonth, parseMonth, neighborMonths, shortNames, CALENDAR_VERIFIED_AT,
 } from '@/lib/taxCalendar';
 import { postsForCalc } from '@/lib/blog';
 import { breadcrumbLd, ldJson } from '@/lib/jsonLd';
 import { linkifyLaw } from '@/lib/lawLink';
+import { MonthGrid } from '@/components/MonthGrid';
 import s from '../calendar.module.css';
 
 /**
@@ -47,6 +48,7 @@ export default function MonthPage({ params }: { params: { month: string } }) {
   if (month === null) notFound();
 
   const events = eventsInMonth(month);
+  const labels = shortNames(events);   // 격자 칸에 넣을 짧은 이름(7월처럼 겹치면 원래 이름)
   const { prev, next } = neighborMonths(month);
 
   const crumbLd = breadcrumbLd([
@@ -57,7 +59,7 @@ export default function MonthPage({ params }: { params: { month: string } }) {
   const day = (mmdd: string) => Number(mmdd.slice(3));
 
   return (
-    <div className="container-narrow" style={{ paddingTop: '1.8rem' }}>
+    <div className="container" style={{ paddingTop: '1.8rem' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldJson(crumbLd) }} />
 
       <header className={s.head}>
@@ -73,6 +75,12 @@ export default function MonthPage({ params }: { params: { month: string } }) {
           다를 수 있습니다.
         </p>
       </header>
+
+      {/* 기간을 글자로만 적으면 몇째 주인지 머릿속에서 달력을 그려야 한다 */}
+      <MonthGrid
+        month={month}
+        ranges={events.map((e, i) => ({ from: day(e.from), to: day(e.to), label: labels[i] }))}
+      />
 
       <div className={s.body}>
         {events.map(e => {

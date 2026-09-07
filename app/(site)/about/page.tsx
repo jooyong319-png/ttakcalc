@@ -22,7 +22,7 @@ export default function AboutPage() {
   const verifiedAt = latestVerifiedAt();
 
   return (
-    <div className="container-narrow">
+    <div className="container">
       <header className={s.head}>
         <p className={s.eyebrow}>사이트 소개</p>
         <h1 className={s.title}>답만 주는 계산기는 이미 많습니다</h1>

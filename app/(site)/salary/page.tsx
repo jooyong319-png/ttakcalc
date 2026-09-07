@@ -38,7 +38,7 @@ export default function SalaryIndexPage() {
   ];
 
   return (
-    <div className={`container-narrow ${s.c1}`}>
+    <div className={`container ${s.c1}`}>
       {lds.map((ld, i) => (
         <script key={i} type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: ldJson(ld) }} />

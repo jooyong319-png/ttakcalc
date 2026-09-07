@@ -19,7 +19,7 @@ export default function CorrectionsPage() {
   const valueCount = valueCorrectionCount();
 
   return (
-    <div className="container-narrow">
+    <div className="container">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldJson(crumbLd) }} />
 
       <header className={s.head}>

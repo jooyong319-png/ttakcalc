@@ -60,7 +60,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           dangerouslySetInnerHTML={{ __html: ldJson(ld) }} />
       ))}
 
-      <article className="container-narrow" style={{ paddingTop: '1.8rem' }}>
+      <article className="container" style={{ paddingTop: '1.8rem' }}>
         <header className={s.postHead}>
           <p className={s.meta}>
             <Link href="/blog" className={s.backLink}>블로그</Link>

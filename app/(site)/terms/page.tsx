@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 // 개인별 공제와 과세관청 판단은 우리가 알 수 없는 영역이기 때문이다.
 export default function TermsPage() {
   return (
-    <div className="container-narrow">
+    <div className="container">
       <header className={s.head}>
         <p className={s.eyebrow}>이용약관</p>
         <h1 className={s.title}>이용약관 및 면책 조항</h1>

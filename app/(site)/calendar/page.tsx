@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SITE } from '@/lib/site';
-import { TAX_EVENTS, CALENDAR_VERIFIED_AT, monthsWithEvents } from '@/lib/taxCalendar';
+import { TAX_EVENTS, CALENDAR_VERIFIED_AT } from '@/lib/taxCalendar';
 import { UpcomingTax } from '@/components/UpcomingTax';
-import { MonthJump } from '@/components/MonthJump';
+import { YearGrid } from '@/components/YearGrid';
 import { breadcrumbLd, ldJson } from '@/lib/jsonLd';
 import { linkifyLaw } from '@/lib/lawLink';
 import s from './calendar.module.css';
@@ -39,7 +39,7 @@ export default function CalendarPage() {
   }
 
   return (
-    <div className="container-narrow" style={{ paddingTop: '1.8rem' }}>
+    <div className="container" style={{ paddingTop: '1.8rem' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldJson(crumbLd) }} />
 
       <header className={s.head}>
@@ -55,7 +55,8 @@ export default function CalendarPage() {
       {/* 오늘 기준 임박한 것. 클라이언트에서 계산한다 — 정적 생성이라 서버에서 하면 굳는다. */}
       {/* 자기 달로 바로. 첫 화면에 있어야 뜻이 있다 — 아래에 두면 그걸 보려고
           이미 스크롤한 뒤라 쓸모가 없다(2026-09-08 모바일에서 확인). */}
-      <MonthJump months={monthsWithEvents()} />
+      {/* 이름이 "달력"이면 달력처럼 보여야 한다. 달 격자 하나가 예전의 월 이동 칩까지 겸한다. */}
+      <YearGrid />
 
       <UpcomingTax limit={2} />
 

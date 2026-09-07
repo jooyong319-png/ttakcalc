@@ -27,7 +27,7 @@ export default function BlogIndexPage() {
   const crumbLd = breadcrumbLd([{ name: '블로그' }]);
 
   return (
-    <div className="container-narrow" style={{ paddingTop: '1.8rem' }}>
+    <div className="container" style={{ paddingTop: '1.8rem' }}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldJson(crumbLd) }} />
 
       <header className={s.head}>

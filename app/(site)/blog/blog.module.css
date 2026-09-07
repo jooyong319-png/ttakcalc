@@ -96,3 +96,7 @@
 }
 .postFoot p { margin-bottom: 0.5rem; }
 .postFoot a { color: var(--accent); text-decoration: underline; text-underline-offset: 0.16em; }
+
+/* 컨테이너를 홈과 같은 1040px로 넓혔지만(2026-09-08), **읽는 본문은 줄이 길어지면
+   눈이 다음 줄을 못 찾는다.** 컨테이너 폭과 글줄 폭은 따로 정한다. */
+.body { max-width: 46rem; }

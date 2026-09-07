@@ -1,0 +1,65 @@
+/* 1년 열두 달 격자 — "언제 세금이 몰리나"를 한눈에.
+   세금은 한 달에 한두 건뿐이라 날짜 격자는 빈칸투성이가 되지만, 달 단위는 밀도가 맞는다. */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+  counter-reset: none;
+}
+
+/* 좁은 화면에서 4열은 글자가 뭉갠다 */
+@media (max-width: 40rem) { .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 26rem) { .grid { grid-template-columns: repeat(2, 1fr); } }
+
+.cell {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  min-height: 5.5rem;
+}
+/* 일정이 있는 달과 없는 달을 배경·테두리·글자 셋으로 구분한다 — 색 하나에 기대지 않는다 */
+.on { background: var(--paper-card); border-color: var(--rule-strong); }
+.off { background: transparent; }
+
+.link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  height: 100%;
+  padding: 0.6rem 0.7rem;
+  text-decoration: none;
+  color: inherit;
+}
+a.link:hover { background: var(--paper-sunken); border-radius: var(--radius-sm); }
+a.link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--radius-sm); }
+
+.month { font-size: 0.82rem; font-weight: 700; color: var(--ink-soft); }
+.on .month { color: var(--ink); }
+.month .num { font-size: 1.25em; }
+
+.names { display: flex; flex-direction: column; gap: 0.15rem; }
+.name {
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--accent);
+}
+.none { font-size: 0.8rem; color: var(--ink-faint); }
+
+/* 이번 달 — 테두리 두께로 알리고, 칸 안에 "지금" 글자를 함께 둔다(색만으로 알리지 않는다) */
+.current { box-shadow: inset 0 0 0 2px var(--accent); }
+.now {
+  margin-left: 0.35rem;
+  padding: 0.05rem 0.3rem;
+  border-radius: 999px;
+  /* 채우지 않고 테두리로 그린다 — 액센트는 밝은 테마에서 진한 파랑, 어두운 테마에서
+     옅은 파랑이라 배경으로 깔면 그 위에 올릴 글자색이 테마마다 뒤집힌다. 글자를 액센트로
+     두면 링크와 같은 대비(양쪽 8:1 이상)를 그대로 물려받는다. */
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.62rem;
+  font-weight: 700;
+  vertical-align: 0.1em;
+}
