@@ -16,6 +16,7 @@ export default function Page() {
   return (
     <CalcPage
       category="금융·자동차"
+      href="/calc/car-acquisition"
       tone="c3"
       year={year}
       title="자동차 취득세 계산기"

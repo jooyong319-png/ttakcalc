@@ -17,6 +17,7 @@ export default function Page() {
   return (
     <CalcPage
       category="부동산"
+      href="/calc/comprehensive-property-tax"
       tone="c2"
       year={year}
       title="종합부동산세 계산기"

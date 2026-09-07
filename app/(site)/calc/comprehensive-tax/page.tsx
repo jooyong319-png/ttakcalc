@@ -17,6 +17,7 @@ export default function Page() {
   return (
     <CalcPage
       category="급여·세금"
+      href="/calc/comprehensive-tax"
       tone="c1"
       year={year}
       title={`${year}년 종합소득세 계산기`}
