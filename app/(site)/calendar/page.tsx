@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SITE } from '@/lib/site';
-import { TAX_EVENTS, CALENDAR_VERIFIED_AT } from '@/lib/taxCalendar';
+import { TAX_EVENTS, CALENDAR_VERIFIED_AT, monthsWithEvents } from '@/lib/taxCalendar';
 import { UpcomingTax } from '@/components/UpcomingTax';
+import { MonthJump } from '@/components/MonthJump';
 import { breadcrumbLd, ldJson } from '@/lib/jsonLd';
 import { linkifyLaw } from '@/lib/lawLink';
 import s from './calendar.module.css';
@@ -52,11 +53,15 @@ export default function CalendarPage() {
       </header>
 
       {/* 오늘 기준 임박한 것. 클라이언트에서 계산한다 — 정적 생성이라 서버에서 하면 굳는다. */}
-      <UpcomingTax />
+      {/* 자기 달로 바로. 첫 화면에 있어야 뜻이 있다 — 아래에 두면 그걸 보려고
+          이미 스크롤한 뒤라 쓸모가 없다(2026-09-08 모바일에서 확인). */}
+      <MonthJump months={monthsWithEvents()} />
+
+      <UpcomingTax limit={2} />
 
       <div className={s.body}>
         {Array.from(byMonth.entries()).map(([month, events]) => (
-          <section key={month} className={s.month}>
+          <section key={month} id={`m${Number(month)}`} className={s.month}>
             <h2 className={s.monthTitle}>
               {/* 월별 페이지로 가는 크롤 경로이자 "9월 세금" 검색의 착지점 */}
               <Link href={`/calendar/${Number(month)}`}>
