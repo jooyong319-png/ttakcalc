@@ -86,6 +86,42 @@ export function statusOf(events: TaxEvent[], today: Date): EventStatus[] {
   });
 }
 
+/**
+ * 월별 페이지를 만들 달.
+ *
+ * **일정이 있는 달만 만든다.** 4·6·8·10·11월은 법정 기한이 없는데, "이번 달은 낼 세금이
+ * 없습니다"만 적힌 페이지를 네 장 만들면 서로 내용이 거의 같아진다 — 검색 결과에는
+ * 여러 개로 뜨는데 이용자에게는 같은 페이지인 것, 그게 도어웨이다.
+ *
+ * 연도를 URL에 넣지 않는 이유 — 세금 일정은 매년 같은 날에 돌아온다. `/calendar/9`는
+ * 내년에도 그대로 쓰이지만 `/calendar/2026-09`는 매년 새 URL이 필요하고, 지난 URL은
+ * 죽은 페이지로 남는다.
+ */
+export function monthsWithEvents(): number[] {
+  return Array.from(new Set(TAX_EVENTS.map(e => Number(e.from.slice(0, 2)))))
+    .sort((a, b) => a - b);
+}
+
+export function eventsInMonth(month: number): TaxEvent[] {
+  return TAX_EVENTS.filter(e => Number(e.from.slice(0, 2)) === month);
+}
+
+export function parseMonth(param: string): number | null {
+  const n = Number(param);
+  return Number.isInteger(n) && monthsWithEvents().includes(n) ? n : null;
+}
+
+/** 일정이 있는 달 중 앞뒤. 없는 달은 건너뛴다 — 링크한 곳에 페이지가 있어야 한다. */
+export function neighborMonths(month: number): { prev: number | null; next: number | null } {
+  const all = monthsWithEvents();
+  const i = all.indexOf(month);
+  if (i < 0) return { prev: null, next: null };
+  return {
+    prev: i > 0 ? all[i - 1] : all[all.length - 1],
+    next: i < all.length - 1 ? all[i + 1] : all[0],
+  };
+}
+
 /** 임박한 순서로. 진행 중인 것이 먼저, 그다음 가까운 순. */
 export function upcoming(events: TaxEvent[], today: Date, limit = 3): EventStatus[] {
   return statusOf(events, today)

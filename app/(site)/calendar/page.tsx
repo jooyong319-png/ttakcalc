@@ -58,7 +58,10 @@ export default function CalendarPage() {
         {Array.from(byMonth.entries()).map(([month, events]) => (
           <section key={month} className={s.month}>
             <h2 className={s.monthTitle}>
-              <span className="num">{Number(month)}</span>월
+              {/* 월별 페이지로 가는 크롤 경로이자 "9월 세금" 검색의 착지점 */}
+              <Link href={`/calendar/${Number(month)}`}>
+                <span className="num">{Number(month)}</span>월
+              </Link>
             </h2>
             <ul className={s.events}>
               {events.map(e => (

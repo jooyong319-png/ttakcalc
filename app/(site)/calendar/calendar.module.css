@@ -66,3 +66,25 @@
   background: var(--paper-sunken); border-radius: var(--radius-sm);
 }
 .verified p { font-size: 0.86rem; margin: 0.4rem 0 0; }
+
+/* 월별 페이지 — 그 달로 바로 들어온 사람이 쓴다. 한 달치만 있으니 여백을 넉넉히. */
+.head .eyebrow a { color: var(--accent); text-decoration: underline; text-underline-offset: 0.16em; }
+
+.related {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  margin-top: 0.7rem; padding: 0.8rem 1rem;
+  background: var(--paper-sunken); border-radius: var(--radius-sm);
+  list-style: none;
+}
+.related li { display: flex; flex-direction: column; gap: 0.15rem; }
+.related a { font-weight: 600; color: var(--accent); text-decoration: underline; text-underline-offset: 0.16em; }
+.relatedDesc { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.7; }
+
+.monthNav {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem;
+  justify-content: space-between; align-items: center;
+  margin-top: 2rem; padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.9rem;
+}
+.monthNav a { color: var(--accent); text-decoration: underline; text-underline-offset: 0.16em; }
