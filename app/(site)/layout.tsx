@@ -90,15 +90,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="site-footer">
           <div className="container">
             {/* 개인정보처리방침은 다른 링크와 구분되게 표시하도록 권고된다(개인정보 보호법 제30조 ②) */}
+            {/*
+              prefetch={false} — 이 푸터는 모든 페이지에 있다. 기본값이면 푸터가 화면에
+              들어오는 순간 8개 경로를 통째로 미리 당겨오고, 그만큼 ISR 읽기가 발생한다.
+              실제로 짧은 페이지(/blog)에서 페이지당 prefetch가 9건 나갔다(2026-09-07).
+              마우스를 올리면 그때 당겨오므로 눌렀을 때의 체감은 그대로다.
+            */}
             <nav className="footer-nav" aria-label="사이트 정보">
-              <Link href="/about">사이트 소개</Link>
-              <Link href="/blog">블로그</Link>
-              <Link href="/calendar">세금 달력</Link>
-              <Link href="/changes">제도 변화</Link>
-              <Link href="/corrections">정정 이력</Link>
-              <Link href="/embed">계산기 임베드</Link>
-              <Link href="/terms">이용약관</Link>
-              <Link href="/privacy" className="footer-strong">개인정보처리방침</Link>
+              <Link href="/about" prefetch={false}>사이트 소개</Link>
+              <Link href="/blog" prefetch={false}>블로그</Link>
+              <Link href="/calendar" prefetch={false}>세금 달력</Link>
+              <Link href="/changes" prefetch={false}>제도 변화</Link>
+              <Link href="/corrections" prefetch={false}>정정 이력</Link>
+              <Link href="/embed" prefetch={false}>계산기 임베드</Link>
+              <Link href="/terms" prefetch={false}>이용약관</Link>
+              <Link href="/privacy" className="footer-strong" prefetch={false}>개인정보처리방침</Link>
               <a href={`mailto:${SITE.email}`}>문의</a>
             </nav>
 
