@@ -16,6 +16,7 @@ export default function Page() {
   return (
     <CalcPage
       category="부동산"
+      href="/calc/acquisition-tax"
       tone="c2"
       year={year}
       title="취득세 계산기"

@@ -17,6 +17,7 @@ export default function Page() {
   return (
     <CalcPage
       category="부동산"
+      href="/calc/rent-conversion"
       tone="c2"
       year={year}
       title="전월세 전환율 계산기"

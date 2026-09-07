@@ -16,6 +16,7 @@ export default function Page() {
   return (
     <CalcPage
       category="계산·단위"
+      href="/calc/vat"
       tone="c4"
       year={year}
       title="부가가치세 계산기"

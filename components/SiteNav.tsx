@@ -55,6 +55,7 @@ export function SiteNav() {
           ))}
         </nav>
 
+        <a href="/calendar" className={s.plain}>세금 달력</a>
         <a href="/changes" className={s.plain}>제도 변화</a>
         <ThemeToggle />
       </div>

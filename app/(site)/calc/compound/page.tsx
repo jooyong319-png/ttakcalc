@@ -17,6 +17,7 @@ export default function Page() {
   return (
     <CalcPage
       category="계산·단위"
+      href="/calc/compound"
       tone="c4"
       year={year}
       title="예·적금 이자 계산기"

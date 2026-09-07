@@ -19,12 +19,12 @@ const md = (mmdd: string) => {
   return `${m}월 ${d}일`;
 };
 
-export function UpcomingTax() {
+export function UpcomingTax({ limit = 3, compact = false }: { limit?: number; compact?: boolean } = {}) {
   const [rows, setRows] = useState<EventStatus[] | null>(null);
 
   useEffect(() => {
-    setRows(upcoming(TAX_EVENTS, new Date(), 3));
-  }, []);
+    setRows(upcoming(TAX_EVENTS, new Date(), limit));
+  }, [limit]);
 
   if (!rows) {
     // 하이드레이션 전에는 자리만 잡아 둔다. 레이아웃이 튀지 않게 높이를 비슷하게.
@@ -32,8 +32,12 @@ export function UpcomingTax() {
   }
 
   return (
-    <section className={s.wrap} aria-label="다가오는 세금 일정">
-      <h2 className={s.title}>지금 챙길 것</h2>
+    <section className={`${s.wrap} ${compact ? s.compact : ''}`} aria-label="다가오는 세금 일정">
+      <h2 className={s.title}>
+        지금 챙길 것
+        {/* 홈에서는 하나만 보여주고 나머지는 달력으로 보낸다 */}
+        {compact && <a className={s.more} href="/calendar">세금 달력 전체 →</a>}
+      </h2>
       <ul className={s.list}>
         {rows.map(({ event, ongoing, daysUntil, daysLeft }) => (
           <li key={event.id} className={ongoing ? s.ongoing : undefined}>

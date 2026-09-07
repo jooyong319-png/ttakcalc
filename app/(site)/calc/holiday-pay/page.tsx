@@ -16,6 +16,7 @@ export default function Page() {
   return (
     <CalcPage
       category="급여·세금"
+      href="/calc/holiday-pay"
       tone="c1"
       year={year}
       title="주휴수당 계산기"

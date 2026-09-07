@@ -1,15 +1,19 @@
 import type { ReactNode } from 'react';
 import { linkifyLaw } from '@/lib/lawLink';
 import { breadcrumbLd, categoryHrefByName, ldJson, webApplicationLd } from '@/lib/jsonLd';
+import { postsForCalc } from '@/lib/blog';
 import type { Tone } from '@/lib/catalog';
 import styles from './CalcPage.module.css';
 
 /** 계산기 페이지 공통 껍데기 — 제목·계산·문답·적용기준 순으로 놓는다.
  *  category는 홈의 컬러 블록과 같은 갈래라서, 어디서 들어왔든 위치를 잃지 않게 한다. */
 export function CalcPage({
-  category, tone, title, lead, children, faqs, basisItems, verifiedAt, year,
+  category, tone, title, lead, children, faqs, basisItems, verifiedAt, year, href,
 }: {
   category: string;
+  /** 이 계산기의 경로(예: /calc/salary). 서버 컴포넌트는 자기 URL을 알 수 없어서 받는다.
+   *  안 넘기면 관련 글이 표시되지 않을 뿐 화면은 멀쩡하다 — 안전한 쪽으로 실패한다. */
+  href?: string;
   tone: Tone;
   title: string;
   lead: ReactNode;
@@ -30,6 +34,8 @@ export function CalcPage({
 
   // 눈썹줄 링크와 같은 곳을 가리켜야 한다 — 화면과 다른 경로를 마크업하면 그건 거짓말이다
   const catHref = categoryHrefByName(category);
+  // 이 계산기를 다룬 글 — 계산기 쪽에 목록을 손으로 적지 않는다
+  const related = href ? postsForCalc(href) : [];
   const crumbLd = breadcrumbLd([{ name: category, href: catHref }, { name: title }]);
   // 마지막 대조일을 그대로 쓴다. 화면의 "확인 {verifiedAt}"과 같은 날짜다.
   const appLd = webApplicationLd({
@@ -66,6 +72,21 @@ export function CalcPage({
                 <p className={styles.faqA}>{f.a}</p>
               </details>
             ))}
+          </section>
+        )}
+
+        {/* 이 계산기를 다룬 글이 있으면 여기서 연결한다. 없으면 아무것도 안 나온다. */}
+        {related.length > 0 && (
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>더 읽을 거리</h2>
+            <ul className={styles.related}>
+              {related.map(p => (
+                <li key={p.slug}>
+                  <a href={`/blog/${p.slug}`}>{p.title}</a>
+                  <span className={styles.relatedDesc}>{p.description}</span>
+                </li>
+              ))}
+            </ul>
           </section>
         )}
 

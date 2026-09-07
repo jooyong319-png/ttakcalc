@@ -23,6 +23,7 @@ export default async function Page() {
   return (
     <CalcPage
       category="금융·자동차"
+      href="/calc/exchange"
       tone="c3"
       year={year}
       title="환전 계산기"

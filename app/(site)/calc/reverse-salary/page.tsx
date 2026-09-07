@@ -16,6 +16,7 @@ export default function Page() {
   return (
     <CalcPage
       category="급여·세금"
+      href="/calc/reverse-salary"
       tone="c1"
       year={year}
       title="실수령액 → 연봉 역산"

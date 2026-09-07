@@ -16,6 +16,7 @@ export default function Page() {
   return (
     <CalcPage
       category="부동산"
+      href="/calc/brokerage-fee"
       tone="c2"
       year={year}
       title="부동산 중개수수료 계산기"

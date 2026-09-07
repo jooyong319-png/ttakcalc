@@ -16,6 +16,7 @@ export default function Page() {
   return (
     <CalcPage
       category="계산·단위"
+      href="/calc/percent"
       tone="c4"
       year={year}
       title="퍼센트 계산기"

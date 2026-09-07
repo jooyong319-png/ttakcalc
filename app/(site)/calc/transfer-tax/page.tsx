@@ -17,6 +17,7 @@ export default function Page() {
   return (
     <CalcPage
       category="부동산"
+      href="/calc/transfer-tax"
       tone="c2"
       year={year}
       title="양도소득세 계산기"

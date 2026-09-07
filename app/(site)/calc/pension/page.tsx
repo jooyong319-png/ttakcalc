@@ -19,6 +19,7 @@ export default function Page() {
   return (
     <CalcPage
       category="금융·자동차"
+      href="/calc/pension"
       tone="c3"
       year={year}
       title={`${year}년 국민연금 예상 수령액 계산기`}

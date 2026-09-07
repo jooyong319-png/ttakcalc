@@ -17,6 +17,7 @@ export default function Page() {
   return (
     <CalcPage
       category="급여·세금"
+      href="/calc/employer-cost"
       tone="c1"
       year={year}
       title={`${year}년 4대보험 사업주 부담 계산기`}

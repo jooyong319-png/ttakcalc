@@ -17,6 +17,7 @@ export default function Page() {
   return (
     <CalcPage
       category="급여·세금"
+      href="/calc/unemployment"
       tone="c1"
       year={year}
       title="실업급여 계산기"

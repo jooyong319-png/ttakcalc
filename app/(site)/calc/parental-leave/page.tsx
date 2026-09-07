@@ -21,6 +21,7 @@ export default function Page() {
   return (
     <CalcPage
       category="급여·세금"
+      href="/calc/parental-leave"
       tone="c1"
       year={year}
       title={`${year}년 육아휴직급여 계산기`}

@@ -17,6 +17,7 @@ export default function Page() {
   return (
     <CalcPage
       category="급여·세금"
+      href="/calc/annual-leave"
       tone="c1"
       year={year}
       title="연차수당 계산기"

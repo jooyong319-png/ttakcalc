@@ -3,6 +3,7 @@ import { latestYear, getRates } from '@/lib/rates';
 import { CATEGORIES, calcCount } from '@/lib/catalog';
 import { quickAnswers } from '@/lib/quickAnswers';
 import { CalcSearch } from '@/components/CalcSearch';
+import { UpcomingTax } from '@/components/UpcomingTax';
 import { SITE } from '@/lib/site';
 import styles from './home.module.css';
 
@@ -37,6 +38,15 @@ export default function HomePage() {
           <strong>숫자만</strong>(예: 5000) 넣어도 찾아드립니다.
         </p>
       </section>
+
+      {/*
+        지금 임박한 세금 일정 하나.
+        계산기는 "얼마인가"에 답하지만 "지금 해야 하나"에는 답하지 못한다. 재산세 납부가
+        코앞인데 홈에서 그걸 알 길이 없었다 — 세금 달력과 블로그가 푸터에만 있어서
+        끝까지 스크롤해야 발견했다(2026-09-08).
+        클라이언트에서 오늘을 계산한다. 정적 생성이라 서버에서 하면 빌드한 날에 굳는다.
+      */}
+      <UpcomingTax limit={1} compact />
 
       {/* 답이 먼저 — 한 번 더 누르지 않아도 숫자가 보인다 */}
       <section className={styles.qaSection}>

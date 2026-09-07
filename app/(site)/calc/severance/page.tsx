@@ -15,6 +15,7 @@ export default function Page() {
   return (
     <CalcPage
       category="급여·세금"
+      href="/calc/severance"
       tone="c1"
       year={year}
       title="퇴직금 계산기"

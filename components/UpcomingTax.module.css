@@ -63,3 +63,18 @@
   text-decoration: underline;
   text-underline-offset: 0.16em;
 }
+
+/* 홈에 얹는 형태 — 한 장만, 낮게. 홈의 중심은 검색바라 여기가 커지면 안 된다. */
+.compact { margin-bottom: 1.6rem; }
+.compact .title { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; }
+.compact .list { grid-template-columns: 1fr; }
+.compact li { padding: 0.75rem 0.9rem; }
+
+.more {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+  white-space: nowrap;
+}

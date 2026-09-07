@@ -16,6 +16,7 @@ export default function Page() {
   return (
     <CalcPage
       category="계산·단위"
+      href="/calc/pyeong"
       tone="c4"
       year={year}
       title="평 ↔ ㎡ 변환"

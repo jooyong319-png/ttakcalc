@@ -39,6 +39,7 @@ export default function SalaryPage() {
   return (
     <CalcPage
       category="급여·세금"
+      href="/calc/salary"
       tone="c1"
       year={year}
       title={`${year}년 연봉 실수령액 계산기`}

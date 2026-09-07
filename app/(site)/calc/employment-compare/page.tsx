@@ -16,6 +16,7 @@ export default function Page() {
   return (
     <CalcPage
       category="급여·세금"
+      href="/calc/employment-compare"
       tone="c1"
       year={year}
       title="정규직 vs 프리랜서 3.3%"

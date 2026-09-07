@@ -18,6 +18,7 @@ export default function Page() {
   return (
     <CalcPage
       category="급여·세금"
+      href="/calc/overtime"
       tone="c1"
       year={year}
       title={`${year}년 연장·야간·휴일수당 계산기`}

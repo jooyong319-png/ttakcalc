@@ -172,6 +172,19 @@ export function getPostBySlug(slug: string): Post | null {
   return getAllPosts().find(p => p.slug === slug) ?? null;
 }
 
+/**
+ * 이 계산기를 다룬 글.
+ *
+ * 글 → 계산기 방향은 frontmatter의 `calc`로 이미 있었는데 **반대가 없었다.** 그래서
+ * 블로그가 푸터에만 걸린 채 아무도 못 찾는 상태였다(2026-09-08). 계산기를 쓰다가
+ * "왜 이 금액이지"가 되는 지점이 글을 읽을 사람이 가장 많은 자리다.
+ *
+ * 글이 늘면 자동으로 연결된다 — 계산기 쪽에 목록을 손으로 적지 않는다.
+ */
+export function postsForCalc(calcHref: string): Post[] {
+  return getAllPosts().filter(p => p.calc === calcHref);
+}
+
 const escapeHtml = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 

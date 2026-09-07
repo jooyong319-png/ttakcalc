@@ -15,6 +15,7 @@ export default function Page() {
   return (
     <CalcPage
       category="금융·자동차"
+      href="/calc/loan"
       tone="c3"
       year={year}
       title="대출 이자 계산기"

@@ -17,6 +17,7 @@ export default function Page() {
   return (
     <CalcPage
       category="금융·자동차"
+      href="/calc/car-cost"
       tone="c3"
       year={year}
       title={`${year}년 자동차 유지비 계산기`}

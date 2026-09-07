@@ -17,6 +17,7 @@ export default function Page() {
   return (
     <CalcPage
       category="급여·세금"
+      href="/calc/year-end"
       tone="c1"
       year={year}
       title={`${year}년 연말정산 환급금 계산기`}

@@ -18,6 +18,7 @@ export default function Page() {
   return (
     <CalcPage
       category="부동산"
+      href="/calc/property-tax"
       tone="c2"
       year={year}
       title={`${year}년 재산세 계산기`}
