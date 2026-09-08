@@ -7,9 +7,10 @@ import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const axe = readFileSync(require.resolve('axe-core/axe.min.js'), 'utf-8');
-const { chromium } = await import(
-  process.env.PLAYWRIGHT_PATH ?? 'file:///d:/Gcalen/whenstage/node_modules/playwright/index.mjs'
-);
+// playwright 는 이 프로젝트의 devDependency 다. 맨 이름으로 부르면 node 가 로컬
+// node_modules 에서 찾는다 — 예전엔 whenstage 것을 절대경로로 빌려 썼는데, 기계를
+// 옮기자 그 경로가 죽어 조용히 깨졌다. 기계 경로를 코드에 두지 않는다.
+const { chromium } = await import(process.env.PLAYWRIGHT_PATH ?? 'playwright');
 
 const BASE = process.env.AXE_BASE ?? 'http://localhost:3111';
 // 계산기 유형별로 한 장씩 — 같은 컴포넌트를 쓰므로 전수를 돌 필요가 없다

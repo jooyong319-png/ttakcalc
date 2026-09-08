@@ -14,6 +14,13 @@ import {
 import { CATEGORIES } from '../lib/catalog';
 import { getRates, latestYear } from '../lib/rates';
 
+// 소스를 읽을 땐 반드시 이걸 쓴다.
+// Windows 에서 새로 클론하면 core.autocrlf 가 작업 사본을 CRLF 로 만든다. 그러면
+// `;\n` 같은 정규식이 `;\r\n` 에 안 맞아 **조용히 null** 이 나오고, 검사는 "상수가
+// 없다"고 오보한다. 2026-09-08 새 기계에서 이 테스트가 실제로 그렇게 빨개졌다.
+// 정규식마다 `\r?\n` 을 넣는 것보다 읽는 지점에서 한 번 정규화하는 편이 안전하다.
+const readText = (file: string) => readFileSync(file, 'utf-8').replace(/\r\n/g, '\n');
+
 test('구조화데이터 — 카테고리 이름은 반드시 카탈로그에 있어야 한다', () => {
   // 계산기 페이지가 넘기는 category가 카탈로그에 없으면 눈썹줄 링크가 홈으로 새고
   // breadcrumb도 엉뚱한 곳을 가리킨다. 실제로 "급여·노동", "금융", "자동차"라는
@@ -65,7 +72,7 @@ test('구조화데이터 — 계산기 페이지의 category가 실제 카탈로
   for (const dir of readdirSync(root)) {
     const file = join(root, dir, 'page.tsx');
     if (!existsSync(file)) continue;
-    const m = readFileSync(file, 'utf-8').match(/category="([^"]+)"/);
+    const m = readText(file).match(/category="([^"]+)"/);
     if (!m) continue;
     const used = m[1];
     if (!known.has(used)) { bad.push(`${file}: "${used}"는 카탈로그에 없는 갈래`); continue; }
@@ -105,7 +112,7 @@ test('구조화데이터 — Dataset 설명은 50자 이상이고 실제로 설�
   for (const dir of readdirSync(root)) {
     const file = join(root, dir, 'page.tsx');
     if (!existsSync(file)) continue;
-    const src = readFileSync(file, 'utf-8');
+    const src = readText(file);
     // Dataset을 내보내는 페이지만 검사한다
     if (!src.includes('RouteIndex') && !src.includes('datasetLd')) continue;
 
@@ -131,7 +138,7 @@ test('사이트맵 — lastmod가 한 날짜로 뭉치지 않는다', () => {
   //
   // 지문은 늘 같았다: **전부 같은 날짜**. 실제로는 페이지마다 바뀐 날이 다르다.
   // 요율 데이터만 보는 방식은 페이지가 늘어난 경우를 원리적으로 못 잡는다.
-  const src = readFileSync(join('app', 'sitemap.ts'), 'utf-8');
+  const src = readText(join('app', 'sitemap.ts'));
   assert.ok(
     src.includes('routeModified') && src.includes("'git'"),
     'lastmod를 페이지별 변경일에서 가져오지 않는다 — 데이터 확인일만 쓰면 새 페이지를 놓친다',
