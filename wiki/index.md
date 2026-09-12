@@ -7,7 +7,7 @@
 슬로건: *"제도는 바뀝니다. 계산은 항상 최신으로."*
 WhenStage(콘서트 캘린더)의 인프라·SEO 노하우를 물려받아 2026-07-30 시작.
 
-- 로컬 경로: `d:/Gcalen/ttakcalc`
+- 로컬 경로: `C:/Make_Web/ttakcalc`
 - **운영: https://ttakcalc.com** (Vercel) · 저장소: github.com/jooyong319-png/ttakcalc
 - **계산기 32종 · 사이트맵 703 URL · 회귀 테스트 222개** (2026-09-08)
   - 운영자 `devju` · 정정 이력(/corrections) · 임베드(/embed)
@@ -28,7 +28,7 @@ WhenStage(콘서트 캘린더)의 인프라·SEO 노하우를 물려받아 2026-
 
 ## 상위: 통합 개발 위키 (기술 지식, 재사용)
 Next.js·Vercel·SEO·접근성·CSS 같은 **어느 프로젝트든 재사용되는 기술 지식**은 상위 통합 위키
-(`../../wiki/`, 즉 `d:/Gcalen/wiki/`)에 있다. 이 프로젝트는 거기 정리된 검증된 패턴
+(`../../wiki/`, 즉 `C:/Make_Web/wiki/`)에 있다. 이 프로젝트는 거기 정리된 검증된 패턴
 (soft-404 방지, 구조화 데이터, 사이트맵 lastmod, axe 감사법, GA4 로드 방식 등)을 적용해 출발했다.
 ⚠️ 통합 위키는 이 저장소 **바깥의 로컬 폴더**라 `git clone`만 하는 원격 세션은 못 읽는다 —
 그 경우 [[unified-wiki-inbox]]를 경유한다.
