@@ -14,7 +14,18 @@ import { monthsWithEvents } from '@/lib/taxCalendar';
 const BASE = 'https://ttakcalc.com';
 
 
-/** 값 하나당 페이지 하나인 프로그래매틱 라우트 */
+/**
+ * 검색 유입이 **실측으로 확인된** 프로그래매틱 축.
+ *
+ * 네이버 서치어드바이저 상위 페이지(2026-09-12) 기준이다 — 상위 10개 중 8개가
+ * `/net-salary/*`(7개)와 `/salary/*`(1위 `/salary/3350`, CTR 9.1%)였다.
+ * 전체 네이버 클릭 20개 중 17개가 프로그래매틱 페이지에서 나왔다.
+ *
+ * 여기 없는 축은 "죽었다"는 뜻이 아니라 **아직 데이터가 없다**는 뜻이다.
+ * 목록을 20~30위까지 더 받아보고 갱신할 것.
+ */
+const PROVEN = new Set(['/net-salary', '/salary']);
+
 /** 값 하나당 페이지 하나인 프로그래매틱 라우트. src는 그 페이지를 만드는 소스 파일이다. */
 const GENERATED: { base: string; values: number[]; src: string }[] = [
   { base: '/salary', values: allSalaryValues(), src: 'app/(site)/salary/[man]/page.tsx' },
@@ -88,13 +99,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 데이터 확인일은 하한이다. 페이지가 그보다 나중에 바뀌었으면 그쪽이 맞다.
   const dataDate = latestVerifiedAt();
 
-  /** src를 안 주면 데이터 확인일을 쓴다(내용이 요율에서만 나오는 페이지) */
-  const at = (url: string, priority: number, src?: string): MetadataRoute.Sitemap[number] => ({
+  /**
+   * src를 안 주면 데이터 확인일을 쓴다(내용이 요율에서만 나오는 페이지).
+   *
+   * `freq`는 **정직하게** 적는다(2026-09-12). 전에는 전부 `monthly`였는데, 프로그래매틱
+   * 페이지 646장은 실제로는 요율이 바뀔 때만 변한다 — 대체로 1년에 한 번이다.
+   * 매달 바뀐다고 신고해두면 크롤러가 646장을 매달 재확인하러 오고, 그게 정확히
+   * 크롤 예산을 먹는 행동이다.
+   *
+   * 실측 근거(서치 콘솔 2026-09-12): 사이트맵 717장 중 색인된 것은 69장뿐이고
+   * **346장은 아직 크롤조차 안 됐다**(`발견됨 – 색인 생성되지 않음`). 예산이 모자란
+   * 상황에서 안 바뀌는 페이지의 재방문을 줄이면, 그만큼이 새 글과 핵심 페이지로 간다.
+   *
+   * ⚠️ 이건 "요청"이 아니라 **힌트**다. 크롤러가 그대로 따른다는 보장은 없다. 다만
+   * 과장된 값을 계속 보내면 lastmod·changefreq 신호 자체를 통째로 무시당한다 —
+   * 이 사이트는 lastmod에서 이미 그 함정을 밟은 적이 있다(위 latestVerifiedAt 주석).
+   */
+  const at = (
+    url: string,
+    priority: number,
+    src?: string,
+    freq: 'daily' | 'weekly' | 'monthly' | 'yearly' = 'monthly',
+  ): MetadataRoute.Sitemap[number] => ({
     url,
     lastModified: src ? modifiedOf(src, dataDate) : new Date(dataDate),
-    changeFrequency: 'monthly',
+    changeFrequency: freq,
     priority,
   });
+
+  /** 요율이 바뀔 때만 변하는 계산 결과 페이지 — 연 1회 수준이다. */
+  const RATE_BOUND = 'yearly' as const;
 
   const S = 'app/(site)';
 
@@ -122,16 +156,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...allCalcHrefs().map(h => at(`${BASE}${h}`, 0.9, `${S}${h}/page.tsx`)),
     // 목록 페이지 — 상세 페이지로 가는 크롤링 경로다. 상세보다 우선순위를 높게 준다.
     ...GENERATED.map(g => at(`${BASE}${g.base}`, 0.7, `${S}${g.base}/page.tsx`)),
-    ...GENERATED.flatMap(g => g.values.map(v => at(`${BASE}${g.base}/${v}`, 0.6, g.src))),
+    // 상세는 **실적으로 순위를 나눈다**(2026-09-12).
+    //
+    // 네이버 서치어드바이저 상위 10개 중 9개가 프로그래매틱이었고, 그중 8개가
+    // `/net-salary/*`와 `/salary/*`였다(1위 `/salary/3350` CTR 9.1%).
+    // 구글이 이 축들을 색인하지 않는다고 해서 가치가 없는 게 아니라는 증거다 —
+    // **두 엔진은 크롤 예산도 색인 판단도 따로 간다.**
+    //
+    // 그래서 페이지를 줄이는 대신, 실적이 확인된 축을 앞세워 크롤 순서만 유도한다.
+    // 나머지 축은 아직 데이터가 없을 뿐 "죽었다"고 판정한 게 아니다 — 2~4주 뒤
+    // 네이버 상위 목록을 20~30위까지 받아 보고 다시 정한다(wiki/todo.md).
+    ...GENERATED.flatMap(g =>
+      g.values.map(v =>
+        at(`${BASE}${g.base}/${v}`, PROVEN.has(g.base) ? 0.65 : 0.55, g.src, RATE_BOUND))),
     // 배기량 × 차령 조합. 차령 경감 때문에 조합마다 세액이 달라 각각 다른 답을 준다.
+    // `/car-tax/2500/8`이 네이버 상위 10위에 있다 — 조합 축도 실제로 유입을 만든다.
     ...carAgePairs().map(({ cc, age }) =>
-      at(`${BASE}/car-tax/${cc}/${age}`, 0.5, `${S}/car-tax/[cc]/[age]/page.tsx`)),
+      at(`${BASE}/car-tax/${cc}/${age}`, 0.5, `${S}/car-tax/[cc]/[age]/page.tsx`, RATE_BOUND)),
     // 연봉 비교. 개별 페이지와 다른 질문("올리면 얼마나 더 남나")에 답한다.
     ...salaryComparePairs().map(({ from, to }) =>
-      at(`${BASE}/salary/compare/${from}-${to}`, 0.5, `${S}/salary/compare/[pair]/page.tsx`)),
+      at(`${BASE}/salary/compare/${from}-${to}`, 0.5, `${S}/salary/compare/[pair]/page.tsx`, RATE_BOUND)),
     // 부양가족 조합. 인적공제 때문에 사람 수마다 실수령액이 실제로 달라진다.
     ...familyPairs().map(({ man, family }) =>
-      at(`${BASE}/salary/${man}/family-${family}`, 0.4, `${S}/salary/[man]/[family]/page.tsx`)),
+      at(`${BASE}/salary/${man}/family-${family}`, 0.4, `${S}/salary/[man]/[family]/page.tsx`, RATE_BOUND)),
   ]
     // 카탈로그와 GENERATED에 같은 URL이 들어가는 경우가 있다(예: /salary는 목록 페이지이면서
     // 카탈로그 항목이기도 하다). 사이트맵에 같은 loc이 두 번 나오면 안 된다.
