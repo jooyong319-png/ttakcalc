@@ -1,4 +1,5 @@
 import { execFileSync } from 'node:child_process';
+import { existsSync, readFileSync } from 'node:fs';
 import type { MetadataRoute } from 'next';
 import { getRates, latestYear } from '@/lib/rates';
 import {
@@ -70,18 +71,36 @@ function latestVerifiedAt(): string {
  *  검색엔진이 lastmod 자체를 무시하게 된다. git 커밋일은 **실제로 그 페이지가 바뀐 날**이라
  *  그 함정에 빠지지 않으면서 새 페이지도 정확히 잡는다.
  *
- *  얕은 클론 등으로 git을 못 쓰면 null을 돌려주고, 호출부가 데이터 확인일로 폴백한다.
+ *  git을 못 쓰면 null을 돌려주고, 호출부가 데이터 확인일로 폴백한다.
  *  사이트맵 하나 때문에 배포가 실패하는 것이 날짜가 조금 부정확한 것보다 나쁘다.
+ *
+ *  🔴 **얕은 클론의 경계 커밋은 믿으면 안 된다** (2026-10-22). Vercel은 최근 10커밋만 받아
+ *  빌드하는데, 그러면 가장 오래된 커밋이 모든 파일을 "추가"한 것처럼 보인다. 그래서 716장이
+ *  전부 경계 커밋 날짜(2026-09-11)로 나가고 있었고, 블로그 글이 올라올 때마다 경계가 밀려
+ *  716장이 한꺼번에 "수정됨"이 됐다. 결과가 경계 커밋이면 진짜 변경일을 모르는 것이므로 null.
  */
 const gitDateCache = new Map<string, string | null>();
+let shallowBoundary: Set<string> | null = null;
+function shallowCommits(): Set<string> {
+  if (shallowBoundary) return shallowBoundary;
+  try {
+    const file = execFileSync('git', ['rev-parse', '--git-path', 'shallow'], {
+      encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    shallowBoundary = new Set(existsSync(file) ? readFileSync(file, 'utf-8').split(/\s+/).filter(Boolean) : []);
+  } catch {
+    shallowBoundary = new Set();
+  }
+  return shallowBoundary;
+}
 function routeModified(sourceFile: string): string | null {
   if (gitDateCache.has(sourceFile)) return gitDateCache.get(sourceFile)!;
   let out: string | null = null;
   try {
-    const r = execFileSync('git', ['log', '-1', '--format=%cs', '--', sourceFile], {
+    const [hash, date] = execFileSync('git', ['log', '-1', '--format=%H %cs', '--', sourceFile], {
       encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'],
-    }).trim();
-    out = /^\d{4}-\d{2}-\d{2}$/.test(r) ? r : null;
+    }).trim().split(' ');
+    out = /^\d{4}-\d{2}-\d{2}$/.test(date ?? '') && !shallowCommits().has(hash) ? date : null;
   } catch {
     out = null;
   }

@@ -23,6 +23,8 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       publishedTime: post.date,
       modifiedTime: post.updated ?? post.date,
       tags: post.tags,
+      // 페이지의 openGraph는 레이아웃 것을 통째로 덮어쓴다(얕은 병합) — 이미지를 다시 적어야 한다
+      images: [{ url: '/og.png', width: 1200, height: 630, alt: post.title }],
     },
   };
 }

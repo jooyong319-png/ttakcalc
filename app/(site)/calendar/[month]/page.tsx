@@ -32,7 +32,8 @@ export function generateMetadata({ params }: { params: { month: string } }): Met
   const month = parseMonth(params.month);
   if (month === null) return {};
   const events = eventsInMonth(month);
-  const names = events.map(e => e.name.replace(/\s*\([^)]*\)/g, '')).join('·');
+  // 괄호를 지우면 "재산세 (건축물)"·"재산세 (주택 1기분)"이 둘 다 "재산세"가 된다 — 중복 제거
+  const names = Array.from(new Set(events.map(e => e.name.replace(/\s*\([^)]*\)/g, '')))).join('·');
   return {
     title: `${month}월에 내는 세금 — ${names}`,
     description:
